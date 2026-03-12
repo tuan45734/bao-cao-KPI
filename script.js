@@ -767,7 +767,7 @@ function createAreaKPIChart(data) {
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: Math.max(100, ...avgTLData, ...totalTLData) * 1.1,
+                         max: Math.ceil(Math.max(100, ...avgTLData, ...totalTLData) * 1.1 * 100) / 100,
                         ticks: {
                             callback: function(value) {
                                 return value + '%';
