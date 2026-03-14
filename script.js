@@ -1337,7 +1337,7 @@ function displaySummaryStats(data) {
             value: getEmployeeName(nvCaoNhat.ma_nv), 
             subValue: formatNumber(nvCaoNhat.doanh_so?.th || 0), 
             subLabel: 'Doanh số',
-            nppInfo: `NPP-NPP ${nvCaoNhatNPP}` 
+            nppInfo: ` - ${nvCaoNhatNPP}` 
         },
         { label: '🏢 NPP cao nhất', value: getGroupName(nppCaoNhat ? nppCaoNhat.ten : 'N/A'), subValue: nppCaoNhat ? formatNumber(nppCaoNhat.doanhSoTH) : '0', subLabel: 'Doanh số', tlValue: nppCaoNhat ? nppCaoNhat.tl.toFixed(1) + '%' : '0%' },
         { label: '📍 KV doanh thu cao nhất', value: kvCaoNhat ? getGroupName(kvCaoNhat.ma) : 'N/A', subValue: kvCaoNhat ? formatNumber(kvCaoNhat.doanhThu) : '0', subLabel: 'Doanh số TH', tlValue: kvCaoNhat ? `Tỷ lệ: ${kvCaoNhat.tl.toFixed(1)}%` : '' }
