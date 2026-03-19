@@ -1575,11 +1575,86 @@ function showError(message) {
     errorMessage.style.display = 'block';
 }
 
-// ========== KHỞI TẠO ==========
+// ========== TỰ ĐỘNG GỌI API KHI LOAD TRANG ==========
 
+// Hàm khởi tạo và tự động gọi API
+async function initializeAndFetchKPI() {
+    console.log('🚀 Tự động tải dữ liệu KPI...');
+    
+    // Hiển thị loading
+    const loading = document.getElementById('loading');
+    const searchBtn = document.getElementById('searchBtn');
+    
+    searchBtn.disabled = true;
+    loading.classList.add('active');
+    
+    try {
+        // Tải dữ liệu nhân viên và nhóm
+        console.log('🔄 Đang tải dữ liệu nhân viên và nhóm...');
+        await Promise.all([fetchEmployees(), fetchGroups()]);
+        
+        // Đợi 2 giây trước khi gọi API KPI
+        console.log('⏳ Đợi 2 giây trước khi gọi API KPI...');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Lấy thông tin tháng và năm hiện tại
+        const month = document.getElementById('month').value;
+        const year = document.getElementById('year').value;
+        const auth = document.getElementById('auth').value;
+        
+        console.log(`🔄 Đang tải dữ liệu KPI tháng ${month}/${year}...`);
+        
+        // Gọi API KPI
+        const url = `https://openapi.mobiwork.vn/OpenAPI/V1/KPI?thang=${month}&nam=${year}`;
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'accept': 'application/json', 'Authorization': auth }
+        });
+        
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const data = await response.json();
+        
+        // Xử lý dữ liệu
+        currentData = data.result || [];
+        allData = JSON.parse(JSON.stringify(currentData));
+        
+        // Cập nhật tiêu đề
+        document.getElementById('reportTitle').textContent = `Báo cáo KPI tháng ${month}/${year}`;
+        
+        // Hiển thị thông tin
+        displayDataInfo(currentData);
+        
+        // Vẽ biểu đồ
+        setTimeout(() => createCharts(currentData), 100);
+        
+        // Hiển thị thống kê
+        displaySummaryStats(currentData);
+        
+        // Hiển thị báo cáo
+        document.getElementById('reportSection').classList.add('active');
+        
+        console.log(`✅ Đã tải xong dữ liệu KPI: ${currentData.length} nhân viên`);
+        
+    } catch (error) {
+        console.error('❌ Lỗi khi tự động tải dữ liệu:', error);
+        showError(`Lỗi khi tự động tải dữ liệu: ${error.message}`);
+    } finally {
+        // Ẩn loading
+        searchBtn.disabled = false;
+        loading.classList.remove('active');
+    }
+}
+
+// Ghi đè hàm DOMContentLoaded để tự động gọi API
 document.addEventListener('DOMContentLoaded', function() {
     const today = new Date();
     document.getElementById('month').value = today.getMonth() + 1;
     document.getElementById('year').value = today.getFullYear();
     console.log('🚀 Ứng dụng đã sẵn sàng!');
+    
+    // Tự động gọi API sau khi trang load 1 giây
+    setTimeout(() => {
+        initializeAndFetchKPI();
+    }, 1000);
 });
