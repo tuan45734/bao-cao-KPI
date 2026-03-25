@@ -40,7 +40,7 @@ const nppData = [
     { ten: "NPP Hưng Thịnh", doanhSo: 1591111111, kv: "KV4" },
     { ten: "NPP Ngọc Phúc", doanhSo: 1272888889, kv: "KV4" },
     { ten: "NPP Nguyễn Đình Hân", doanhSo: 1909333333, kv: "KV4" },
-    { ten: "NPP Tân Thuý", doanhSo: 3182222222, kv: "KV4" },
+    { ten: "NPP Tân Thúy", doanhSo: 3182222222, kv: "KV4" },
     { ten: "NPP Thảo Thắng", doanhSo: 1440000000, kv: "KV4" },
     { ten: "NPP Tùng Phương", doanhSo: 992888889, kv: "KV4" },
     { ten: "NPP Anh Đức", doanhSo: 1079522000, kv: "KV5" },
@@ -623,19 +623,23 @@ function createTopCompletionChart(data, kv = 'all') {
         return;
     }
     
+    // Sửa labels để hiển thị thêm KV
     const labels = topData.map(item => {
         const { ten, maDonVi, groupPath } = getEmployeeDisplayInfo(item.ma_nv);
-        if (groupPath && maDonVi) return `${ten}-${maDonVi}`;
-        if (maDonVi) return `${ten} (${maDonVi})`;
-        if (groupPath) return `${ten}\n(${groupPath})`;
-        return ten;
+        // Lấy KV của nhân viên
+        const employeeKV = findKVFromGroup(item.ma_kv || 'Khác');
+        const kvDisplay = employeeKV !== 'Khác' ? ` [${employeeKV}]` : '';
+        
+        if (groupPath && maDonVi) return `${ten}${kvDisplay}-${maDonVi}`;
+        if (maDonVi) return `${ten}${kvDisplay} (${maDonVi})`;
+        if (groupPath) return `${ten}${kvDisplay}\n(${groupPath})`;
+        return `${ten}${kvDisplay}`;
     });
     
     const revenues = topData.map(item => item.doanh_so?.th || 0);
     
-    // Tính giá trị max cho trục X: lấy doanh số cao nhất * 1.3, làm tròn lên
     const maxRevenue = Math.max(...revenues);
-    let maxAxis = Math.ceil(maxRevenue * 1.3 / 1000000) * 1000000; // Làm tròn lên triệu
+    let maxAxis = Math.ceil(maxRevenue * 1.3 / 1000000) * 1000000;
     
     try {
         const ctx = document.getElementById('topCompletionChart').getContext('2d');
@@ -681,7 +685,9 @@ function createTopCompletionChart(data, kv = 'all') {
                                 const revenue = context.raw;
                                 const target = item.doanh_so?.kh || 0;
                                 const completionRate = target > 0 ? ((revenue / target) * 100).toFixed(1) : 0;
+                                const kvInfo = findKVFromGroup(item.ma_kv || 'Khác');
                                 return [
+                                    `📍 Khu vực: ${kvInfo}`,
                                     `💰 Doanh số: ${formatNumber(revenue)}`,
                                     `🎯 Kế hoạch: ${formatNumber(target)}`,
                                     `📊 Tỷ lệ HT: ${completionRate}%`
@@ -705,7 +711,7 @@ function createTopCompletionChart(data, kv = 'all') {
                         max: maxAxis,
                         ticks: { 
                             callback: value => formatNumber(value),
-                            stepSize: maxAxis / 5 // Chia thành 5 bước
+                            stepSize: maxAxis / 5
                         },
                         title: { 
                             display: true, 
@@ -763,21 +769,23 @@ function createBottomCompletionChart(data, kv = 'all') {
         return;
     }
     
+    // Sửa labels để hiển thị thêm KV
     const labels = bottomData.map(item => {
         const { ten, maDonVi, groupPath } = getEmployeeDisplayInfo(item.ma_nv);
-        if (groupPath && maDonVi) return `${ten}-${maDonVi}`;
-        if (maDonVi) return `${ten} (${maDonVi})`;
-        if (groupPath) return `${ten}\n(${groupPath})`;
-        return ten;
+        // Lấy KV của nhân viên
+        const employeeKV = findKVFromGroup(item.ma_kv || 'Khác');
+        const kvDisplay = employeeKV !== 'Khác' ? ` [${employeeKV}]` : '';
+        
+        if (groupPath && maDonVi) return `${ten}${kvDisplay}-${maDonVi}`;
+        if (maDonVi) return `${ten}${kvDisplay} (${maDonVi})`;
+        if (groupPath) return `${ten}${kvDisplay}\n(${groupPath})`;
+        return `${ten}${kvDisplay}`;
     });
     
     const revenues = bottomData.map(item => item.doanh_so?.th || 0);
     
-    // Tính giá trị max cho trục X: lấy doanh số cao nhất * 1.5 (bottom chart cần khoảng trống lớn hơn)
     const maxRevenue = Math.max(...revenues);
-    let maxAxis = Math.ceil(maxRevenue * 1.5 / 1000000) * 1000000; // Làm tròn lên triệu, cộng 50%
-    
-    // Đảm bảo maxAxis ít nhất là 10 triệu cho bottom chart
+    let maxAxis = Math.ceil(maxRevenue * 1.5 / 1000000) * 1000000;
     if (maxAxis < 10000000) maxAxis = 10000000;
     
     try {
@@ -792,7 +800,6 @@ function createBottomCompletionChart(data, kv = 'all') {
                     label: 'Doanh số (VNĐ)',
                     data: revenues,
                     backgroundColor: revenues.map((revenue, index) => {
-                        // Gradient đỏ cho bottom chart
                         return `rgba(244, 67, 54, ${0.4 + (index * 0.03)})`;
                     }),
                     borderColor: revenues.map(() => 'rgba(244, 67, 54, 1)'),
@@ -817,7 +824,9 @@ function createBottomCompletionChart(data, kv = 'all') {
                                 const revenue = context.raw;
                                 const target = item.doanh_so?.kh || 0;
                                 const completionRate = target > 0 ? ((revenue / target) * 100).toFixed(1) : 0;
+                                const kvInfo = findKVFromGroup(item.ma_kv || 'Khác');
                                 return [
+                                    `📍 Khu vực: ${kvInfo}`,
                                     `💰 Doanh số: ${formatNumber(revenue)}`,
                                     `🎯 Kế hoạch: ${formatNumber(target)}`,
                                     `📊 Tỷ lệ HT: ${completionRate}%`
@@ -841,7 +850,7 @@ function createBottomCompletionChart(data, kv = 'all') {
                         max: maxAxis,
                         ticks: { 
                             callback: value => formatNumber(value),
-                            stepSize: maxAxis / 5 // Chia thành 5 bước
+                            stepSize: maxAxis / 5
                         },
                         title: { 
                             display: true, 
@@ -1145,7 +1154,8 @@ function createTopAreaChart(data) {
         if (!areaMap[area]) areaMap[area] = { 
             tongDoanhSoTH: 0, 
             count: 0,
-            target: getNPPTarget(area) // Lấy kế hoạch từ NPP
+            target: getNPPTarget(area),
+            kv: findKVFromGroup(area) // Lấy KV của NPP
         };
         areaMap[area].tongDoanhSoTH += item.doanh_so?.th || 0;
         areaMap[area].count += 1;
@@ -1154,9 +1164,11 @@ function createTopAreaChart(data) {
     const areaData = Object.entries(areaMap)
         .map(([area, values]) => ({ 
             area, 
+            tenHienThi: `${getGroupName(area)} [${values.kv}]`, // Thêm KV vào tên hiển thị
             tongDoanhSoTH: values.tongDoanhSoTH, 
             soNhanVien: values.count,
             target: values.target,
+            kv: values.kv,
             completionRate: values.target > 0 ? (values.tongDoanhSoTH / values.target * 100) : 0
         }))
         .sort((a, b) => b.tongDoanhSoTH - a.tongDoanhSoTH)
@@ -1164,11 +1176,10 @@ function createTopAreaChart(data) {
     
     if (areaData.length === 0) return;
     
-    const labels = areaData.map(item => getGroupName(item.area));
+    const labels = areaData.map(item => item.tenHienThi);
     const doanhSoData = areaData.map(item => item.tongDoanhSoTH);
     const targetData = areaData.map(item => item.target);
     
-    // Tính giá trị max cho trục X
     const maxDoanhSo = Math.max(...doanhSoData, ...targetData);
     let maxAxis = Math.ceil(maxDoanhSo * 1.3 / 1000000) * 1000000;
     
@@ -1222,6 +1233,7 @@ function createTopAreaChart(data) {
                                 const item = areaData[context.dataIndex];
                                 if (context.dataset.label === 'Doanh số thực tế') {
                                     return [
+                                        `📍 Khu vực: ${item.kv}`,
                                         `💰 Doanh số TH: ${formatNumber(context.raw)}`,
                                         `👥 Số nhân viên: ${item.soNhanVien}`,
                                         `📊 Bình quân: ${formatNumber(context.raw / item.soNhanVien)}/người`
@@ -1267,7 +1279,7 @@ function createTopAreaChart(data) {
                             font: { size: 12 },
                             callback: function(value, index, values) {
                                 const label = this.getLabelForValue(value);
-                                return label && label.length > 30 ? label.substring(0, 27) + '...' : label;
+                                return label && label.length > 35 ? label.substring(0, 32) + '...' : label;
                             }
                         } 
                     }
@@ -1288,7 +1300,8 @@ function createBottomAreaChart(data) {
         if (!areaMap[area]) areaMap[area] = { 
             tongDoanhSoTH: 0, 
             count: 0,
-            target: getNPPTarget(area)
+            target: getNPPTarget(area),
+            kv: findKVFromGroup(area) // Lấy KV của NPP
         };
         areaMap[area].tongDoanhSoTH += item.doanh_so?.th || 0;
         areaMap[area].count += 1;
@@ -1298,9 +1311,11 @@ function createBottomAreaChart(data) {
         .filter(([_, values]) => values.tongDoanhSoTH > 0)
         .map(([area, values]) => ({ 
             area, 
+            tenHienThi: `${getGroupName(area)} [${values.kv}]`, // Thêm KV vào tên hiển thị
             tongDoanhSoTH: values.tongDoanhSoTH, 
             soNhanVien: values.count,
             target: values.target,
+            kv: values.kv,
             completionRate: values.target > 0 ? (values.tongDoanhSoTH / values.target * 100) : 0
         }))
         .sort((a, b) => a.tongDoanhSoTH - b.tongDoanhSoTH)
@@ -1308,11 +1323,10 @@ function createBottomAreaChart(data) {
     
     if (areaData.length === 0) return;
     
-    const labels = areaData.map(item => getGroupName(item.area));
+    const labels = areaData.map(item => item.tenHienThi);
     const doanhSoData = areaData.map(item => item.tongDoanhSoTH);
     const targetData = areaData.map(item => item.target);
     
-    // Tính giá trị max cho trục X
     const maxDoanhSo = Math.max(...doanhSoData, ...targetData);
     let maxAxis = Math.ceil(maxDoanhSo * 1.3 / 1000000) * 1000000;
     if (maxAxis < 10000000) maxAxis = 10000000;
@@ -1367,6 +1381,7 @@ function createBottomAreaChart(data) {
                                 const item = areaData[context.dataIndex];
                                 if (context.dataset.label === 'Doanh số thực tế') {
                                     return [
+                                        `📍 Khu vực: ${item.kv}`,
                                         `💰 Doanh số TH: ${formatNumber(context.raw)}`,
                                         `👥 Số nhân viên: ${item.soNhanVien}`,
                                         `📊 Bình quân: ${formatNumber(context.raw / item.soNhanVien)}/người`
@@ -1412,7 +1427,7 @@ function createBottomAreaChart(data) {
                             font: { size: 12 },
                             callback: function(value, index, values) {
                                 const label = this.getLabelForValue(value);
-                                return label && label.length > 30 ? label.substring(0, 27) + '...' : label;
+                                return label && label.length > 35 ? label.substring(0, 32) + '...' : label;
                             }
                         } 
                     }
