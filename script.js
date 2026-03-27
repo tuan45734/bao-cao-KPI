@@ -498,7 +498,7 @@ async function searchKPI() {
         
         currentData = mergedData;
         allData = JSON.parse(JSON.stringify(mergedData));
-        document.getElementById('reportTitle').textContent = `Báo cáo KPI tháng ${month}/${year}`;
+        document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
         displayDataInfo(currentData);
         setTimeout(() => createCharts(currentData), 100);
         displaySummaryStats(currentData);
@@ -723,7 +723,7 @@ function createTopCompletionChart(data, kv = 'all') {
         const titleElement = chartCard.querySelector('h3');
         if (titleElement) {
             if (kv === 'all') {
-                titleElement.innerHTML = '🏆 15 Nhân viên doanh số cao nhất (Tất cả KV)';
+                titleElement.innerHTML = '🏆 15 Nhân viên doanh số cao nhất (Miền Bắc)';
             } else {
                 const kvName = getGroupName(kv) || kv;
                 titleElement.innerHTML = `🏆 15 Nhân viên doanh số cao nhất - ${kvName}`;
@@ -869,7 +869,7 @@ function createBottomCompletionChart(data, kv = 'all') {
         const titleElement = chartCard.querySelector('h3');
         if (titleElement) {
             if (kv === 'all') {
-                titleElement.innerHTML = '⚠️ 15 Nhân viên doanh số thấp nhất (Tất cả KV)';
+                titleElement.innerHTML = '⚠️ 15 Nhân viên doanh số thấp nhất (Miền Bắc)';
             } else {
                 const kvName = getGroupName(kv) || kv;
                 titleElement.innerHTML = `⚠️ 15 Nhân viên doanh số thấp nhất - ${kvName}`;
@@ -1764,7 +1764,7 @@ async function initializeAndFetchKPI() {
         allData = JSON.parse(JSON.stringify(currentData));
         
         // Cập nhật tiêu đề
-        document.getElementById('reportTitle').textContent = `Báo cáo KPI tháng ${month}/${year}`;
+        document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
         
         // Hiển thị thông tin
         displayDataInfo(currentData);
