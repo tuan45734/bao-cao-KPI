@@ -77,6 +77,11 @@ const additionalKPIData = [
         "ma_kv": "NPP Công Giang"
     },
     {
+        "ma_nv": "A105.09",
+        "doanh_so": { "kh": 225000000, "th": 20931024, "tl": 9.3	 },
+        "ma_kv": "NPP Công Giang"
+    },
+    {
         "ma_nv": "A402.05",
         "doanh_so": { "kh": 230000000, "th": 186563741, "tl": 81.1 },
         "ma_kv": "NPP Tân Hoa"
