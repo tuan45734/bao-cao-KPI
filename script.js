@@ -71,14 +71,83 @@ const nppData = [
     { ten: "NPP Thông Thơm", doanhSo: 480000000, kv: "KV6" }
 ];
 const additionalKPIData = [
+
     {
+        "ma_nv": "A204.08",
+        "doanh_so": { "kh": 249151397, "th": 33712960, "tl": 13.5 },
+        "ma_kv": "NPP Công Giang"
+    },  {
+        "ma_nv": "A203.09",
+        "doanh_so": { "kh": 299567258, "th": 241195820, "tl": 80.5 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A101.03",
+        "doanh_so": { "kh": 205000000, "th": 206816480, "tl": 100.9 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A506.02",
+        "doanh_so": { "kh": 230000000, "th": 236526040, "tl": 102.8 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A407.02",
+        "doanh_so": { "kh": 289000000, "th": 289952450, "tl": 100.3 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A513.01",
+        "doanh_so": { "kh": 290000000, "th": 223165716, "tl": 77 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A412.04",
+        "doanh_so": { "kh": 252001000, "th": 227730980, "tl": 90.4 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A412.06",
+        "doanh_so": { "kh": 239624000, "th": 215972370, "tl": 90.1 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A413.04",
+        "doanh_so": { "kh": 318222222, "th": 224775824, "tl": 70.6 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A503.02",
+        "doanh_so": { "kh": 260000000, "th": 234911260, "tl": 90.4 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A316.01",
+        "doanh_so": { "kh": 0, "th": 2819580, "tl": 100 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A303.08",
+        "doanh_so": { "kh": 318938000, "th": 520969122, "tl": 163.3 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A402.03",
+        "doanh_so": { "kh": 210000000, "th": 360484860, "tl": 171.7 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A402.02",
+        "doanh_so": { "kh": 250000000, "th": 69903507, "tl": 28 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A204.05",
+        "doanh_so": { "kh": 302281120, "th": 256199930, "tl": 84.8 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A204.03",
+        "doanh_so": { "kh": 266290017, "th": 220824740, "tl": 82.9 },
+        "ma_kv": "NPP Công Giang"
+    }, {
+        "ma_nv": "A204.01",
+        "doanh_so": { "kh": 310948625, "th": 250751420, "tl": 80.6 },
+        "ma_kv": "NPP Công Giang"
+    }, {
         "ma_nv": "A201.06",
         "doanh_so": { "kh": 222845000, "th": 1573400, "tl": 0.7 },
         "ma_kv": "NPP Công Giang"
     },
     {
         "ma_nv": "A105.09",
-        "doanh_so": { "kh": 225000000, "th": 20931024, "tl": 9.3	 },
+        "doanh_so": { "kh": 225000000, "th": 20931024, "tl": 9.3 },
         "ma_kv": "NPP Công Giang"
     },
     {
@@ -173,28 +242,28 @@ let currentKVFilter = 'all';
 
 function getNPPTarget(maNPP) {
     if (!maNPP) return 0;
-    
+
     // Tìm NPP trong danh sách
     const npp = nppData.find(item => {
         // Loại bỏ "NPP " prefix để so sánh tốt hơn
         const normalizedMaNPP = maNPP.replace(/^NPP\s+/i, '').toLowerCase();
         const normalizedTen = item.ten.replace(/^NPP\s+/i, '').toLowerCase();
-        
-        return normalizedTen.includes(normalizedMaNPP) || 
-               normalizedMaNPP.includes(normalizedTen);
+
+        return normalizedTen.includes(normalizedMaNPP) ||
+            normalizedMaNPP.includes(normalizedTen);
     });
-    
+
     return npp ? npp.doanhSo : 0;
 }
 function mergeKPIData(apiData) {
     if (!apiData) return [];
-    
+
     // Tạo map từ dữ liệu API để dễ dàng cập nhật
     const dataMap = new Map();
     apiData.forEach(item => {
         dataMap.set(item.ma_nv, item);
     });
-    
+
     // Hợp nhất dữ liệu bổ sung
     additionalKPIData.forEach(additionalItem => {
         if (dataMap.has(additionalItem.ma_nv)) {
@@ -210,12 +279,12 @@ function mergeKPIData(apiData) {
             dataMap.set(additionalItem.ma_nv, { ...additionalItem });
         }
     });
-    
+
     return Array.from(dataMap.values());
 }
 function calculateNPPRevenue(data) {
     const nppRevenue = new Map();
-    
+
     // Khởi tạo dữ liệu cho tất cả NPP
     nppData.forEach(npp => {
         nppRevenue.set(npp.ten, {
@@ -226,7 +295,7 @@ function calculateNPPRevenue(data) {
             count: 0
         });
     });
-    
+
     // Cập nhật doanh số thực từ dữ liệu KPI
     data.forEach(item => {
         const maKV = item.ma_kv || '';
@@ -236,14 +305,14 @@ function calculateNPPRevenue(data) {
             const normalizedMaKV = maKV.replace(/^NPP\s+/i, '').toLowerCase();
             return normalizedMaKV.includes(normalizedNPP) || normalizedNPP.includes(normalizedMaKV);
         });
-        
+
         if (matchingNPP && nppRevenue.has(matchingNPP.ten)) {
             const revenueData = nppRevenue.get(matchingNPP.ten);
             revenueData.actualRevenue += item.doanh_so?.th || 0;
             revenueData.count += 1;
         }
     });
-    
+
     return Array.from(nppRevenue.values());
 }
 function getKVTargetFromNPP(kv) {
@@ -275,7 +344,7 @@ function getAllParentGroups(maDonVi) {
     const groups = [];
     let currentMa = maDonVi;
     let visited = new Set();
-    
+
     while (currentMa && !visited.has(currentMa)) {
         visited.add(currentMa);
         const group = groupMap.get(currentMa);
@@ -292,7 +361,7 @@ function getEmployeeDisplayInfo(maNV) {
     if (!maNV) return { ten: 'N/A', display: 'N/A', groupPath: '', maDonVi: '' };
     let employeeName = maNV;
     let maDonVi = null;
-    
+
     if (employeeMap.has(maNV)) {
         const emp = employeeMap.get(maNV);
         employeeName = emp.ten || maNV;
@@ -305,7 +374,7 @@ function getEmployeeDisplayInfo(maNV) {
             maDonVi = emp.ma_don_vi;
         }
     }
-    
+
     const parentGroups = getAllParentGroups(maDonVi);
     const groupPath = parentGroups.length > 0 ? parentGroups.join(' › ') : '';
     let display = employeeName;
@@ -334,7 +403,7 @@ function findKVFromGroup(maNhom) {
     if (maNhom.startsWith('KV') && maNhom.length <= 3) return maNhom;
     let currentMa = maNhom;
     let visited = new Set();
-    
+
     while (currentMa && !visited.has(currentMa)) {
         visited.add(currentMa);
         const group = groupMap.get(currentMa);
@@ -489,7 +558,7 @@ async function searchKPI() {
         console.log('⏳ Đợi 2 giây trước khi gọi API KPI...');
         await new Promise(resolve => setTimeout(resolve, 2000));
         console.log('🔄 Đang tải dữ liệu KPI...');
-        
+
         const url = `https://openapi.mobiwork.vn/OpenAPI/V1/KPI?thang=${month}&nam=${year}`;
         const response = await fetch(url, {
             method: 'GET',
@@ -497,10 +566,10 @@ async function searchKPI() {
         });
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
-        
+
         // Hợp nhất dữ liệu từ API và dữ liệu bổ sung
         const mergedData = mergeKPIData(data.result || []);
-        
+
         currentData = mergedData;
         allData = JSON.parse(JSON.stringify(mergedData));
         document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
@@ -533,13 +602,13 @@ function filterTopEmployees(kv, event) {
         btn.classList.remove('top-active');
     });
     event.target.classList.add('top-active');
-    
+
     currentTopKVFilter = kv;
     if (!currentData) return;
-    
+
     const chartCard = event.target.closest('.chart-card');
     showChartLoading(chartCard);
-    
+
     setTimeout(() => {
         let filteredData = currentData;
         if (kv !== 'all') {
@@ -548,7 +617,7 @@ function filterTopEmployees(kv, event) {
                 return itemKV === kv;
             });
         }
-        
+
         if (filteredData.length === 0) {
             showToast(`Không có dữ liệu nhân viên cho ${kv}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
@@ -571,13 +640,13 @@ function filterBottomEmployees(kv, event) {
         btn.classList.remove('bottom-active');
     });
     event.target.classList.add('bottom-active');
-    
+
     currentBottomKVFilter = kv;
     if (!currentData) return;
-    
+
     const chartCard = event.target.closest('.chart-card');
     showChartLoading(chartCard);
-    
+
     setTimeout(() => {
         let filteredData = currentData;
         if (kv !== 'all') {
@@ -586,7 +655,7 @@ function filterBottomEmployees(kv, event) {
                 return itemKV === kv;
             });
         }
-        
+
         if (filteredData.length === 0) {
             showToast(`Không có dữ liệu nhân viên cho ${kv}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
@@ -608,29 +677,29 @@ function filterAreaRevenue(kv, event) {
         btn.classList.remove('active');
     });
     event.target.classList.add('active');
-    
+
     currentKVFilter = kv;
     if (!currentData) return;
-    
+
     const nppRevenueData = calculateNPPRevenue(currentData);
     updateTotalRevenueFromNPP(nppRevenueData);
-    
+
     const chartCard = event.target.closest('.chart-card');
-    
+
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'kv-loading';
     loadingDiv.innerHTML = '<div class="spinner-small"></div><p>Đang lọc dữ liệu...</p>';
     loadingDiv.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,0.9); padding: 20px; border-radius: 10px; z-index: 10;';
     chartCard.style.position = 'relative';
     chartCard.appendChild(loadingDiv);
-    
+
     setTimeout(() => {
         if (kv === 'all') {
             createAreaRevenueChart(currentData);
         } else {
             createNPPChartByKV(currentData, kv);
         }
-        
+
         const loadingDiv = chartCard.querySelector('.kv-loading');
         if (loadingDiv) loadingDiv.remove();
     }, 300);
@@ -638,10 +707,10 @@ function filterAreaRevenue(kv, event) {
 
 function updateTotalRevenue(data, kv = 'all') {
     if (!data) return;
-    
+
     let totalRevenue = 0;
     let totalTarget = 0;
-    
+
     if (kv === 'all') {
         totalRevenue = data.reduce((sum, item) => sum + (item.doanh_so?.th || 0), 0);
         totalTarget = getKVTargetFromNPP('all');
@@ -652,12 +721,12 @@ function updateTotalRevenue(data, kv = 'all') {
                 return itemKV === kv;
             })
             .reduce((sum, item) => sum + (item.doanh_so?.th || 0), 0);
-        
+
         totalTarget = getKVTargetFromNPP(kv);
     }
-    
+
     const completionRate = totalTarget > 0 ? (totalRevenue / totalTarget * 100).toFixed(1) : 0;
-    
+
     const totalRevenueElement = document.getElementById('totalRevenueAll');
     if (totalRevenueElement) {
         totalRevenueElement.innerHTML = `${formatNumber(totalRevenue)} / ${formatNumber(totalTarget)} (${completionRate}%)`;
@@ -668,12 +737,12 @@ function updateTotalRevenue(data, kv = 'all') {
 
 function createCharts(data) {
     console.log('🔄 Đang vẽ biểu đồ...');
-    
+
     // Reset filters
     currentTopKVFilter = 'all';
     currentBottomKVFilter = 'all';
     currentKVFilter = 'all';
-    
+
     // Reset active states - Top chart
     const topFilter = document.querySelector('.kv-filter-employee:first-child');
     if (topFilter) {
@@ -682,7 +751,7 @@ function createCharts(data) {
         });
         topFilter.querySelector('[data-kv="all"]').classList.add('top-active');
     }
-    
+
     // Reset active states - Bottom chart
     const bottomFilter = document.querySelector('.kv-filter-employee:last-child');
     if (bottomFilter) {
@@ -691,7 +760,7 @@ function createCharts(data) {
         });
         bottomFilter.querySelector('[data-kv="all"]').classList.add('bottom-active');
     }
-    
+
     // Reset active states - Area chart
     const areaFilter = document.querySelector('.kv-filter');
     if (areaFilter) {
@@ -700,19 +769,19 @@ function createCharts(data) {
         });
         areaFilter.querySelector('[data-kv="all"]').classList.add('active');
     }
-    
+
     // Destroy old charts
     if (topCompletionChart) topCompletionChart.destroy();
     if (bottomCompletionChart) bottomCompletionChart.destroy();
     if (topAreaChart) topAreaChart.destroy();
     if (bottomAreaChart) bottomAreaChart.destroy();
     if (areaRevenueChart) areaRevenueChart.destroy();
-    
+
     if (!data || data.length === 0) {
         console.warn('⚠️ Không có dữ liệu để vẽ biểu đồ');
         return;
     }
-    
+
     createTopCompletionChart(data);
     createBottomCompletionChart(data);
     createTopAreaChart(data);
@@ -722,7 +791,7 @@ function createCharts(data) {
 }
 function createTopCompletionChart(data, kv = 'all') {
     if (!data || data.length === 0) return;
-    
+
     const chartCard = document.getElementById('topCompletionChart')?.closest('.chart-card');
     if (chartCard) {
         const titleElement = chartCard.querySelector('h3');
@@ -735,12 +804,12 @@ function createTopCompletionChart(data, kv = 'all') {
             }
         }
     }
-    
+
     const topData = [...data]
         .filter(item => (item.doanh_so?.th || 0) > 0)
         .sort((a, b) => (b.doanh_so?.th || 0) - (a.doanh_so?.th || 0))
         .slice(0, 15);
-    
+
     if (topData.length === 0) {
         const ctx = document.getElementById('topCompletionChart').getContext('2d');
         if (topCompletionChart) topCompletionChart.destroy();
@@ -751,29 +820,29 @@ function createTopCompletionChart(data, kv = 'all') {
         });
         return;
     }
-    
+
     // Sửa labels để hiển thị thêm KV
     const labels = topData.map(item => {
         const { ten, maDonVi, groupPath } = getEmployeeDisplayInfo(item.ma_nv);
         // Lấy KV của nhân viên
         const employeeKV = findKVFromGroup(item.ma_kv || 'Khác');
         const kvDisplay = employeeKV !== 'Khác' ? ` [${employeeKV}]` : '';
-        
+
         if (groupPath && maDonVi) return `${ten}${kvDisplay}-${maDonVi}`;
         if (maDonVi) return `${ten}${kvDisplay} (${maDonVi})`;
         if (groupPath) return `${ten}${kvDisplay}\n(${groupPath})`;
         return `${ten}${kvDisplay}`;
     });
-    
+
     const revenues = topData.map(item => item.doanh_so?.th || 0);
-    
+
     const maxRevenue = Math.max(...revenues);
     let maxAxis = Math.ceil(maxRevenue * 1.3 / 1000000) * 1000000;
-    
+
     try {
         const ctx = document.getElementById('topCompletionChart').getContext('2d');
         if (topCompletionChart) topCompletionChart.destroy();
-        
+
         topCompletionChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -809,7 +878,7 @@ function createTopCompletionChart(data, kv = 'all') {
                         bodyFont: { size: 13 },
                         padding: 12,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const item = topData[context.dataIndex];
                                 const revenue = context.raw;
                                 const target = item.doanh_so?.kh || 0;
@@ -838,20 +907,20 @@ function createTopCompletionChart(data, kv = 'all') {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: { 
+                        ticks: {
                             callback: value => formatNumber(value),
                             stepSize: maxAxis / 5
                         },
-                        title: { 
-                            display: true, 
-                            text: 'Doanh số (VNĐ)', 
-                            font: { weight: 'bold' } 
+                        title: {
+                            display: true,
+                            text: 'Doanh số (VNĐ)',
+                            font: { weight: 'bold' }
                         }
                     },
                     y: {
                         ticks: {
                             font: { size: 10 },
-                            callback: function(value, index, values) {
+                            callback: function (value, index, values) {
                                 const label = this.getLabelForValue(value);
                                 return label && label.length > 50 ? label.substring(0, 47) + '...' : label;
                             }
@@ -868,7 +937,7 @@ function createTopCompletionChart(data, kv = 'all') {
 
 function createBottomCompletionChart(data, kv = 'all') {
     if (!data || data.length === 0) return;
-    
+
     const chartCard = document.getElementById('bottomCompletionChart')?.closest('.chart-card');
     if (chartCard) {
         const titleElement = chartCard.querySelector('h3');
@@ -881,12 +950,12 @@ function createBottomCompletionChart(data, kv = 'all') {
             }
         }
     }
-    
+
     const bottomData = [...data]
         .filter(item => (item.doanh_so?.th || 0) > 0)
         .sort((a, b) => (a.doanh_so?.th || 0) - (b.doanh_so?.th || 0))
         .slice(0, 15);
-    
+
     if (bottomData.length === 0) {
         const ctx = document.getElementById('bottomCompletionChart').getContext('2d');
         if (bottomCompletionChart) bottomCompletionChart.destroy();
@@ -897,30 +966,30 @@ function createBottomCompletionChart(data, kv = 'all') {
         });
         return;
     }
-    
+
     // Sửa labels để hiển thị thêm KV
     const labels = bottomData.map(item => {
         const { ten, maDonVi, groupPath } = getEmployeeDisplayInfo(item.ma_nv);
         // Lấy KV của nhân viên
         const employeeKV = findKVFromGroup(item.ma_kv || 'Khác');
         const kvDisplay = employeeKV !== 'Khác' ? ` [${employeeKV}]` : '';
-        
+
         if (groupPath && maDonVi) return `${ten}${kvDisplay}-${maDonVi}`;
         if (maDonVi) return `${ten}${kvDisplay} (${maDonVi})`;
         if (groupPath) return `${ten}${kvDisplay}\n(${groupPath})`;
         return `${ten}${kvDisplay}`;
     });
-    
+
     const revenues = bottomData.map(item => item.doanh_so?.th || 0);
-    
+
     const maxRevenue = Math.max(...revenues);
     let maxAxis = Math.ceil(maxRevenue * 1.5 / 1000000) * 1000000;
     if (maxAxis < 10000000) maxAxis = 10000000;
-    
+
     try {
         const ctx = document.getElementById('bottomCompletionChart').getContext('2d');
         if (bottomCompletionChart) bottomCompletionChart.destroy();
-        
+
         bottomCompletionChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -948,7 +1017,7 @@ function createBottomCompletionChart(data, kv = 'all') {
                         bodyFont: { size: 13 },
                         padding: 12,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const item = bottomData[context.dataIndex];
                                 const revenue = context.raw;
                                 const target = item.doanh_so?.kh || 0;
@@ -977,20 +1046,20 @@ function createBottomCompletionChart(data, kv = 'all') {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: { 
+                        ticks: {
                             callback: value => formatNumber(value),
                             stepSize: maxAxis / 5
                         },
-                        title: { 
-                            display: true, 
-                            text: 'Doanh số (VNĐ)', 
-                            font: { weight: 'bold' } 
+                        title: {
+                            display: true,
+                            text: 'Doanh số (VNĐ)',
+                            font: { weight: 'bold' }
                         }
                     },
                     y: {
                         ticks: {
                             font: { size: 10 },
-                            callback: function(value, index, values) {
+                            callback: function (value, index, values) {
                                 const label = this.getLabelForValue(value);
                                 return label && label.length > 50 ? label.substring(0, 47) + '...' : label;
                             }
@@ -1006,10 +1075,10 @@ function createBottomCompletionChart(data, kv = 'all') {
 }
 function updateTotalRevenueFromNPP(nppRevenueData) {
     if (!nppRevenueData) return;
-    
+
     let totalActualRevenue = 0;
     let totalTarget = 0;
-    
+
     if (currentKVFilter === 'all') {
         totalActualRevenue = nppRevenueData.reduce((sum, npp) => sum + npp.actualRevenue, 0);
         totalTarget = getKVTargetFromNPP('all');
@@ -1018,9 +1087,9 @@ function updateTotalRevenueFromNPP(nppRevenueData) {
         totalActualRevenue = filteredNPPs.reduce((sum, npp) => sum + npp.actualRevenue, 0);
         totalTarget = getKVTargetFromNPP(currentKVFilter);
     }
-    
+
     const completionRate = totalTarget > 0 ? (totalActualRevenue / totalTarget * 100).toFixed(1) : 0;
-    
+
     const totalRevenueElement = document.getElementById('totalRevenueAll');
     if (totalRevenueElement) {
         totalRevenueElement.innerHTML = `${formatNumber(totalActualRevenue)} / ${formatNumber(totalTarget)} (${completionRate}%)`;
@@ -1029,7 +1098,7 @@ function updateTotalRevenueFromNPP(nppRevenueData) {
 function createAreaRevenueChart(data) {
     // Tính doanh số thực theo KV từ dữ liệu KPI
     const nppRevenueData = calculateNPPRevenue(data);
-    
+
     // Tính tổng doanh số theo KV
     const kvActualRevenue = {};
     nppRevenueData.forEach(npp => {
@@ -1038,16 +1107,16 @@ function createAreaRevenueChart(data) {
         }
         kvActualRevenue[npp.kv] += npp.actualRevenue;
     });
-    
+
     // Chuẩn bị dữ liệu cho biểu đồ
     const kvData = [];
     const uniqueKVs = [...new Set(nppData.map(item => item.kv))];
-    
+
     uniqueKVs.forEach(kv => {
         const actualRevenue = kvActualRevenue[kv] || 0;
         const targetRevenue = getKVTargetFromNPP(kv);
         const completionRate = targetRevenue > 0 ? (actualRevenue / targetRevenue * 100) : 0;
-        
+
         kvData.push({
             kv: kv,
             actualRevenue: actualRevenue,
@@ -1055,16 +1124,16 @@ function createAreaRevenueChart(data) {
             completionRate: completionRate
         });
     });
-    
+
     // Cập nhật tổng doanh thu hiển thị
     updateTotalRevenueFromNPP(nppRevenueData);
-    
+
     // Sắp xếp theo tỷ lệ hoàn thành
     kvData.sort((a, b) => b.completionRate - a.completionRate);
-    
+
     const labels = kvData.map(item => getGroupName(item.kv) || item.kv);
     const completionRates = kvData.map(item => item.completionRate);
-    
+
     const chartCard = document.getElementById('areaRevenueChart')?.closest('.chart-card');
     if (chartCard) {
         const titleElement = chartCard.querySelector('h3');
@@ -1072,11 +1141,11 @@ function createAreaRevenueChart(data) {
             titleElement.innerHTML = '🥧 Tỷ lệ hoàn thành KPI theo Khu vực';
         }
     }
-    
+
     try {
         const ctx = document.getElementById('areaRevenueChart').getContext('2d');
         if (areaRevenueChart) areaRevenueChart.destroy();
-        
+
         const config = {
             type: 'bar',
             data: {
@@ -1107,7 +1176,7 @@ function createAreaRevenueChart(data) {
                         bodyFont: { size: 13 },
                         padding: 12,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const index = context.dataIndex;
                                 const item = kvData[index];
                                 return [
@@ -1136,21 +1205,21 @@ function createAreaRevenueChart(data) {
                             callback: value => value + '%',
                             stepSize: 10
                         },
-                        title: { 
-                            display: true, 
-                            text: 'Tỷ lệ hoàn thành (%)', 
-                            font: { weight: 'bold' } 
+                        title: {
+                            display: true,
+                            text: 'Tỷ lệ hoàn thành (%)',
+                            font: { weight: 'bold' }
                         }
                     },
-                    y: { 
-                        ticks: { 
+                    y: {
+                        ticks: {
                             font: { size: 12 }
-                        } 
+                        }
                     }
                 }
             }
         };
-        
+
         areaRevenueChart = new Chart(ctx, config);
     } catch (error) {
         console.error('❌ Lỗi vẽ biểu đồ tỷ lệ hoàn thành khu vực:', error);
@@ -1159,15 +1228,15 @@ function createAreaRevenueChart(data) {
 
 function createNPPChartByKV(data, kv) {
     if (!data || data.length === 0) return;
-    
+
     const nppRevenueData = calculateNPPRevenue(data);
     const filteredNPPs = nppRevenueData.filter(npp => npp.kv === kv);
-    
+
     if (filteredNPPs.length === 0) {
         showToast(`Không có dữ liệu NPP cho ${kv}`);
         return;
     }
-    
+
     // Sắp xếp theo tỷ lệ hoàn thành
     const chartData = filteredNPPs
         .map(npp => ({
@@ -1177,24 +1246,24 @@ function createNPPChartByKV(data, kv) {
             completionRate: npp.target > 0 ? (npp.actualRevenue / npp.target * 100) : 0
         }))
         .sort((a, b) => b.completionRate - a.completionRate);
-    
+
     const labels = chartData.map(item => item.ten.replace(/^NPP\s+/i, ''));
     const completionRates = chartData.map(item => item.completionRate);
-    
+
     // Tính giá trị max cho trục X
     const maxCompletion = Math.max(...completionRates);
     let maxAxis = Math.ceil((maxCompletion + 10) / 10) * 10;
     if (maxAxis < 100) maxAxis = 100;
-    
+
     try {
         const ctx = document.getElementById('areaRevenueChart').getContext('2d');
         if (areaRevenueChart) areaRevenueChart.destroy();
-        
+
         const kvName = getGroupName(kv) || kv;
         const chartCard = ctx.canvas.closest('.chart-card');
         const titleElement = chartCard.querySelector('h3');
         if (titleElement) titleElement.innerHTML = `🏢 Tỷ lệ hoàn thành KPI NPP - ${kvName}`;
-        
+
         const config = {
             type: 'bar',
             data: {
@@ -1225,7 +1294,7 @@ function createNPPChartByKV(data, kv) {
                         bodyFont: { size: 13 },
                         padding: 12,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const index = context.dataIndex;
                                 const item = chartData[index];
                                 return [
@@ -1254,25 +1323,25 @@ function createNPPChartByKV(data, kv) {
                             callback: value => value + '%',
                             stepSize: maxAxis > 100 ? 20 : 10
                         },
-                        title: { 
-                            display: true, 
-                            text: 'Tỷ lệ hoàn thành (%)', 
-                            font: { weight: 'bold' } 
+                        title: {
+                            display: true,
+                            text: 'Tỷ lệ hoàn thành (%)',
+                            font: { weight: 'bold' }
                         }
                     },
-                    y: { 
-                        ticks: { 
+                    y: {
+                        ticks: {
                             font: { size: 12 },
-                            callback: function(value, index, values) {
+                            callback: function (value, index, values) {
                                 const label = this.getLabelForValue(value);
                                 return label && label.length > 30 ? label.substring(0, 27) + '...' : label;
                             }
-                        } 
+                        }
                     }
                 }
             }
         };
-        
+
         areaRevenueChart = new Chart(ctx, config);
     } catch (error) {
         console.error('❌ Lỗi vẽ biểu đồ NPP theo KV:', error);
@@ -1281,12 +1350,12 @@ function createNPPChartByKV(data, kv) {
 
 function createTopAreaChart(data) {
     if (!data || data.length === 0) return;
-    
+
     const areaMap = {};
     data.forEach(item => {
         const area = item.ma_kv || 'N/A';
-        if (!areaMap[area]) areaMap[area] = { 
-            tongDoanhSoTH: 0, 
+        if (!areaMap[area]) areaMap[area] = {
+            tongDoanhSoTH: 0,
             count: 0,
             target: getNPPTarget(area),
             kv: findKVFromGroup(area) // Lấy KV của NPP
@@ -1294,12 +1363,12 @@ function createTopAreaChart(data) {
         areaMap[area].tongDoanhSoTH += item.doanh_so?.th || 0;
         areaMap[area].count += 1;
     });
-    
+
     const areaData = Object.entries(areaMap)
-        .map(([area, values]) => ({ 
-            area, 
+        .map(([area, values]) => ({
+            area,
             tenHienThi: `${getGroupName(area)} [${values.kv}]`, // Thêm KV vào tên hiển thị
-            tongDoanhSoTH: values.tongDoanhSoTH, 
+            tongDoanhSoTH: values.tongDoanhSoTH,
             soNhanVien: values.count,
             target: values.target,
             kv: values.kv,
@@ -1307,20 +1376,20 @@ function createTopAreaChart(data) {
         }))
         .sort((a, b) => b.tongDoanhSoTH - a.tongDoanhSoTH)
         .slice(0, 10);
-    
+
     if (areaData.length === 0) return;
-    
+
     const labels = areaData.map(item => item.tenHienThi);
     const doanhSoData = areaData.map(item => item.tongDoanhSoTH);
     const targetData = areaData.map(item => item.target);
-    
+
     const maxDoanhSo = Math.max(...doanhSoData, ...targetData);
     let maxAxis = Math.ceil(maxDoanhSo * 1.3 / 1000000) * 1000000;
-    
+
     try {
         const ctx = document.getElementById('topAreaChart').getContext('2d');
         if (topAreaChart) topAreaChart.destroy();
-        
+
         topAreaChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -1350,9 +1419,9 @@ function createTopAreaChart(data) {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { 
+                    legend: {
                         position: 'top',
-                        labels: { 
+                        labels: {
                             font: { size: 12 },
                             usePointStyle: true
                         }
@@ -1363,7 +1432,7 @@ function createTopAreaChart(data) {
                         bodyFont: { size: 13 },
                         padding: 12,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const item = areaData[context.dataIndex];
                                 if (context.dataset.label === 'Doanh số thực tế') {
                                     return [
@@ -1376,14 +1445,14 @@ function createTopAreaChart(data) {
                                     return `🎯 Kế hoạch: ${formatNumber(context.raw)}`;
                                 }
                             },
-                            footer: function(context) {
+                            footer: function (context) {
                                 const item = areaData[context[0].dataIndex];
                                 return `📈 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`;
                             }
                         }
                     },
                     datalabels: hasDataLabelsPlugin ? {
-                        display: function(context) {
+                        display: function (context) {
                             return context.dataset.label === 'Doanh số thực tế';
                         },
                         anchor: 'end',
@@ -1398,24 +1467,24 @@ function createTopAreaChart(data) {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: { 
+                        ticks: {
                             callback: value => formatNumber(value),
                             stepSize: maxAxis / 5
                         },
-                        title: { 
-                            display: true, 
-                            text: 'Doanh số (VNĐ)', 
-                            font: { weight: 'bold' } 
+                        title: {
+                            display: true,
+                            text: 'Doanh số (VNĐ)',
+                            font: { weight: 'bold' }
                         }
                     },
-                    y: { 
-                        ticks: { 
+                    y: {
+                        ticks: {
                             font: { size: 12 },
-                            callback: function(value, index, values) {
+                            callback: function (value, index, values) {
                                 const label = this.getLabelForValue(value);
                                 return label && label.length > 35 ? label.substring(0, 32) + '...' : label;
                             }
-                        } 
+                        }
                     }
                 }
             }
@@ -1427,12 +1496,12 @@ function createTopAreaChart(data) {
 
 function createBottomAreaChart(data) {
     if (!data || data.length === 0) return;
-    
+
     const areaMap = {};
     data.forEach(item => {
         const area = item.ma_kv || 'N/A';
-        if (!areaMap[area]) areaMap[area] = { 
-            tongDoanhSoTH: 0, 
+        if (!areaMap[area]) areaMap[area] = {
+            tongDoanhSoTH: 0,
             count: 0,
             target: getNPPTarget(area),
             kv: findKVFromGroup(area) // Lấy KV của NPP
@@ -1440,13 +1509,13 @@ function createBottomAreaChart(data) {
         areaMap[area].tongDoanhSoTH += item.doanh_so?.th || 0;
         areaMap[area].count += 1;
     });
-    
+
     const areaData = Object.entries(areaMap)
         .filter(([_, values]) => values.tongDoanhSoTH > 0)
-        .map(([area, values]) => ({ 
-            area, 
+        .map(([area, values]) => ({
+            area,
             tenHienThi: `${getGroupName(area)} [${values.kv}]`, // Thêm KV vào tên hiển thị
-            tongDoanhSoTH: values.tongDoanhSoTH, 
+            tongDoanhSoTH: values.tongDoanhSoTH,
             soNhanVien: values.count,
             target: values.target,
             kv: values.kv,
@@ -1454,21 +1523,21 @@ function createBottomAreaChart(data) {
         }))
         .sort((a, b) => a.tongDoanhSoTH - b.tongDoanhSoTH)
         .slice(0, 10);
-    
+
     if (areaData.length === 0) return;
-    
+
     const labels = areaData.map(item => item.tenHienThi);
     const doanhSoData = areaData.map(item => item.tongDoanhSoTH);
     const targetData = areaData.map(item => item.target);
-    
+
     const maxDoanhSo = Math.max(...doanhSoData, ...targetData);
     let maxAxis = Math.ceil(maxDoanhSo * 1.3 / 1000000) * 1000000;
     if (maxAxis < 10000000) maxAxis = 10000000;
-    
+
     try {
         const ctx = document.getElementById('bottomAreaChart').getContext('2d');
         if (bottomAreaChart) bottomAreaChart.destroy();
-        
+
         bottomAreaChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -1498,9 +1567,9 @@ function createBottomAreaChart(data) {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { 
+                    legend: {
                         position: 'top',
-                        labels: { 
+                        labels: {
                             font: { size: 12 },
                             usePointStyle: true
                         }
@@ -1511,7 +1580,7 @@ function createBottomAreaChart(data) {
                         bodyFont: { size: 13 },
                         padding: 12,
                         callbacks: {
-                            label: function(context) {
+                            label: function (context) {
                                 const item = areaData[context.dataIndex];
                                 if (context.dataset.label === 'Doanh số thực tế') {
                                     return [
@@ -1524,14 +1593,14 @@ function createBottomAreaChart(data) {
                                     return `🎯 Kế hoạch: ${formatNumber(context.raw)}`;
                                 }
                             },
-                            footer: function(context) {
+                            footer: function (context) {
                                 const item = areaData[context[0].dataIndex];
                                 return `📈 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`;
                             }
                         }
                     },
                     datalabels: hasDataLabelsPlugin ? {
-                        display: function(context) {
+                        display: function (context) {
                             return context.dataset.label === 'Doanh số thực tế';
                         },
                         anchor: 'end',
@@ -1546,24 +1615,24 @@ function createBottomAreaChart(data) {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: { 
+                        ticks: {
                             callback: value => formatNumber(value),
                             stepSize: maxAxis / 5
                         },
-                        title: { 
-                            display: true, 
-                            text: 'Doanh số (VNĐ)', 
-                            font: { weight: 'bold' } 
+                        title: {
+                            display: true,
+                            text: 'Doanh số (VNĐ)',
+                            font: { weight: 'bold' }
                         }
                     },
-                    y: { 
-                        ticks: { 
+                    y: {
+                        ticks: {
                             font: { size: 12 },
-                            callback: function(value, index, values) {
+                            callback: function (value, index, values) {
                                 const label = this.getLabelForValue(value);
                                 return label && label.length > 35 ? label.substring(0, 32) + '...' : label;
                             }
-                        } 
+                        }
                     }
                 }
             }
@@ -1579,18 +1648,18 @@ function displaySummaryStats(data) {
     const summaryStats = document.getElementById('summaryStats');
     summaryStats.innerHTML = '';
     if (!data || data.length === 0) return;
-    
+
     const tongDoanhSoTH = data.reduce((sum, item) => sum + (item.doanh_so?.th || 0), 0);
     const tongDoanhSoKH = getKVTargetFromNPP('all'); // Tổng kế hoạch từ tất cả NPP
-    
+
     const tlTrungBinh = tongDoanhSoKH > 0 ? (tongDoanhSoTH / tongDoanhSoKH * 100) : 0;
-    
+
     const nvCaoNhat = data.reduce((max, item) => (item.doanh_so?.th || 0) > (max.doanh_so?.th || 0) ? item : max, data[0]);
-    
+
     // Lấy thông tin NPP của nhân viên cao nhất
     const nvCaoNhatInfo = getEmployeeDisplayInfo(nvCaoNhat.ma_nv);
     const nvCaoNhatNPP = nvCaoNhatInfo.maDonVi ? getGroupName(nvCaoNhatInfo.maDonVi) : 'N/A';
-    
+
     // Tính doanh số theo KV
     const kvRevenue = {};
     data.forEach(item => {
@@ -1600,7 +1669,7 @@ function displaySummaryStats(data) {
         if (!kvRevenue[kv]) kvRevenue[kv] = 0;
         kvRevenue[kv] += revenue;
     });
-    
+
     // Tìm KV có doanh thu cao nhất
     let kvCaoNhat = null;
     let maxRevenue = 0;
@@ -1608,15 +1677,15 @@ function displaySummaryStats(data) {
         if (revenue > maxRevenue && kv !== 'Khác') {
             maxRevenue = revenue;
             const target = getKVTargetFromNPP(kv);
-            kvCaoNhat = { 
-                ma: kv, 
+            kvCaoNhat = {
+                ma: kv,
                 doanhThu: revenue,
                 target: target,
                 tl: target > 0 ? (revenue / target * 100) : 0
             };
         }
     });
-    
+
     // Tìm NPP có doanh thu cao nhất (từ dữ liệu thực tế)
     const nppActualRevenue = {};
     data.forEach(item => {
@@ -1625,7 +1694,7 @@ function displaySummaryStats(data) {
         if (!nppActualRevenue[maKV]) nppActualRevenue[maKV] = 0;
         nppActualRevenue[maKV] += revenue;
     });
-    
+
     // Tìm NPP có doanh thu thực tế cao nhất
     let nppCaoNhatThucTe = null;
     let maxNPPActualRevenue = 0;
@@ -1639,39 +1708,39 @@ function displaySummaryStats(data) {
             };
         }
     });
-    
+
     const stats = [
         { label: '🎯 Tổng DS KH (từ NPP)', value: tongDoanhSoKH },
         { label: '💰 Tổng DS TH', value: tongDoanhSoTH },
         { label: '📈 Tỷ lệ TB', value: tlTrungBinh, unit: '%' },
-        { 
-            label: '🏆 NV cao nhất', 
-            value: getEmployeeName(nvCaoNhat.ma_nv), 
-            subValue: formatNumber(nvCaoNhat.doanh_so?.th || 0), 
+        {
+            label: '🏆 NV cao nhất',
+            value: getEmployeeName(nvCaoNhat.ma_nv),
+            subValue: formatNumber(nvCaoNhat.doanh_so?.th || 0),
             subLabel: 'Doanh số',
-            nppInfo: ` - ${nvCaoNhatNPP}` 
+            nppInfo: ` - ${nvCaoNhatNPP}`
         },
-        { 
-            label: '🏢 NPP có DS cao nhất', 
-            value: nppCaoNhatThucTe ? nppCaoNhatThucTe.ten : 'N/A', 
-            subValue: formatNumber(nppCaoNhatThucTe ? nppCaoNhatThucTe.doanhSoTH : 0), 
+        {
+            label: '🏢 NPP có DS cao nhất',
+            value: nppCaoNhatThucTe ? nppCaoNhatThucTe.ten : 'N/A',
+            subValue: formatNumber(nppCaoNhatThucTe ? nppCaoNhatThucTe.doanhSoTH : 0),
             subLabel: 'Doanh số TH',
-            tlValue: nppCaoNhatThucTe && nppCaoNhatThucTe.target > 0 ? 
-                    `KH: ${formatNumber(nppCaoNhatThucTe.target)} (${(nppCaoNhatThucTe.doanhSoTH / nppCaoNhatThucTe.target * 100).toFixed(1)}%)` : ''
+            tlValue: nppCaoNhatThucTe && nppCaoNhatThucTe.target > 0 ?
+                `KH: ${formatNumber(nppCaoNhatThucTe.target)} (${(nppCaoNhatThucTe.doanhSoTH / nppCaoNhatThucTe.target * 100).toFixed(1)}%)` : ''
         },
-        { 
-            label: '📍 KV doanh thu cao nhất', 
-            value: kvCaoNhat ? getGroupName(kvCaoNhat.ma) : 'N/A', 
-            subValue: formatNumber(kvCaoNhat ? kvCaoNhat.doanhThu : 0), 
+        {
+            label: '📍 KV doanh thu cao nhất',
+            value: kvCaoNhat ? getGroupName(kvCaoNhat.ma) : 'N/A',
+            subValue: formatNumber(kvCaoNhat ? kvCaoNhat.doanhThu : 0),
             subLabel: 'Doanh số TH',
-            tlValue: kvCaoNhat ? `KH: ${formatNumber(kvCaoNhat.target)} (${kvCaoNhat.tl.toFixed(1)}%)` : '' 
+            tlValue: kvCaoNhat ? `KH: ${formatNumber(kvCaoNhat.target)} (${kvCaoNhat.tl.toFixed(1)}%)` : ''
         }
     ];
-    
+
     stats.forEach(stat => {
         const statCard = document.createElement('div');
         statCard.className = 'stat-card';
-        
+
         if (stat.unit === '%') {
             statCard.innerHTML = `<div class="stat-label">${stat.label}</div><div class="stat-value">${stat.value.toFixed(1)}%</div>`;
         } else if (stat.subValue) {
@@ -1698,7 +1767,7 @@ function displaySummaryStats(data) {
         } else {
             statCard.innerHTML = `<div class="stat-label">${stat.label}</div><div class="stat-value">${formatNumber(stat.value)}</div>`;
         }
-        
+
         summaryStats.appendChild(statCard);
     });
 }
@@ -1729,62 +1798,62 @@ function showError(message) {
 // Hàm khởi tạo và tự động gọi API
 async function initializeAndFetchKPI() {
     console.log('🚀 Tự động tải dữ liệu KPI...');
-    
+
     // Hiển thị loading
     const loading = document.getElementById('loading');
     const searchBtn = document.getElementById('searchBtn');
-    
+
     searchBtn.disabled = true;
     loading.classList.add('active');
-    
+
     try {
         // Tải dữ liệu nhân viên và nhóm
         console.log('🔄 Đang tải dữ liệu nhân viên và nhóm...');
         await Promise.all([fetchEmployees(), fetchGroups()]);
-        
+
         // Đợi 2 giây trước khi gọi API KPI
         console.log('⏳ Đợi 2 giây trước khi gọi API KPI...');
         await new Promise(resolve => setTimeout(resolve, 2000));
-        
+
         // Lấy thông tin tháng và năm hiện tại
         const month = document.getElementById('month').value;
         const year = document.getElementById('year').value;
         const auth = document.getElementById('auth').value;
-        
+
         console.log(`🔄 Đang tải dữ liệu KPI tháng ${month}/${year}...`);
-        
+
         // Gọi API KPI
         const url = `https://openapi.mobiwork.vn/OpenAPI/V1/KPI?thang=${month}&nam=${year}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: { 'accept': 'application/json', 'Authorization': auth }
         });
-        
+
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        
+
         const data = await response.json();
-        
+
         // Xử lý dữ liệu
         currentData = data.result || [];
         allData = JSON.parse(JSON.stringify(currentData));
-        
+
         // Cập nhật tiêu đề
         document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
-        
+
         // Hiển thị thông tin
         displayDataInfo(currentData);
-        
+
         // Vẽ biểu đồ
         setTimeout(() => createCharts(currentData), 100);
-        
+
         // Hiển thị thống kê
         displaySummaryStats(currentData);
-        
+
         // Hiển thị báo cáo
         document.getElementById('reportSection').classList.add('active');
-        
+
         console.log(`✅ Đã tải xong dữ liệu KPI: ${currentData.length} nhân viên`);
-        
+
     } catch (error) {
         console.error('❌ Lỗi khi tự động tải dữ liệu:', error);
         showError(`Lỗi khi tự động tải dữ liệu: ${error.message}`);
@@ -1796,12 +1865,12 @@ async function initializeAndFetchKPI() {
 }
 
 // Ghi đè hàm DOMContentLoaded để tự động gọi API
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const today = new Date();
     document.getElementById('month').value = today.getMonth() + 1;
     document.getElementById('year').value = today.getFullYear();
     console.log('🚀 Ứng dụng đã sẵn sàng!');
-    
+
     // Tự động gọi API sau khi trang load 1 giây
     setTimeout(() => {
         initializeAndFetchKPI();
