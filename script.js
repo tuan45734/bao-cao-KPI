@@ -75,71 +75,67 @@ const additionalKPIData = [
     {
         "ma_nv": "A204.08",
         "doanh_so": { "kh": 249151397, "th": 33712960, "tl": 13.5 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tuấn Yến"
     },  {
         "ma_nv": "A203.09",
         "doanh_so": { "kh": 299567258, "th": 241195820, "tl": 80.5 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Đức Nam Tiến"
     }, {
         "ma_nv": "A101.03",
         "doanh_so": { "kh": 205000000, "th": 206816480, "tl": 100.9 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Lâm Hạ"
     }, {
         "ma_nv": "A506.02",
         "doanh_so": { "kh": 230000000, "th": 236526040, "tl": 102.8 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Phương Hà"
     }, {
         "ma_nv": "A407.02",
         "doanh_so": { "kh": 289000000, "th": 289952450, "tl": 100.3 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tuấn Huyền"
     }, {
         "ma_nv": "A513.01",
         "doanh_so": { "kh": 290000000, "th": 223165716, "tl": 77 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Thành Thanh"
     }, {
         "ma_nv": "A412.04",
         "doanh_so": { "kh": 252001000, "th": 227730980, "tl": 90.4 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tiên Lan"
     }, {
         "ma_nv": "A412.06",
         "doanh_so": { "kh": 239624000, "th": 215972370, "tl": 90.1 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tiên Lan"
     }, {
         "ma_nv": "A413.04",
         "doanh_so": { "kh": 318222222, "th": 224775824, "tl": 70.6 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Nguyễn Đình Hân"
     }, {
         "ma_nv": "A503.02",
         "doanh_so": { "kh": 260000000, "th": 234911260, "tl": 90.4 },
-        "ma_kv": "NPP Công Giang"
-    }, {
-        "ma_nv": "A316.01",
-        "doanh_so": { "kh": 0, "th": 2819580, "tl": 100 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Mạnh Hà 1"
     }, {
         "ma_nv": "A303.08",
         "doanh_so": { "kh": 318938000, "th": 520969122, "tl": 163.3 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Sơn Lâm"
     }, {
         "ma_nv": "A402.03",
         "doanh_so": { "kh": 210000000, "th": 360484860, "tl": 171.7 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tân Hoa"
     }, {
         "ma_nv": "A402.02",
         "doanh_so": { "kh": 250000000, "th": 69903507, "tl": 28 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tân Hoa"
     }, {
         "ma_nv": "A204.05",
         "doanh_so": { "kh": 302281120, "th": 256199930, "tl": 84.8 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tuấn Yến"
     }, {
         "ma_nv": "A204.03",
         "doanh_so": { "kh": 266290017, "th": 220824740, "tl": 82.9 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tuấn Yến"
     }, {
         "ma_nv": "A204.01",
         "doanh_so": { "kh": 310948625, "th": 250751420, "tl": 80.6 },
-        "ma_kv": "NPP Công Giang"
+        "ma_kv": "NPP Tuấn Yến"
     }, {
         "ma_nv": "A201.06",
         "doanh_so": { "kh": 222845000, "th": 1573400, "tl": 0.7 },
@@ -1872,7 +1868,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('🚀 Ứng dụng đã sẵn sàng!');
 
     // Tự động gọi API sau khi trang load 1 giây
-    setTimeout(() => {
-        initializeAndFetchKPI();
-    }, 1000);
+    // setTimeout(() => {
+    //     initializeAndFetchKPI();
+    // }, 1000);
 });
