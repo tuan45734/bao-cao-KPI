@@ -1,230 +1,81 @@
 // Thêm vào đầu file script.js, sau các khai báo biến
 // Dữ liệu NPP từ file Excel
 const nppData = [
-    { ten: "NPP Công Giang", doanhSo: 1153676939, kv: "KV1" },
-    { ten: "NPP Cường Thịnh", doanhSo: 778731433, kv: "KV1" },
-    { ten: "NPP Dũng Cúc", doanhSo: 462227928, kv: "KV1" },
-    { ten: "NPP Đức Nam Tiến", doanhSo: 1165705653, kv: "KV1" },
-    { ten: "NPP Long Liên", doanhSo: 1670936352, kv: "KV1" },
-    { ten: "NPP Bảo Lâm", doanhSo: 2000000000, kv: "KV1" },
-    { ten: "NPP Lâm Hạ", doanhSo: 820000000, kv: "KV1" },
-    { ten: "NPP Nguyên Vũ", doanhSo: 1800000000, kv: "KV1" },
-    { ten: "NPP Vũ Tấm", doanhSo: 1320000000, kv: "KV1" },
-    { ten: "NPP Thảo Nam", doanhSo: 1449580244, kv: "KV1" },
-    { ten: "NPP Tuấn Huê", doanhSo: 1763484900, kv: "KV1" },
-    { ten: "NPP Tuấn Yến", doanhSo: 1377822556, kv: "KV1" },
-    { ten: "NPP Duy Anh", doanhSo: 1005000000, kv: "KV2" },
-    { ten: "NPP Hoa Việt", doanhSo: 1628089802, kv: "KV2" },
-    { ten: "NPP Hùng Huệ", doanhSo: 1005000000, kv: "KV2" },
-    { ten: "NPP Long Châm", doanhSo: 1005000000, kv: "KV2" },
-    { ten: "NPP Ngọc Kiên", doanhSo: 1620000000, kv: "KV2" },
-    { ten: "NPP Ngọc Thêu", doanhSo: 1620000000, kv: "KV2" },
-    { ten: "NPP Thành Lụa", doanhSo: 900000000, kv: "KV2" },
-    { ten: "NPP Phong Hiền", doanhSo: 1100000000, kv: "KV2" },
-    { ten: "NPP Phúc Thịnh", doanhSo: 1009744209, kv: "KV2" },
-    { ten: "NPP Phương Đông", doanhSo: 3800000000, kv: "KV2" },
-    { ten: "NPP Tuấn Huyền", doanhSo: 1005000000, kv: "KV2" },
-    { ten: "NPP Bảo Cường", doanhSo: 1595000000, kv: "KV3" },
-    { ten: "NPP Hikoji", doanhSo: 1825000000, kv: "KV3" },
-    { ten: "NPP Long Hải", doanhSo: 1200000000, kv: "KV3" },
-    { ten: "NPP Tân Hoa", doanhSo: 1620000000, kv: "KV3" },
-    { ten: "NPP Tây Đô", doanhSo: 1700000000, kv: "KV3" },
-    { ten: "NPP Thành Hân", doanhSo: 2200000000, kv: "KV3" },
-    { ten: "NPP Thắng Lợi", doanhSo: 1620000000, kv: "KV3" },
-    { ten: "NPP Tiến Thịnh", doanhSo: 1580000000, kv: "KV3" },
-    { ten: "NPP Ánh Thu", doanhSo: 1909333333, kv: "KV4" },
-    { ten: "NPP Dũng Béo", doanhSo: 1250000000, kv: "KV4" },
-    { ten: "NPP Thăng Hương", doanhSo: 720000000, kv: "KV4" },
-    { ten: "NPP Dương Minh", doanhSo: 1909333333, kv: "KV4" },
-    { ten: "NPP Đức Oanh", doanhSo: 1272888889, kv: "KV4" },
-    { ten: "NPP Hưng Thịnh", doanhSo: 1591111111, kv: "KV4" },
-    { ten: "NPP Ngọc Phúc", doanhSo: 1272888889, kv: "KV4" },
-    { ten: "NPP Nguyễn Đình Hân", doanhSo: 1909333333, kv: "KV4" },
-    { ten: "NPP Tân Thúy", doanhSo: 3182222222, kv: "KV4" },
-    { ten: "NPP Thảo Thắng", doanhSo: 1440000000, kv: "KV4" },
-    { ten: "NPP Tùng Phương", doanhSo: 992888889, kv: "KV4" },
-    { ten: "NPP Anh Đức", doanhSo: 1079522000, kv: "KV5" },
-    { ten: "NPP Hải Hằng", doanhSo: 1563524000, kv: "KV5" },
-    { ten: "NPP Hoàng Minh", doanhSo: 1910477000, kv: "KV5" },
-    { ten: "NPP Oanh Định", doanhSo: 905202000, kv: "KV5" },
-    { ten: "NPP Sơn Lâm", doanhSo: 1913628000, kv: "KV5" },
-    { ten: "NPP Thái Hoà", doanhSo: 1918287000, kv: "KV5" },
-    { ten: "NPP Thảo Xuân", doanhSo: 1353747000, kv: "KV5" },
-    { ten: "NPP Tiên Lan", doanhSo: 1440134000, kv: "KV5" },
-    { ten: "NPP Hiền Cường", doanhSo: 1036397000, kv: "KV5" },
-    { ten: "NPP Tuấn Vân", doanhSo: 1007946000, kv: "KV5" },
-    { ten: "NPP Vũ Đức Nam", doanhSo: 876794000, kv: "KV5" },
-    { ten: "NPP Anh Minh HT", doanhSo: 1620000000, kv: "KV6" },
-    { ten: "NPP Hà Thanh", doanhSo: 1400000000, kv: "KV6" },
-    { ten: "NPP Hồng Đức", doanhSo: 1000000000, kv: "KV6" },
-    { ten: "NPP Thanh Bình", doanhSo: 705000000, kv: "KV6" },
-    { ten: "NPP Linh Trang", doanhSo: 960000000, kv: "KV6" },
-    { ten: "NPP Mạnh Hà 1", doanhSo: 1400000000, kv: "KV6" },
-    { ten: "NPP Minh Châu", doanhSo: 1120000000, kv: "KV6" },
-    { ten: "NPP Nhung Tùng", doanhSo: 1680000000, kv: "KV6" },
-    { ten: "NPP Phương Hà", doanhSo: 1400000000, kv: "KV6" },
-    { ten: "NPP Mạnh Hà 2", doanhSo: 810000000, kv: "KV6" },
-    { ten: "NPP Tân Bích An", doanhSo: 720000000, kv: "KV6" },
-    { ten: "NPP Thành Thanh", doanhSo: 1400000000, kv: "KV6" },
-    { ten: "NPP Trường Hằng", doanhSo: 960000000, kv: "KV6" },
-    { ten: "NPP Minh Lộc", doanhSo: 585000000, kv: "KV6" },
-    { ten: "NPP Thông Thơm", doanhSo: 480000000, kv: "KV6" }
+ {   "ten": "NPP Công Giang",   "doanhSo": 1000000000,   "kv": "KV1" },
+ {   "ten": "NPP Cường Thịnh",   "doanhSo": 720000000,   "kv": "KV1" },
+ {   "ten": "NPP Dũng Cúc",   "doanhSo": 400000000,   "kv": "KV1" },
+ {   "ten": "NPP Đức Nam Tiến",   "doanhSo": 900000000,   "kv": "KV1" },
+ {   "ten": "NPP Long Liên",   "doanhSo": 1050000000,   "kv": "KV1" },
+ {   "ten": "NPP Bảo Lâm",   "doanhSo": 1669801000,   "kv": "KV1" },
+ {   "ten": "NPP Lâm Hạ",   "doanhSo": 720000000,   "kv": "KV1" },
+ {   "ten": "NPP Nguyên Vũ",   "doanhSo": 1635000000,   "kv": "KV1" },
+ {   "ten": "NPP Vũ Tấm",   "doanhSo": 1250000000,   "kv": "KV1" },
+ {   "ten": "NPP Thảo Nam",   "doanhSo": 1050000000,   "kv": "KV1" },
+ {   "ten": "NPP Tuấn Huê",   "doanhSo": 1180000000,   "kv": "KV1" },
+ {   "ten": "NPP Tuấn Yến",   "doanhSo": 1070000000,   "kv": "KV1" },
+ {   "ten": "NPP Duy Anh",   "doanhSo": 806236000,   "kv": "KV2" },
+ {   "ten": "NPP Hoa Việt",   "doanhSo": 1306094000,   "kv": "KV2" },
+ {   "ten": "NPP Hùng Huệ",   "doanhSo": 806236000,   "kv": "KV2" },
+ {   "ten": "NPP Long Châm",   "doanhSo": 806236000,   "kv": "KV2" },
+ {   "ten": "NPP Ngọc Kiên",   "doanhSo": 1259604000,   "kv": "KV2" },
+ {   "ten": "NPP Ngọc Thêu",   "doanhSo": 1259604000,   "kv": "KV2" },
+ {   "ten": "NPP Thành Lụa",   "doanhSo": 740000000,   "kv": "KV2" },
+ {   "ten": "NPP Phong Hiền",   "doanhSo": 962447000,   "kv": "KV2" },
+ {   "ten": "NPP Phúc Thịnh",   "doanhSo": 810042000,   "kv": "KV2" },
+ {   "ten": "NPP Phương Đông",   "doanhSo": 3030456000,   "kv": "KV2" },
+ {   "ten": "NPP Tuấn Huyền",   "doanhSo": 806237000,   "kv": "KV2" },
+ {   "ten": "NPP Bảo Cường",   "doanhSo": 1275000000,   "kv": "KV3" },
+ {   "ten": "NPP Hikoji",   "doanhSo": 1465000000,   "kv": "KV3" },
+ {   "ten": "NPP Long Hải",   "doanhSo": 965000000,   "kv": "KV3" },
+ {   "ten": "NPP Tân Hoa",   "doanhSo": 1308000000,   "kv": "KV3" },
+ {   "ten": "NPP Tây Đô",   "doanhSo": 1360000000,   "kv": "KV3" },
+ {   "ten": "NPP Thành Hân",   "doanhSo": 1760000000,   "kv": "KV3" },
+ {   "ten": "NPP Thắng Lợi",   "doanhSo": 1309000000,   "kv": "KV3" },
+ {   "ten": "NPP Tiến Thịnh",   "doanhSo": 1260000000,   "kv": "KV3" },
+ {   "ten": "NPP Ánh Thu",   "doanhSo": 1399882300,   "kv": "KV4" },
+ {   "ten": "NPP Dũng Béo",   "doanhSo": 1166568583,   "kv": "KV4" },
+ {   "ten": "NPP Thăng Hương",   "doanhSo": 933254867,   "kv": "KV4" },
+ {   "ten": "NPP Dương Minh",   "doanhSo": 1399882300,   "kv": "KV4" },
+ {   "ten": "NPP Đức Oanh",   "doanhSo": 933254867,   "kv": "KV4" },
+ {   "ten": "NPP Hưng Thịnh",   "doanhSo": 933254867,   "kv": "KV4" },
+ {   "ten": "NPP Ngọc Phúc",   "doanhSo": 933254867,   "kv": "KV4" },
+ {   "ten": "NPP Nguyễn Đình Hân",   "doanhSo": 1399882300,   "kv": "KV4" },
+ {   "ten": "NPP Tân Thuý",   "doanhSo": 2333137167,   "kv": "KV4" },
+ {   "ten": "NPP Thảo Thắng",   "doanhSo": 1399882300,   "kv": "KV4" },
+ {   "ten": "NPP Tùng Phương",   "doanhSo": 933254867,   "kv": "KV4" },
+ {   "ten": "NPP Đồng Lợi",   "doanhSo": 842336138,   "kv": "KV5" },
+ {   "ten": "NPP Hải Hằng",   "doanhSo": 1203337340,   "kv": "KV5" },
+ {   "ten": "NPP Hoàng Minh",   "doanhSo": 1484940907,   "kv": "KV5" },
+ {   "ten": "NPP Oanh Định",   "doanhSo": 682100632,   "kv": "KV5" },
+ {   "ten": "NPP Sơn Lâm",   "doanhSo": 1431184296,   "kv": "KV5" },
+ {   "ten": "NPP Thái Hoà",   "doanhSo": 1510581931,   "kv": "KV5" },
+ {   "ten": "NPP Thảo Xuân",   "doanhSo": 1083003606,   "kv": "KV5" },
+ {   "ten": "NPP Tiên Lan",   "doanhSo": 1323671074,   "kv": "KV5" },
+ {   "ten": "NPP Hiền Cường",   "doanhSo": 907878933,   "kv": "KV5" },
+ {   "ten": "NPP Tuấn Vân",   "doanhSo": 842336138,   "kv": "KV5" },
+ {   "ten": "NPP Vũ Đức Nam",   "doanhSo": 722002404,   "kv": "KV5" },
+ {   "ten": "NPP Anh Minh HT",   "doanhSo": 1200000000,   "kv": "KV6" },
+ {   "ten": "NPP Hà Thanh",   "doanhSo": 1150000000,   "kv": "KV6" },
+ {   "ten": "NPP Hồng Đức",   "doanhSo": 740000000,   "kv": "KV6" },
+ {   "ten": "NPP Thanh Bình",   "doanhSo": 708000000,   "kv": "KV6" },
+ {   "ten": "NPP Linh Trang",   "doanhSo": 760000000,   "kv": "KV6" },
+ {   "ten": "NPP Mạnh Hà 1",   "doanhSo": 1150000000,   "kv": "KV6" },
+ {   "ten": "NPP Minh Châu",   "doanhSo": 920000000,   "kv": "KV6" },
+ {   "ten": "NPP Nhung Tùng",   "doanhSo": 1380000000,   "kv": "KV6" },
+ {   "ten": "NPP Phương Hà",   "doanhSo": 1140000000,   "kv": "KV6" },
+ {   "ten": "NPP Mạnh Hà 2",   "doanhSo": 630000000,   "kv": "KV6" },
+ {   "ten": "NPP Tân Bích An",   "doanhSo": 570000000,   "kv": "KV6" },
+ {   "ten": "NPP Thành Thanh",   "doanhSo": 1150000000,   "kv": "KV6" },
+ {   "ten": "NPP Trường Hằng",   "doanhSo": 800000000,   "kv": "KV6" },
+ {   "ten": "NPP Minh Lộc",   "doanhSo": 352000000,   "kv": "KV6" },
+ {   "ten": "NPP Thông Thơm",   "doanhSo": 380000000,   "kv": "KV6" }
 ];
 const additionalKPIData = [
  {
-        "ma_nv": "A701.02",
-        "doanh_so": { "kh": 220000000, "th": 302132720, "tl": 137.3 },
-        "ma_kv": "NPP Tuấn Yến"
-    }, 
-    {
-        "ma_nv": "A204.08",
-        "doanh_so": { "kh": 249151397, "th": 33712960, "tl": 13.5 },
-        "ma_kv": "NPP Tuấn Yến"
-    },  {
-        "ma_nv": "A203.09",
-        "doanh_so": { "kh": 299567258, "th": 241195820, "tl": 80.5 },
-        "ma_kv": "NPP Đức Nam Tiến"
-    }, {
-        "ma_nv": "A101.03",
-        "doanh_so": { "kh": 205000000, "th": 206816480, "tl": 100.9 },
-        "ma_kv": "NPP Lâm Hạ"
-    }, {
-        "ma_nv": "A506.02",
-        "doanh_so": { "kh": 230000000, "th": 236526040, "tl": 102.8 },
-        "ma_kv": "NPP Phương Hà"
-    }, {
-        "ma_nv": "A407.02",
-        "doanh_so": { "kh": 289000000, "th": 289952450, "tl": 100.3 },
-        "ma_kv": "NPP Tuấn Huyền"
-    }, {
-        "ma_nv": "A513.01",
-        "doanh_so": { "kh": 290000000, "th": 223165716, "tl": 77 },
-        "ma_kv": "NPP Thành Thanh"
-    }, {
-        "ma_nv": "A412.04",
-        "doanh_so": { "kh": 252001000, "th": 227730980, "tl": 90.4 },
-        "ma_kv": "NPP Tiên Lan"
-    }, {
-        "ma_nv": "A412.06",
-        "doanh_so": { "kh": 239624000, "th": 215972370, "tl": 90.1 },
-        "ma_kv": "NPP Tiên Lan"
-    }, {
-        "ma_nv": "A413.04",
-        "doanh_so": { "kh": 318222222, "th": 224775824, "tl": 70.6 },
-        "ma_kv": "NPP Nguyễn Đình Hân"
-    }, {
-        "ma_nv": "A503.02",
-        "doanh_so": { "kh": 260000000, "th": 234911260, "tl": 90.4 },
-        "ma_kv": "NPP Mạnh Hà 1"
-    }, {
-        "ma_nv": "A303.08",
-        "doanh_so": { "kh": 318938000, "th": 520969122, "tl": 163.3 },
-        "ma_kv": "NPP Sơn Lâm"
-    }, {
-        "ma_nv": "A402.03",
-        "doanh_so": { "kh": 210000000, "th": 360484860, "tl": 171.7 },
-        "ma_kv": "NPP Tân Hoa"
-    }, {
-        "ma_nv": "A402.02",
-        "doanh_so": { "kh": 250000000, "th": 69903507, "tl": 28 },
-        "ma_kv": "NPP Tân Hoa"
-    }, {
-        "ma_nv": "A204.05",
-        "doanh_so": { "kh": 302281120, "th": 256199930, "tl": 84.8 },
-        "ma_kv": "NPP Tuấn Yến"
-    }, {
-        "ma_nv": "A204.03",
-        "doanh_so": { "kh": 266290017, "th": 220824740, "tl": 82.9 },
-        "ma_kv": "NPP Tuấn Yến"
-    }, {
-        "ma_nv": "A204.01",
-        "doanh_so": { "kh": 310948625, "th": 250751420, "tl": 80.6 },
-        "ma_kv": "NPP Tuấn Yến"
-    }, {
-        "ma_nv": "A201.06",
-        "doanh_so": { "kh": 222845000, "th": 1573400, "tl": 0.7 },
-        "ma_kv": "NPP Công Giang"
-    },
-    {
-        "ma_nv": "A105.09",
-        "doanh_so": { "kh": 225000000, "th": 20931024, "tl": 9.3 },
-        "ma_kv": "NPP Công Giang"
-    },
-    {
-        "ma_nv": "A402.05",
-        "doanh_so": { "kh": 230000000, "th": 186563741, "tl": 81.1 },
-        "ma_kv": "NPP Tân Hoa"
-    },
-    {
-        "ma_nv": "A512.03",
-        "doanh_so": { "kh": 250000000, "th": 151039960, "tl": 60.4 },
-        "ma_kv": "NPP Hà Thanh"
-    },
-    {
-        "ma_nv": "A701.05",
-        "doanh_so": { "kh": 0, "th": 3198300, "tl": 100 },
-        "ma_kv": "NPP Tiến Thịnh"
-    },
-    {
-        "ma_nv": "A305.06",
-        "doanh_so": { "kh": 0, "th": 6660600, "tl": 4.6 },
-        "ma_kv": "NPP Oanh Định"
-    },
-    {
-        "ma_nv": "A105.07",
-        "doanh_so": { "kh": 225000000, "th": 432000, "tl": 0.2 },
-        "ma_kv": "NPP Nguyên Vũ"
-    },
-    {
-        "ma_nv": "A303.07",
-        "doanh_so": { "kh": 318938000, "th": 88514620, "tl": 27.8 },
-        "ma_kv": "NPP Sơn Lâm"
-    },
-    {
-        "ma_nv": "A404.03",
-        "doanh_so": { "kh": 196453200, "th": 6681000, "tl": 3.4 },
-        "ma_kv": "NPP Phúc Thịnh"
-    },
-    {
-        "ma_nv": "A305.08",
-        "doanh_so": { "kh": 268376000, "th": 97649840, "tl": 36.4 },
-        "ma_kv": "NPP Hiền Cường"
-    },
-    {
-        "ma_nv": "A413.02",
-        "doanh_so": { "kh": 318222222, "th": 89657400, "tl": 28.2 },
-        "ma_kv": "NPP Nguyễn Đình Hân"
-    },
-    {
-        "ma_nv": "A317.01",
-        "doanh_so": { "kh": 230000000, "th": 61497850, "tl": 26.7 },
-        "ma_kv": "NPP Vũ Đức Nam"
-    },
-    {
-        "ma_nv": "A512.06",
-        "doanh_so": { "kh": 220000000, "th": 14770160, "tl": 6.7 },
-        "ma_kv": "NPP Hà Thanh"
-    },
-    {
-        "ma_nv": "A503.15",
-        "doanh_so": { "kh": 380000000, "th": 1664400, "tl": 0.4 },
-        "ma_kv": "NPP Nhung Tùng"
-    },
-    {
-        "ma_nv": "A306.01",
-        "doanh_so": { "kh": 220000000, "th": 49453570, "tl": 22.5 },
-        "ma_kv": "NPP Ngọc Phúc"
-    },
-    {
-        "ma_nv": "A409.01",
-        "doanh_so": { "kh": 250000000, "th": 3808560, "tl": 1.5 },
-        "ma_kv": "NPP Ngọc Thêu"
-    },
-    {
-        "ma_nv": "A304.12",
-        "doanh_so": { "kh": 130000000, "th": 1393560, "tl": 1.1 },
-        "ma_kv": "NPP Anh Đức"
-    }
+        "ma_nv": "A104.01",
+        "doanh_so": { "kh": 190000000, "th": 1690140, "tl": 0.9 },
+        "ma_kv": "NPP Vũ Tấm"
+}
 ];
 let currentData = null;
 let topCompletionChart = null;
