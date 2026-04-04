@@ -75,6 +75,14 @@ const additionalKPIData = [
         "ma_nv": "A104.01",
         "doanh_so": { "kh": 190000000, "th": 1690140, "tl": 0.9 },
         "ma_kv": "NPP Vũ Tấm"
+},{
+        "ma_nv": "A316.02",
+        "doanh_so": { "kh": 228989487, "th": 13305700, "tl": 5.8 },
+        "ma_kv": "NPP Sơn Lâm"
+},{
+        "ma_nv": "A304.10",
+        "doanh_so": { "kh": 227430757, "th": 35373120, "tl": 15.6 },
+        "ma_kv": "NPP Đồng Lợi"
 }
 ];
 let currentData = null;
