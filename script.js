@@ -40,7 +40,7 @@ const nppData = [
  {   "ten": "NPP Hưng Thịnh",   "doanhSo": 933254867,   "kv": "KV4" },
  {   "ten": "NPP Ngọc Phúc",   "doanhSo": 933254867,   "kv": "KV4" },
  {   "ten": "NPP Nguyễn Đình Hân",   "doanhSo": 1399882300,   "kv": "KV4" },
- {   "ten": "NPP Tân Thuý",   "doanhSo": 2333137167,   "kv": "KV4" },
+ {   "ten": "NPP Tân Thúy",   "doanhSo": 2333137167,   "kv": "KV4" },
  {   "ten": "NPP Thảo Thắng",   "doanhSo": 1399882300,   "kv": "KV4" },
  {   "ten": "NPP Tùng Phương",   "doanhSo": 933254867,   "kv": "KV4" },
  {   "ten": "NPP Đồng Lợi",   "doanhSo": 842336138,   "kv": "KV5" },
@@ -155,16 +155,17 @@ function calculateNPPRevenue(data) {
         });
     });
 
-    // Cập nhật doanh số thực từ dữ liệu KPI
+    
     data.forEach(item => {
         const maKV = item.ma_kv || '';
-        // Tìm NPP phù hợp
+        
         const matchingNPP = nppData.find(npp => {
             const normalizedNPP = npp.ten.replace(/^NPP\s+/i, '').toLowerCase();
             const normalizedMaKV = maKV.replace(/^NPP\s+/i, '').toLowerCase();
             return normalizedMaKV.includes(normalizedNPP) || normalizedNPP.includes(normalizedMaKV);
         });
 
+         
         if (matchingNPP && nppRevenue.has(matchingNPP.ten)) {
             const revenueData = nppRevenue.get(matchingNPP.ten);
             revenueData.actualRevenue += item.doanh_so?.th || 0;
@@ -176,10 +177,10 @@ function calculateNPPRevenue(data) {
 }
 function getKVTargetFromNPP(kv) {
     if (kv === 'all') {
-        // Tính tổng tất cả NPP
+        
         return nppData.reduce((sum, item) => sum + item.doanhSo, 0);
     }
-    // Lọc các NPP thuộc KV và tính tổng doanh số
+    
     const kvNPPs = nppData.filter(item => item.kv === kv);
     return kvNPPs.reduce((sum, item) => sum + item.doanhSo, 0);
 }
