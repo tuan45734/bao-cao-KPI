@@ -37,7 +37,7 @@ const nppData = [
  {   "ten": "NPP Thăng Hương",   "doanhSo": 933254867,   "kv": "KV4" },
  {   "ten": "NPP Dương Minh",   "doanhSo": 1399882300,   "kv": "KV4" },
  {   "ten": "NPP Đức Oanh",   "doanhSo": 933254867,   "kv": "KV4" },
- {   "ten": "NPP Hưng Thịnh",   "doanhSo": 933254867,   "kv": "KV4" },
+ {   "ten": "NPP Hưng Thịnh",   "doanhSo":  1166568583,   "kv": "KV4" },
  {   "ten": "NPP Ngọc Phúc",   "doanhSo": 933254867,   "kv": "KV4" },
  {   "ten": "NPP Nguyễn Đình Hân",   "doanhSo": 1399882300,   "kv": "KV4" },
  {   "ten": "NPP Tân Thúy",   "doanhSo": 2333137167,   "kv": "KV4" },
