@@ -105,6 +105,10 @@ const additionalKPIData = [
         "ma_nv": "A402.07",
         "doanh_so": { "kh": 252000000, "th": 16668100, "tl": 6.6 },
         "ma_kv": "NPP Tân Hoa"
+},{
+        "ma_nv": "A403.01",
+        "doanh_so": { "kh": 233313717, "th": 23550480, "tl": 10.1 },
+        "ma_kv": "NPP Tùng Phương"
 }
 ];
 let currentData = null;
