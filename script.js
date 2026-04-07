@@ -72,17 +72,39 @@ const nppData = [
 ];
 const additionalKPIData = [
  {
+        "ma_nv": "A104.06",
+        "doanh_so": { "kh": 172000000, "th": 14695080, "tl": 8.5 },
+        "ma_kv": "NPP Vũ Tấm"
+},{
         "ma_nv": "A104.01",
         "doanh_so": { "kh": 190000000, "th": 1690140, "tl": 0.9 },
         "ma_kv": "NPP Vũ Tấm"
 },{
         "ma_nv": "A316.02",
-        "doanh_so": { "kh": 228989487, "th": 13305700, "tl": 5.8 },
+        "doanh_so": { "kh": 228989487, "th": 6188420, "tl": 2.7 },
+        "ma_kv": "NPP Sơn Lâm"
+},
+{
+        "ma_nv": "A316.01",
+        "doanh_so": { "kh": 228989487, "th": 4240340, "tl": 1.9 },
+        "ma_kv": "NPP Sơn Lâm"
+},
+{
+        "ma_nv": "A316.03",
+        "doanh_so": { "kh": 228989487, "th": 1393560, "tl": 0.6 },
         "ma_kv": "NPP Sơn Lâm"
 },{
         "ma_nv": "A304.10",
         "doanh_so": { "kh": 227430757, "th": 35373120, "tl": 15.6 },
         "ma_kv": "NPP Đồng Lợi"
+},{
+        "ma_nv": "A304.10",
+        "doanh_so": { "kh": 220000000, "th": 29023500, "tl": 13.2 },
+        "ma_kv": "NPP Phương Hà"
+},{
+        "ma_nv": "A402.07",
+        "doanh_so": { "kh": 252000000, "th": 16668100, "tl": 6.6 },
+        "ma_kv": "NPP Tân Hoa"
 }
 ];
 let currentData = null;
