@@ -72,6 +72,14 @@ const nppData = [
 ];
 const additionalKPIData = [
 {
+        "ma_nv": "A304.05",
+        "doanh_so": { "kh": 247490151, "th": 19256600, "tl": 7.8 },
+        "ma_kv": "NPP Hoàng Minh"
+},{
+        "ma_nv": "A301.14",
+        "doanh_so": { "kh": 233313717, "th": 28830240, "tl": 12.4 },
+        "ma_kv": "NPP Tân Thúy"
+},{
         "ma_nv": "A104.02",
         "doanh_so": { "kh": 190000000, "th": 16946020, "tl": 8.9 },
         "ma_kv": "NPP Vũ Tấm"
