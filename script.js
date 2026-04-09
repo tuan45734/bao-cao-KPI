@@ -71,9 +71,9 @@ const nppData = [
  {   "ten": "NPP Thông Thơm",   "doanhSo": 380000000,   "kv": "KV6" }
 ];
 const additionalKPIData = [
- {
-        "ma_nv": "A104.06",
-        "doanh_so": { "kh": 172000000, "th": 14695080, "tl": 8.5 },
+{
+        "ma_nv": "A104.02",
+        "doanh_so": { "kh": 190000000, "th": 16946020, "tl": 8.9 },
         "ma_kv": "NPP Vũ Tấm"
 },{
         "ma_nv": "A104.01",
