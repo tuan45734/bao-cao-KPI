@@ -72,6 +72,11 @@ const nppData = [
 ];
 const additionalKPIData = [
 {
+        "ma_nv": "A109.12",
+        "doanh_so": { "kh": 254000000, "th": 24088535	, "tl": 9.5 },
+        "ma_kv": "NPP Hikoji"
+},
+    {
         "ma_nv": "A304.05",
         "doanh_so": { "kh": 247490151, "th": 19256600, "tl": 7.8 },
         "ma_kv": "NPP Hoàng Minh"
