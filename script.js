@@ -1,75 +1,75 @@
-// Thêm vào đầu file script.js, sau các khai báo biến
 // Dữ liệu NPP từ file Excel
 const nppData = [
- {   "ten": "NPP Công Giang",   "doanhSo": 1000000000,   "kv": "KV1" },
- {   "ten": "NPP Cường Thịnh",   "doanhSo": 720000000,   "kv": "KV1" },
- {   "ten": "NPP Dũng Cúc",   "doanhSo": 400000000,   "kv": "KV1" },
- {   "ten": "NPP Đức Nam Tiến",   "doanhSo": 900000000,   "kv": "KV1" },
- {   "ten": "NPP Long Liên",   "doanhSo": 1050000000,   "kv": "KV1" },
- {   "ten": "NPP Bảo Lâm",   "doanhSo": 1669801000,   "kv": "KV1" },
- {   "ten": "NPP Lâm Hạ",   "doanhSo": 720000000,   "kv": "KV1" },
- {   "ten": "NPP Nguyên Vũ",   "doanhSo": 1635000000,   "kv": "KV1" },
- {   "ten": "NPP Vũ Tấm",   "doanhSo": 1250000000,   "kv": "KV1" },
- {   "ten": "NPP Thảo Nam",   "doanhSo": 1050000000,   "kv": "KV1" },
- {   "ten": "NPP Tuấn Huê",   "doanhSo": 1180000000,   "kv": "KV1" },
- {   "ten": "NPP Tuấn Yến",   "doanhSo": 1070000000,   "kv": "KV1" },
- {   "ten": "NPP Duy Anh",   "doanhSo": 806236000,   "kv": "KV2" },
- {   "ten": "NPP Hoa Việt",   "doanhSo": 1306094000,   "kv": "KV2" },
- {   "ten": "NPP Hùng Huệ",   "doanhSo": 806236000,   "kv": "KV2" },
- {   "ten": "NPP Long Châm",   "doanhSo": 806236000,   "kv": "KV2" },
- {   "ten": "NPP Ngọc Kiên",   "doanhSo": 1259604000,   "kv": "KV2" },
- {   "ten": "NPP Ngọc Thêu",   "doanhSo": 1259604000,   "kv": "KV2" },
- {   "ten": "NPP Thành Lụa",   "doanhSo": 740000000,   "kv": "KV2" },
- {   "ten": "NPP Phong Hiền",   "doanhSo": 962447000,   "kv": "KV2" },
- {   "ten": "NPP Phúc Thịnh",   "doanhSo": 810042000,   "kv": "KV2" },
- {   "ten": "NPP Phương Đông",   "doanhSo": 3030456000,   "kv": "KV2" },
- {   "ten": "NPP Tuấn Huyền",   "doanhSo": 806237000,   "kv": "KV2" },
- {   "ten": "NPP Bảo Cường",   "doanhSo": 1275000000,   "kv": "KV3" },
- {   "ten": "NPP Hikoji",   "doanhSo": 1465000000,   "kv": "KV3" },
- {   "ten": "NPP Long Hải",   "doanhSo": 965000000,   "kv": "KV3" },
- {   "ten": "NPP Tân Hoa",   "doanhSo": 1308000000,   "kv": "KV3" },
- {   "ten": "NPP Tây Đô",   "doanhSo": 1360000000,   "kv": "KV3" },
- {   "ten": "NPP Thành Hân",   "doanhSo": 1760000000,   "kv": "KV3" },
- {   "ten": "NPP Thắng Lợi",   "doanhSo": 1309000000,   "kv": "KV3" },
- {   "ten": "NPP Tiến Thịnh",   "doanhSo": 1260000000,   "kv": "KV3" },
- {   "ten": "NPP Ánh Thu",   "doanhSo": 1399882300,   "kv": "KV4" },
- {   "ten": "NPP Dũng Béo",   "doanhSo": 1166568583,   "kv": "KV4" },
- {   "ten": "NPP Thăng Hương",   "doanhSo": 933254867,   "kv": "KV4" },
- {   "ten": "NPP Dương Minh",   "doanhSo": 1399882300,   "kv": "KV4" },
- {   "ten": "NPP Đức Oanh",   "doanhSo": 933254867,   "kv": "KV4" },
- {   "ten": "NPP Hưng Thịnh",   "doanhSo":  1166568583,   "kv": "KV4" },
- {   "ten": "NPP Ngọc Phúc",   "doanhSo": 933254867,   "kv": "KV4" },
- {   "ten": "NPP Nguyễn Đình Hân",   "doanhSo": 1399882300,   "kv": "KV4" },
- {   "ten": "NPP Tân Thúy",   "doanhSo": 2333137167,   "kv": "KV4" },
- {   "ten": "NPP Thảo Thắng",   "doanhSo": 1399882300,   "kv": "KV4" },
- {   "ten": "NPP Tùng Phương",   "doanhSo": 933254867,   "kv": "KV4" },
- {   "ten": "NPP Đồng Lợi",   "doanhSo": 842336138,   "kv": "KV5" },
- {   "ten": "NPP Hải Hằng",   "doanhSo": 1203337340,   "kv": "KV5" },
- {   "ten": "NPP Hoàng Minh",   "doanhSo": 1484940907,   "kv": "KV5" },
- {   "ten": "NPP Oanh Định",   "doanhSo": 682100632,   "kv": "KV5" },
- {   "ten": "NPP Sơn Lâm",   "doanhSo": 1431184296,   "kv": "KV5" },
- {   "ten": "NPP Thái Hoà",   "doanhSo": 1510581931,   "kv": "KV5" },
- {   "ten": "NPP Thảo Xuân",   "doanhSo": 1083003606,   "kv": "KV5" },
- {   "ten": "NPP Duy Khoa",   "doanhSo": 1323671074,   "kv": "KV5" },
- {   "ten": "NPP Hiền Cường",   "doanhSo": 907878933,   "kv": "KV5" },
- {   "ten": "NPP Tuấn Vân",   "doanhSo": 842336138,   "kv": "KV5" },
- {   "ten": "NPP Vũ Đức Nam",   "doanhSo": 722002404,   "kv": "KV5" },
- {   "ten": "NPP Anh Minh HT",   "doanhSo": 1200000000,   "kv": "KV6" },
- {   "ten": "NPP Hà Thanh",   "doanhSo": 1150000000,   "kv": "KV6" },
- {   "ten": "NPP Hồng Đức",   "doanhSo": 740000000,   "kv": "KV6" },
- {   "ten": "NPP Thanh Bình",   "doanhSo": 708000000,   "kv": "KV6" },
- {   "ten": "NPP Linh Trang",   "doanhSo": 760000000,   "kv": "KV6" },
- {   "ten": "NPP Mạnh Hà 1",   "doanhSo": 1150000000,   "kv": "KV6" },
- {   "ten": "NPP Minh Châu",   "doanhSo": 920000000,   "kv": "KV6" },
- {   "ten": "NPP Nhung Tùng",   "doanhSo": 1380000000,   "kv": "KV6" },
- {   "ten": "NPP Phương Hà",   "doanhSo": 1140000000,   "kv": "KV6" },
- {   "ten": "NPP Mạnh Hà 2",   "doanhSo": 630000000,   "kv": "KV6" },
- {   "ten": "NPP Tân Bích An",   "doanhSo": 570000000,   "kv": "KV6" },
- {   "ten": "NPP Thành Thanh",   "doanhSo": 1150000000,   "kv": "KV6" },
- {   "ten": "NPP Trường Hằng",   "doanhSo": 800000000,   "kv": "KV6" },
- {   "ten": "NPP Minh Lộc",   "doanhSo": 352000000,   "kv": "KV6" },
- {   "ten": "NPP Thông Thơm",   "doanhSo": 380000000,   "kv": "KV6" }
+    { "ten": "NPP Công Giang", "doanhSo": 1000000000, "kv": "KV1" },
+    { "ten": "NPP Cường Thịnh", "doanhSo": 720000000, "kv": "KV1" },
+    { "ten": "NPP Dũng Cúc", "doanhSo": 400000000, "kv": "KV1" },
+    { "ten": "NPP Đức Nam Tiến", "doanhSo": 900000000, "kv": "KV1" },
+    { "ten": "NPP Long Liên", "doanhSo": 1050000000, "kv": "KV1" },
+    { "ten": "NPP Bảo Lâm", "doanhSo": 1669801000, "kv": "KV1" },
+    { "ten": "NPP Lâm Hạ", "doanhSo": 720000000, "kv": "KV1" },
+    { "ten": "NPP Nguyên Vũ", "doanhSo": 1635000000, "kv": "KV1" },
+    { "ten": "NPP Vũ Tấm", "doanhSo": 1250000000, "kv": "KV1" },
+    { "ten": "NPP Thảo Nam", "doanhSo": 1050000000, "kv": "KV1" },
+    { "ten": "NPP Tuấn Huê", "doanhSo": 1180000000, "kv": "KV1" },
+    { "ten": "NPP Tuấn Yến", "doanhSo": 1070000000, "kv": "KV1" },
+    { "ten": "NPP Duy Anh", "doanhSo": 806236000, "kv": "KV2" },
+    { "ten": "NPP Hoa Việt", "doanhSo": 1306094000, "kv": "KV2" },
+    { "ten": "NPP Hùng Huệ", "doanhSo": 806236000, "kv": "KV2" },
+    { "ten": "NPP Long Châm", "doanhSo": 806236000, "kv": "KV2" },
+    { "ten": "NPP Ngọc Kiên", "doanhSo": 1259604000, "kv": "KV2" },
+    { "ten": "NPP Ngọc Thêu", "doanhSo": 1259604000, "kv": "KV2" },
+    { "ten": "NPP Thành Lụa", "doanhSo": 740000000, "kv": "KV2" },
+    { "ten": "NPP Phong Hiền", "doanhSo": 962447000, "kv": "KV2" },
+    { "ten": "NPP Phúc Thịnh", "doanhSo": 810042000, "kv": "KV2" },
+    { "ten": "NPP Phương Đông", "doanhSo": 3030456000, "kv": "KV2" },
+    { "ten": "NPP Tuấn Huyền", "doanhSo": 806237000, "kv": "KV2" },
+    { "ten": "NPP Bảo Cường", "doanhSo": 1275000000, "kv": "KV3" },
+    { "ten": "NPP Hikoji", "doanhSo": 1465000000, "kv": "KV3" },
+    { "ten": "NPP Long Hải", "doanhSo": 965000000, "kv": "KV3" },
+    { "ten": "NPP Tân Hoa", "doanhSo": 1308000000, "kv": "KV3" },
+    { "ten": "NPP Tây Đô", "doanhSo": 1360000000, "kv": "KV3" },
+    { "ten": "NPP Thành Hân", "doanhSo": 1760000000, "kv": "KV3" },
+    { "ten": "NPP Thắng Lợi", "doanhSo": 1309000000, "kv": "KV3" },
+    { "ten": "NPP Tiến Thịnh", "doanhSo": 1260000000, "kv": "KV3" },
+    { "ten": "NPP Ánh Thu", "doanhSo": 1399882300, "kv": "KV4" },
+    { "ten": "NPP Dũng Béo", "doanhSo": 1166568583, "kv": "KV4" },
+    { "ten": "NPP Thăng Hương", "doanhSo": 933254867, "kv": "KV4" },
+    { "ten": "NPP Dương Minh", "doanhSo": 1399882300, "kv": "KV4" },
+    { "ten": "NPP Đức Oanh", "doanhSo": 933254867, "kv": "KV4" },
+    { "ten": "NPP Hưng Thịnh", "doanhSo": 1166568583, "kv": "KV4" },
+    { "ten": "NPP Ngọc Phúc", "doanhSo": 933254867, "kv": "KV4" },
+    { "ten": "NPP Nguyễn Đình Hân", "doanhSo": 1399882300, "kv": "KV4" },
+    { "ten": "NPP Tân Thúy", "doanhSo": 2333137167, "kv": "KV4" },
+    { "ten": "NPP Thảo Thắng", "doanhSo": 1399882300, "kv": "KV4" },
+    { "ten": "NPP Tùng Phương", "doanhSo": 933254867, "kv": "KV4" },
+    { "ten": "NPP Đồng Lợi", "doanhSo": 842336138, "kv": "KV5" },
+    { "ten": "NPP Hải Hằng", "doanhSo": 1203337340, "kv": "KV5" },
+    { "ten": "NPP Hoàng Minh", "doanhSo": 1484940907, "kv": "KV5" },
+    { "ten": "NPP Oanh Định", "doanhSo": 682100632, "kv": "KV5" },
+    { "ten": "NPP Sơn Lâm", "doanhSo": 1431184296, "kv": "KV5" },
+    { "ten": "NPP Thái Hoà", "doanhSo": 1510581931, "kv": "KV5" },
+    { "ten": "NPP Thảo Xuân", "doanhSo": 1083003606, "kv": "KV5" },
+    { "ten": "NPP Duy Khoa", "doanhSo": 1323671074, "kv": "KV5" },
+    { "ten": "NPP Hiền Cường", "doanhSo": 907878933, "kv": "KV5" },
+    { "ten": "NPP Tuấn Vân", "doanhSo": 842336138, "kv": "KV5" },
+    { "ten": "NPP Vũ Đức Nam", "doanhSo": 722002404, "kv": "KV5" },
+    { "ten": "NPP Anh Minh HT", "doanhSo": 1200000000, "kv": "KV6" },
+    { "ten": "NPP Hà Thanh", "doanhSo": 1150000000, "kv": "KV6" },
+    { "ten": "NPP Hồng Đức", "doanhSo": 740000000, "kv": "KV6" },
+    { "ten": "NPP Thanh Bình", "doanhSo": 708000000, "kv": "KV6" },
+    { "ten": "NPP Linh Trang", "doanhSo": 760000000, "kv": "KV6" },
+    { "ten": "NPP Mạnh Hà 1", "doanhSo": 1150000000, "kv": "KV6" },
+    { "ten": "NPP Minh Châu", "doanhSo": 920000000, "kv": "KV6" },
+    { "ten": "NPP Nhung Tùng", "doanhSo": 1380000000, "kv": "KV6" },
+    { "ten": "NPP Phương Hà", "doanhSo": 1140000000, "kv": "KV6" },
+    { "ten": "NPP Mạnh Hà 2", "doanhSo": 630000000, "kv": "KV6" },
+    { "ten": "NPP Tân Bích An", "doanhSo": 570000000, "kv": "KV6" },
+    { "ten": "NPP Thành Thanh", "doanhSo": 1150000000, "kv": "KV6" },
+    { "ten": "NPP Trường Hằng", "doanhSo": 800000000, "kv": "KV6" },
+    { "ten": "NPP Minh Lộc", "doanhSo": 352000000, "kv": "KV6" },
+    { "ten": "NPP Thông Thơm", "doanhSo": 380000000, "kv": "KV6" }
 ];
+
 const additionalKPIData = [];
 let currentData = null;
 let topCompletionChart = null;
@@ -85,34 +85,60 @@ let currentTopKVFilter = 'all';
 let currentBottomKVFilter = 'all';
 let currentKVFilter = 'all';
 
+// ========== HÀM LỌC NHÂN VIÊN THEO TRẠNG THÁI ==========
+
+function filterActiveEmployees(data) {
+    if (!data) return [];
+    
+    return data.filter(item => {
+        const maNV = item.ma_nv;
+        if (!maNV) return false;
+        
+        // Tìm trong employeeMap để lấy trạng thái
+        const empInfo = employeeMap.get(maNV);
+        if (empInfo) {
+            return empInfo.trang_thai === "1";
+        }
+        
+        // Nếu không tìm thấy, thử tìm theo mã cơ sở
+        const baseCode = maNV.split('.')[0];
+        const baseEmpInfo = employeeMap.get(baseCode);
+        if (baseEmpInfo) {
+            return baseEmpInfo.trang_thai === "1";
+        }
+        
+        // Mặc định: nếu không có thông tin, vẫn hiển thị (để tránh mất dữ liệu)
+        return true;
+    });
+}
+
+// Hàm lấy tất cả nhân viên (kể cả inactive) cho các biểu đồ khác
+function getAllEmployees(data) {
+    return data || [];
+}
+
 function getNPPTarget(maNPP) {
     if (!maNPP) return 0;
 
-    // Tìm NPP trong danh sách
     const npp = nppData.find(item => {
-        // Loại bỏ "NPP " prefix để so sánh tốt hơn
         const normalizedMaNPP = maNPP.replace(/^NPP\s+/i, '').toLowerCase();
         const normalizedTen = item.ten.replace(/^NPP\s+/i, '').toLowerCase();
-
-        return normalizedTen.includes(normalizedMaNPP) ||
-            normalizedMaNPP.includes(normalizedTen);
+        return normalizedTen.includes(normalizedMaNPP) || normalizedMaNPP.includes(normalizedTen);
     });
 
     return npp ? npp.doanhSo : 0;
 }
+
 function mergeKPIData(apiData) {
     if (!apiData) return [];
 
-    // Tạo map từ dữ liệu API để dễ dàng cập nhật
     const dataMap = new Map();
     apiData.forEach(item => {
         dataMap.set(item.ma_nv, item);
     });
 
-    // Hợp nhất dữ liệu bổ sung
     additionalKPIData.forEach(additionalItem => {
         if (dataMap.has(additionalItem.ma_nv)) {
-            // Nếu đã tồn tại, cập nhật doanh số
             const existingItem = dataMap.get(additionalItem.ma_nv);
             existingItem.doanh_so.th = (existingItem.doanh_so.th || 0) + (additionalItem.doanh_so.th || 0);
             existingItem.doanh_so.kh = Math.max(existingItem.doanh_so.kh || 0, additionalItem.doanh_so.kh || 0);
@@ -120,17 +146,16 @@ function mergeKPIData(apiData) {
                 existingItem.doanh_so.tl = (existingItem.doanh_so.th / existingItem.doanh_so.kh * 100).toFixed(1);
             }
         } else {
-            // Nếu chưa tồn tại, thêm mới
             dataMap.set(additionalItem.ma_nv, { ...additionalItem });
         }
     });
 
     return Array.from(dataMap.values());
 }
+
 function calculateNPPRevenue(data) {
     const nppRevenue = new Map();
 
-    // Khởi tạo dữ liệu cho tất cả NPP
     nppData.forEach(npp => {
         nppRevenue.set(npp.ten, {
             ten: npp.ten,
@@ -141,7 +166,6 @@ function calculateNPPRevenue(data) {
         });
     });
 
-    
     data.forEach(item => {
         const maKV = item.ma_kv || '';
         
@@ -151,7 +175,6 @@ function calculateNPPRevenue(data) {
             return normalizedMaKV.includes(normalizedNPP) || normalizedNPP.includes(normalizedMaKV);
         });
 
-         
         if (matchingNPP && nppRevenue.has(matchingNPP.ten)) {
             const revenueData = nppRevenue.get(matchingNPP.ten);
             revenueData.actualRevenue += item.doanh_so?.th || 0;
@@ -161,15 +184,15 @@ function calculateNPPRevenue(data) {
 
     return Array.from(nppRevenue.values());
 }
+
 function getKVTargetFromNPP(kv) {
     if (kv === 'all') {
-        
         return nppData.reduce((sum, item) => sum + item.doanhSo, 0);
     }
-    
     const kvNPPs = nppData.filter(item => item.kv === kv);
     return kvNPPs.reduce((sum, item) => sum + item.doanhSo, 0);
 }
+
 // Đăng ký plugin datalabels
 try {
     if (typeof ChartDataLabels !== 'undefined') {
@@ -333,11 +356,16 @@ async function fetchEmployees() {
         if (data.data && Array.isArray(data.data)) {
             data.data.forEach(emp => {
                 if (emp.ma && emp.ten) {
-                    employeeMap.set(emp.ma, { ten: emp.ten, ma_don_vi: emp.ma_don_vi || null });
+                    employeeMap.set(emp.ma, { 
+                        ten: emp.ten, 
+                        ma_don_vi: emp.ma_don_vi || null,
+                        trang_thai: emp.trang_thai || "0"  // Lưu trạng thái
+                    });
                 }
             });
         }
-        console.log(`✅ Đã tải ${employeeMap.size} nhân viên`);
+        const activeCount = Array.from(employeeMap.values()).filter(emp => emp.trang_thai === "1").length;
+        console.log(`✅ Đã tải ${employeeMap.size} nhân viên (${activeCount} đang hoạt động)`);
     } catch (error) {
         console.error('❌ Lỗi khi tải danh sách nhân viên:', error);
         showError(`Lỗi khi tải danh sách nhân viên: ${error.message}`);
@@ -378,7 +406,6 @@ async function fetchGroups() {
 }
 
 async function searchKPI() {
-    
     const month = document.getElementById('month').value;
     const year = document.getElementById('year').value;
     const auth = document.getElementById('auth').value;
@@ -414,9 +441,7 @@ async function searchKPI() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
         const data = await response.json();
 
-        // Hợp nhất dữ liệu từ API và dữ liệu bổ sung
         const mergedData = mergeKPIData(data.result || []);
-
         currentData = mergedData;
         allData = JSON.parse(JSON.stringify(mergedData));
         document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
@@ -437,13 +462,16 @@ async function searchKPI() {
 function displayDataInfo(data) {
     const dataInfo = document.getElementById('dataInfo');
     if (data && data.length > 0) {
-        dataInfo.innerHTML = `📊 Đã tìm thấy ${data.length} nhân viên có dữ liệu KPI`;
+        const activeCount = data.filter(item => item.trang_thai === "1").length;
+        const inactiveCount = data.length - activeCount;
+        dataInfo.innerHTML = `📊 Tổng: ${data.length} nhân viên | 🟢 Đang hoạt động: ${activeCount} | 🔴 Nghỉ/Thử việc: ${inactiveCount}`;
         dataInfo.style.display = 'block';
     }
 }
 
+// ========== HÀM LỌC BIỂU ĐỒ NHÂN VIÊN ==========
+
 function filterTopEmployees(kv, event) {
-    // Reset tất cả nút trong cùng group
     const parentDiv = event.target.closest('.kv-filter-employee');
     parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
         btn.classList.remove('top-active');
@@ -457,22 +485,25 @@ function filterTopEmployees(kv, event) {
     showChartLoading(chartCard);
 
     setTimeout(() => {
-        let filteredData = currentData;
+        // CHỈ LẤY NHÂN VIÊN ACTIVE (trang_thai === "1")
+        let activeData = filterActiveEmployees(currentData);
+        
+        let filteredData = activeData;
         if (kv !== 'all') {
-            filteredData = currentData.filter(item => {
+            filteredData = activeData.filter(item => {
                 const itemKV = findKVFromGroup(item.ma_kv || 'Khác');
                 return itemKV === kv;
             });
         }
 
         if (filteredData.length === 0) {
-            showToast(`Không có dữ liệu nhân viên cho ${kv}`);
+            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${kv === 'all' ? 'Miền Bắc' : kv}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
                 btn.classList.remove('top-active');
             });
             parentDiv.querySelector('[data-kv="all"]').classList.add('top-active');
             currentTopKVFilter = 'all';
-            createTopCompletionChart(currentData);
+            createTopCompletionChart(filterActiveEmployees(currentData));
         } else {
             createTopCompletionChart(filteredData, kv);
         }
@@ -481,7 +512,6 @@ function filterTopEmployees(kv, event) {
 }
 
 function filterBottomEmployees(kv, event) {
-    // Reset tất cả nút trong cùng group
     const parentDiv = event.target.closest('.kv-filter-employee');
     parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
         btn.classList.remove('bottom-active');
@@ -495,22 +525,25 @@ function filterBottomEmployees(kv, event) {
     showChartLoading(chartCard);
 
     setTimeout(() => {
-        let filteredData = currentData;
+        // CHỈ LẤY NHÂN VIÊN ACTIVE (trang_thai === "1")
+        let activeData = filterActiveEmployees(currentData);
+        
+        let filteredData = activeData;
         if (kv !== 'all') {
-            filteredData = currentData.filter(item => {
+            filteredData = activeData.filter(item => {
                 const itemKV = findKVFromGroup(item.ma_kv || 'Khác');
                 return itemKV === kv;
             });
         }
 
         if (filteredData.length === 0) {
-            showToast(`Không có dữ liệu nhân viên cho ${kv}`);
+            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${kv === 'all' ? 'Miền Bắc' : kv}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
                 btn.classList.remove('bottom-active');
             });
             parentDiv.querySelector('[data-kv="all"]').classList.add('bottom-active');
             currentBottomKVFilter = 'all';
-            createBottomCompletionChart(currentData);
+            createBottomCompletionChart(filterActiveEmployees(currentData));
         } else {
             createBottomCompletionChart(filteredData, kv);
         }
@@ -585,12 +618,10 @@ function updateTotalRevenue(data, kv = 'all') {
 function createCharts(data) {
     console.log('🔄 Đang vẽ biểu đồ...');
 
-    // Reset filters
     currentTopKVFilter = 'all';
     currentBottomKVFilter = 'all';
     currentKVFilter = 'all';
 
-    // Reset active states - Top chart
     const topFilter = document.querySelector('.kv-filter-employee:first-child');
     if (topFilter) {
         topFilter.querySelectorAll('.kv-btn-employee').forEach(btn => {
@@ -599,7 +630,6 @@ function createCharts(data) {
         topFilter.querySelector('[data-kv="all"]').classList.add('top-active');
     }
 
-    // Reset active states - Bottom chart
     const bottomFilter = document.querySelector('.kv-filter-employee:last-child');
     if (bottomFilter) {
         bottomFilter.querySelectorAll('.kv-btn-employee').forEach(btn => {
@@ -608,7 +638,6 @@ function createCharts(data) {
         bottomFilter.querySelector('[data-kv="all"]').classList.add('bottom-active');
     }
 
-    // Reset active states - Area chart
     const areaFilter = document.querySelector('.kv-filter');
     if (areaFilter) {
         areaFilter.querySelectorAll('.kv-btn').forEach(btn => {
@@ -617,7 +646,6 @@ function createCharts(data) {
         areaFilter.querySelector('[data-kv="all"]').classList.add('active');
     }
 
-    // Destroy old charts
     if (topCompletionChart) topCompletionChart.destroy();
     if (bottomCompletionChart) bottomCompletionChart.destroy();
     if (topAreaChart) topAreaChart.destroy();
@@ -629,25 +657,39 @@ function createCharts(data) {
         return;
     }
 
-    createTopCompletionChart(data);
-    createBottomCompletionChart(data);
+    // Biểu đồ nhân viên: CHỈ dùng nhân viên active
+    const activeData = filterActiveEmployees(data);
+    createTopCompletionChart(activeData);
+    createBottomCompletionChart(activeData);
+    
+    // Các biểu đồ khác: dùng TẤT CẢ dữ liệu
     createTopAreaChart(data);
     createBottomAreaChart(data);
     createAreaRevenueChart(data);
-    console.log('✅ Đã vẽ xong biểu đồ');
+    console.log(`✅ Đã vẽ xong biểu đồ (${activeData.length} nhân viên active / ${data.length} tổng số)`);
 }
+
 function createTopCompletionChart(data, kv = 'all') {
-    if (!data || data.length === 0) return;
+    if (!data || data.length === 0) {
+        const ctx = document.getElementById('topCompletionChart').getContext('2d');
+        if (topCompletionChart) topCompletionChart.destroy();
+        topCompletionChart = new Chart(ctx, {
+            type: 'bar',
+            data: { labels: ['Không có dữ liệu nhân viên đang hoạt động'], datasets: [{ label: 'Doanh số (VNĐ)', data: [0], backgroundColor: 'rgba(200,200,200,0.5)' }] },
+            options: { plugins: { legend: { display: false }, tooltip: { enabled: false } } }
+        });
+        return;
+    }
 
     const chartCard = document.getElementById('topCompletionChart')?.closest('.chart-card');
     if (chartCard) {
         const titleElement = chartCard.querySelector('h3');
         if (titleElement) {
             if (kv === 'all') {
-                titleElement.innerHTML = '🏆 15 Nhân viên doanh số cao nhất (Miền Bắc)';
+                titleElement.innerHTML = '🏆 15 Nhân viên doanh số cao nhất (Đang hoạt động)';
             } else {
                 const kvName = getGroupName(kv) || kv;
-                titleElement.innerHTML = `🏆 15 Nhân viên doanh số cao nhất - ${kvName}`;
+                titleElement.innerHTML = `🏆 15 Nhân viên doanh số cao nhất - ${kvName} (Đang hoạt động)`;
             }
         }
     }
@@ -668,10 +710,8 @@ function createTopCompletionChart(data, kv = 'all') {
         return;
     }
 
-    // Sửa labels để hiển thị thêm KV
     const labels = topData.map(item => {
         const { ten, maDonVi, groupPath } = getEmployeeDisplayInfo(item.ma_nv);
-        // Lấy KV của nhân viên
         const employeeKV = findKVFromGroup(item.ma_kv || 'Khác');
         const kvDisplay = employeeKV !== 'Khác' ? ` [${employeeKV}]` : '';
 
@@ -682,7 +722,6 @@ function createTopCompletionChart(data, kv = 'all') {
     });
 
     const revenues = topData.map(item => item.doanh_so?.th || 0);
-
     const maxRevenue = Math.max(...revenues);
     let maxAxis = Math.ceil(maxRevenue * 1.3 / 1000000) * 1000000;
 
@@ -735,7 +774,8 @@ function createTopCompletionChart(data, kv = 'all') {
                                     `📍 Khu vực: ${kvInfo}`,
                                     `💰 Doanh số: ${formatNumber(revenue)}`,
                                     `🎯 Kế hoạch: ${formatNumber(target)}`,
-                                    `📊 Tỷ lệ HT: ${completionRate}%`
+                                    `📊 Tỷ lệ HT: ${completionRate}%`,
+                                    `🟢 Trạng thái: Đang hoạt động`
                                 ];
                             }
                         }
@@ -754,15 +794,8 @@ function createTopCompletionChart(data, kv = 'all') {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: {
-                            callback: value => formatNumber(value),
-                            stepSize: maxAxis / 5
-                        },
-                        title: {
-                            display: true,
-                            text: 'Doanh số (VNĐ)',
-                            font: { weight: 'bold' }
-                        }
+                        ticks: { callback: value => formatNumber(value), stepSize: maxAxis / 5 },
+                        title: { display: true, text: 'Doanh số (VNĐ)', font: { weight: 'bold' } }
                     },
                     y: {
                         ticks: {
@@ -783,17 +816,26 @@ function createTopCompletionChart(data, kv = 'all') {
 }
 
 function createBottomCompletionChart(data, kv = 'all') {
-    if (!data || data.length === 0) return;
+    if (!data || data.length === 0) {
+        const ctx = document.getElementById('bottomCompletionChart').getContext('2d');
+        if (bottomCompletionChart) bottomCompletionChart.destroy();
+        bottomCompletionChart = new Chart(ctx, {
+            type: 'bar',
+            data: { labels: ['Không có dữ liệu nhân viên đang hoạt động'], datasets: [{ label: 'Doanh số (VNĐ)', data: [0], backgroundColor: 'rgba(200,200,200,0.5)' }] },
+            options: { plugins: { legend: { display: false }, tooltip: { enabled: false } } }
+        });
+        return;
+    }
 
     const chartCard = document.getElementById('bottomCompletionChart')?.closest('.chart-card');
     if (chartCard) {
         const titleElement = chartCard.querySelector('h3');
         if (titleElement) {
             if (kv === 'all') {
-                titleElement.innerHTML = '⚠️ 15 Nhân viên doanh số thấp nhất (Miền Bắc)';
+                titleElement.innerHTML = '⚠️ 15 Nhân viên doanh số thấp nhất (Đang hoạt động)';
             } else {
                 const kvName = getGroupName(kv) || kv;
-                titleElement.innerHTML = `⚠️ 15 Nhân viên doanh số thấp nhất - ${kvName}`;
+                titleElement.innerHTML = `⚠️ 15 Nhân viên doanh số thấp nhất - ${kvName} (Đang hoạt động)`;
             }
         }
     }
@@ -814,10 +856,8 @@ function createBottomCompletionChart(data, kv = 'all') {
         return;
     }
 
-    // Sửa labels để hiển thị thêm KV
     const labels = bottomData.map(item => {
         const { ten, maDonVi, groupPath } = getEmployeeDisplayInfo(item.ma_nv);
-        // Lấy KV của nhân viên
         const employeeKV = findKVFromGroup(item.ma_kv || 'Khác');
         const kvDisplay = employeeKV !== 'Khác' ? ` [${employeeKV}]` : '';
 
@@ -828,7 +868,6 @@ function createBottomCompletionChart(data, kv = 'all') {
     });
 
     const revenues = bottomData.map(item => item.doanh_so?.th || 0);
-
     const maxRevenue = Math.max(...revenues);
     let maxAxis = Math.ceil(maxRevenue * 1.5 / 1000000) * 1000000;
     if (maxAxis < 10000000) maxAxis = 10000000;
@@ -844,9 +883,7 @@ function createBottomCompletionChart(data, kv = 'all') {
                 datasets: [{
                     label: 'Doanh số (VNĐ)',
                     data: revenues,
-                    backgroundColor: revenues.map((revenue, index) => {
-                        return `rgba(244, 67, 54, ${0.4 + (index * 0.03)})`;
-                    }),
+                    backgroundColor: revenues.map((revenue, index) => `rgba(244, 67, 54, ${0.4 + (index * 0.03)})`),
                     borderColor: revenues.map(() => 'rgba(244, 67, 54, 1)'),
                     borderWidth: 1,
                     borderRadius: 5
@@ -874,7 +911,8 @@ function createBottomCompletionChart(data, kv = 'all') {
                                     `📍 Khu vực: ${kvInfo}`,
                                     `💰 Doanh số: ${formatNumber(revenue)}`,
                                     `🎯 Kế hoạch: ${formatNumber(target)}`,
-                                    `📊 Tỷ lệ HT: ${completionRate}%`
+                                    `📊 Tỷ lệ HT: ${completionRate}%`,
+                                    `🟢 Trạng thái: Đang hoạt động`
                                 ];
                             }
                         }
@@ -893,15 +931,8 @@ function createBottomCompletionChart(data, kv = 'all') {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: {
-                            callback: value => formatNumber(value),
-                            stepSize: maxAxis / 5
-                        },
-                        title: {
-                            display: true,
-                            text: 'Doanh số (VNĐ)',
-                            font: { weight: 'bold' }
-                        }
+                        ticks: { callback: value => formatNumber(value), stepSize: maxAxis / 5 },
+                        title: { display: true, text: 'Doanh số (VNĐ)', font: { weight: 'bold' } }
                     },
                     y: {
                         ticks: {
@@ -920,6 +951,7 @@ function createBottomCompletionChart(data, kv = 'all') {
         console.error('❌ Lỗi vẽ biểu đồ bottom doanh số:', error);
     }
 }
+
 function updateTotalRevenueFromNPP(nppRevenueData) {
     if (!nppRevenueData) return;
 
@@ -942,11 +974,10 @@ function updateTotalRevenueFromNPP(nppRevenueData) {
         totalRevenueElement.innerHTML = `${formatNumber(totalActualRevenue)} / ${formatNumber(totalTarget)} (${completionRate}%)`;
     }
 }
+
 function createAreaRevenueChart(data) {
-    // Tính doanh số thực theo KV từ dữ liệu KPI
     const nppRevenueData = calculateNPPRevenue(data);
 
-    // Tính tổng doanh số theo KV
     const kvActualRevenue = {};
     nppRevenueData.forEach(npp => {
         if (!kvActualRevenue[npp.kv]) {
@@ -955,7 +986,6 @@ function createAreaRevenueChart(data) {
         kvActualRevenue[npp.kv] += npp.actualRevenue;
     });
 
-    // Chuẩn bị dữ liệu cho biểu đồ
     const kvData = [];
     const uniqueKVs = [...new Set(nppData.map(item => item.kv))];
 
@@ -972,10 +1002,7 @@ function createAreaRevenueChart(data) {
         });
     });
 
-    // Cập nhật tổng doanh thu hiển thị
     updateTotalRevenueFromNPP(nppRevenueData);
-
-    // Sắp xếp theo tỷ lệ hoàn thành
     kvData.sort((a, b) => b.completionRate - a.completionRate);
 
     const labels = kvData.map(item => getGroupName(item.kv) || item.kv);
@@ -1048,21 +1075,10 @@ function createAreaRevenueChart(data) {
                     x: {
                         beginAtZero: true,
                         max: 100,
-                        ticks: {
-                            callback: value => value + '%',
-                            stepSize: 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Tỷ lệ hoàn thành (%)',
-                            font: { weight: 'bold' }
-                        }
+                        ticks: { callback: value => value + '%', stepSize: 10 },
+                        title: { display: true, text: 'Tỷ lệ hoàn thành (%)', font: { weight: 'bold' } }
                     },
-                    y: {
-                        ticks: {
-                            font: { size: 12 }
-                        }
-                    }
+                    y: { ticks: { font: { size: 12 } } }
                 }
             }
         };
@@ -1084,7 +1100,6 @@ function createNPPChartByKV(data, kv) {
         return;
     }
 
-    // Sắp xếp theo tỷ lệ hoàn thành
     const chartData = filteredNPPs
         .map(npp => ({
             ten: npp.ten,
@@ -1097,7 +1112,6 @@ function createNPPChartByKV(data, kv) {
     const labels = chartData.map(item => item.ten.replace(/^NPP\s+/i, ''));
     const completionRates = chartData.map(item => item.completionRate);
 
-    // Tính giá trị max cho trục X
     const maxCompletion = Math.max(...completionRates);
     let maxAxis = Math.ceil((maxCompletion + 10) / 10) * 10;
     if (maxAxis < 100) maxAxis = 100;
@@ -1166,15 +1180,8 @@ function createNPPChartByKV(data, kv) {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: {
-                            callback: value => value + '%',
-                            stepSize: maxAxis > 100 ? 20 : 10
-                        },
-                        title: {
-                            display: true,
-                            text: 'Tỷ lệ hoàn thành (%)',
-                            font: { weight: 'bold' }
-                        }
+                        ticks: { callback: value => value + '%', stepSize: maxAxis > 100 ? 20 : 10 },
+                        title: { display: true, text: 'Tỷ lệ hoàn thành (%)', font: { weight: 'bold' } }
                     },
                     y: {
                         ticks: {
@@ -1205,7 +1212,7 @@ function createTopAreaChart(data) {
             tongDoanhSoTH: 0,
             count: 0,
             target: getNPPTarget(area),
-            kv: findKVFromGroup(area) // Lấy KV của NPP
+            kv: findKVFromGroup(area)
         };
         areaMap[area].tongDoanhSoTH += item.doanh_so?.th || 0;
         areaMap[area].count += 1;
@@ -1214,7 +1221,7 @@ function createTopAreaChart(data) {
     const areaData = Object.entries(areaMap)
         .map(([area, values]) => ({
             area,
-            tenHienThi: `${getGroupName(area)} [${values.kv}]`, // Thêm KV vào tên hiển thị
+            tenHienThi: `${getGroupName(area)} [${values.kv}]`,
             tongDoanhSoTH: values.tongDoanhSoTH,
             soNhanVien: values.count,
             target: values.target,
@@ -1266,13 +1273,7 @@ function createTopAreaChart(data) {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            font: { size: 12 },
-                            usePointStyle: true
-                        }
-                    },
+                    legend: { position: 'top', labels: { font: { size: 12 }, usePointStyle: true } },
                     tooltip: {
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
                         titleFont: { size: 14, weight: 'bold' },
@@ -1314,15 +1315,8 @@ function createTopAreaChart(data) {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: {
-                            callback: value => formatNumber(value),
-                            stepSize: maxAxis / 5
-                        },
-                        title: {
-                            display: true,
-                            text: 'Doanh số (VNĐ)',
-                            font: { weight: 'bold' }
-                        }
+                        ticks: { callback: value => formatNumber(value), stepSize: maxAxis / 5 },
+                        title: { display: true, text: 'Doanh số (VNĐ)', font: { weight: 'bold' } }
                     },
                     y: {
                         ticks: {
@@ -1351,7 +1345,7 @@ function createBottomAreaChart(data) {
             tongDoanhSoTH: 0,
             count: 0,
             target: getNPPTarget(area),
-            kv: findKVFromGroup(area) // Lấy KV của NPP
+            kv: findKVFromGroup(area)
         };
         areaMap[area].tongDoanhSoTH += item.doanh_so?.th || 0;
         areaMap[area].count += 1;
@@ -1361,7 +1355,7 @@ function createBottomAreaChart(data) {
         .filter(([_, values]) => values.tongDoanhSoTH > 0)
         .map(([area, values]) => ({
             area,
-            tenHienThi: `${getGroupName(area)} [${values.kv}]`, // Thêm KV vào tên hiển thị
+            tenHienThi: `${getGroupName(area)} [${values.kv}]`,
             tongDoanhSoTH: values.tongDoanhSoTH,
             soNhanVien: values.count,
             target: values.target,
@@ -1414,13 +1408,7 @@ function createBottomAreaChart(data) {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            font: { size: 12 },
-                            usePointStyle: true
-                        }
-                    },
+                    legend: { position: 'top', labels: { font: { size: 12 }, usePointStyle: true } },
                     tooltip: {
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
                         titleFont: { size: 14, weight: 'bold' },
@@ -1462,15 +1450,8 @@ function createBottomAreaChart(data) {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: {
-                            callback: value => formatNumber(value),
-                            stepSize: maxAxis / 5
-                        },
-                        title: {
-                            display: true,
-                            text: 'Doanh số (VNĐ)',
-                            font: { weight: 'bold' }
-                        }
+                        ticks: { callback: value => formatNumber(value), stepSize: maxAxis / 5 },
+                        title: { display: true, text: 'Doanh số (VNĐ)', font: { weight: 'bold' } }
                     },
                     y: {
                         ticks: {
@@ -1496,18 +1477,21 @@ function displaySummaryStats(data) {
     summaryStats.innerHTML = '';
     if (!data || data.length === 0) return;
 
+    // Dùng TẤT CẢ dữ liệu cho thống kê tổng hợp
     const tongDoanhSoTH = data.reduce((sum, item) => sum + (item.doanh_so?.th || 0), 0);
-    const tongDoanhSoKH = getKVTargetFromNPP('all'); // Tổng kế hoạch từ tất cả NPP
-
+    const tongDoanhSoKH = getKVTargetFromNPP('all');
     const tlTrungBinh = tongDoanhSoKH > 0 ? (tongDoanhSoTH / tongDoanhSoKH * 100) : 0;
 
-    const nvCaoNhat = data.reduce((max, item) => (item.doanh_so?.th || 0) > (max.doanh_so?.th || 0) ? item : max, data[0]);
+    // Chỉ lấy nhân viên active cho "NV cao nhất"
+    const activeData = filterActiveEmployees(data);
+    let nvCaoNhat = null;
+    if (activeData.length > 0) {
+        nvCaoNhat = activeData.reduce((max, item) => (item.doanh_so?.th || 0) > (max.doanh_so?.th || 0) ? item : max, activeData[0]);
+    }
 
-    // Lấy thông tin NPP của nhân viên cao nhất
-    const nvCaoNhatInfo = getEmployeeDisplayInfo(nvCaoNhat.ma_nv);
-    const nvCaoNhatNPP = nvCaoNhatInfo.maDonVi ? getGroupName(nvCaoNhatInfo.maDonVi) : 'N/A';
+    const nvCaoNhatInfo = nvCaoNhat ? getEmployeeDisplayInfo(nvCaoNhat.ma_nv) : null;
+    const nvCaoNhatNPP = nvCaoNhatInfo?.maDonVi ? getGroupName(nvCaoNhatInfo.maDonVi) : 'N/A';
 
-    // Tính doanh số theo KV
     const kvRevenue = {};
     data.forEach(item => {
         const maKV = item.ma_kv || 'Khác';
@@ -1517,7 +1501,6 @@ function displaySummaryStats(data) {
         kvRevenue[kv] += revenue;
     });
 
-    // Tìm KV có doanh thu cao nhất
     let kvCaoNhat = null;
     let maxRevenue = 0;
     Object.entries(kvRevenue).forEach(([kv, revenue]) => {
@@ -1533,7 +1516,6 @@ function displaySummaryStats(data) {
         }
     });
 
-    // Tìm NPP có doanh thu cao nhất (từ dữ liệu thực tế)
     const nppActualRevenue = {};
     data.forEach(item => {
         const maKV = item.ma_kv || 'Khác';
@@ -1542,7 +1524,6 @@ function displaySummaryStats(data) {
         nppActualRevenue[maKV] += revenue;
     });
 
-    // Tìm NPP có doanh thu thực tế cao nhất
     let nppCaoNhatThucTe = null;
     let maxNPPActualRevenue = 0;
     Object.entries(nppActualRevenue).forEach(([maNPP, revenue]) => {
@@ -1561,11 +1542,11 @@ function displaySummaryStats(data) {
         { label: '💰 Tổng DS TH', value: tongDoanhSoTH },
         { label: '📈 Tỷ lệ TB', value: tlTrungBinh, unit: '%' },
         {
-            label: '🏆 NV cao nhất',
-            value: getEmployeeName(nvCaoNhat.ma_nv),
-            subValue: formatNumber(nvCaoNhat.doanh_so?.th || 0),
+            label: '🏆 NV cao nhất (Đang HĐ)',
+            value: nvCaoNhat ? getEmployeeName(nvCaoNhat.ma_nv) : 'N/A',
+            subValue: nvCaoNhat ? formatNumber(nvCaoNhat.doanh_so?.th || 0) : '0',
             subLabel: 'Doanh số',
-            nppInfo: ` - ${nvCaoNhatNPP}`
+            nppInfo: nvCaoNhat ? ` - ${nvCaoNhatNPP}` : ''
         },
         {
             label: '🏢 NPP có DS cao nhất',
@@ -1618,6 +1599,7 @@ function displaySummaryStats(data) {
         summaryStats.appendChild(statCard);
     });
 }
+
 // ========== HÀM TIỆN ÍCH ==========
 
 function formatNumber(num) {
@@ -1642,11 +1624,9 @@ function showError(message) {
 
 // ========== TỰ ĐỘNG GỌI API KHI LOAD TRANG ==========
 
-// Hàm khởi tạo và tự động gọi API
 async function initializeAndFetchKPI() {
     console.log('🚀 Tự động tải dữ liệu KPI...');
 
-    // Hiển thị loading
     const loading = document.getElementById('loading');
     const searchBtn = document.getElementById('searchBtn');
 
@@ -1654,22 +1634,18 @@ async function initializeAndFetchKPI() {
     loading.classList.add('active');
 
     try {
-        // Tải dữ liệu nhân viên và nhóm
         console.log('🔄 Đang tải dữ liệu nhân viên và nhóm...');
         await Promise.all([fetchEmployees(), fetchGroups()]);
 
-        // Đợi 2 giây trước khi gọi API KPI
         console.log('⏳ Đợi 2 giây trước khi gọi API KPI...');
         await new Promise(resolve => setTimeout(resolve, 2000));
 
-        // Lấy thông tin tháng và năm hiện tại
         const month = document.getElementById('month').value;
         const year = document.getElementById('year').value;
         const auth = document.getElementById('auth').value;
 
         console.log(`🔄 Đang tải dữ liệu KPI tháng ${month}/${year}...`);
 
-        // Gọi API KPI
         const url = `https://openapi.mobiwork.vn/OpenAPI/V1/KPI?thang=${month}&nam=${year}`;
         const response = await fetch(url, {
             method: 'GET',
@@ -1679,47 +1655,32 @@ async function initializeAndFetchKPI() {
         if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
         const data = await response.json();
-
-        // Xử lý dữ liệu
         currentData = data.result || [];
         allData = JSON.parse(JSON.stringify(currentData));
 
-        // Cập nhật tiêu đề
         document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
-
-        // Hiển thị thông tin
         displayDataInfo(currentData);
-
-        // Vẽ biểu đồ
         setTimeout(() => createCharts(currentData), 100);
-
-        // Hiển thị thống kê
         displaySummaryStats(currentData);
-
-        // Hiển thị báo cáo
         document.getElementById('reportSection').classList.add('active');
 
         console.log(`✅ Đã tải xong dữ liệu KPI: ${currentData.length} nhân viên`);
-
     } catch (error) {
         console.error('❌ Lỗi khi tự động tải dữ liệu:', error);
         showError(`Lỗi khi tự động tải dữ liệu: ${error.message}`);
     } finally {
-        // Ẩn loading
         searchBtn.disabled = false;
         loading.classList.remove('active');
     }
 }
 
-// Ghi đè hàm DOMContentLoaded để tự động gọi API
 document.addEventListener('DOMContentLoaded', function () {
     const today = new Date();
     document.getElementById('month').value = today.getMonth() + 1;
     document.getElementById('year').value = today.getFullYear();
     console.log('🚀 Ứng dụng đã sẵn sàng!');
 
-    // Tự động gọi API sau khi trang load 1 giây
-    // setTimeout(() => {
-    //     initializeAndFetchKPI();
-    // }, 1000);
+    setTimeout(() => {
+        initializeAndFetchKPI();
+    }, 1000);
 });
