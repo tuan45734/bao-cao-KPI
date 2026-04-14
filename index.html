@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
     <div class="container">
         <h1>Báo cáo KPI Miền Bắc</h1>
@@ -148,7 +146,12 @@
         <div id="errorMessage" class="error-message"></div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Thứ tự load file JS -->
+    <script src="constants.js"></script>
+    <script src="utils.js"></script>
+    <script src="employee-charts.js"></script>
+    <script src="npp-charts.js"></script>
+    <script src="area-charts.js"></script>
+    <script src="main.js"></script>
 </body>
-
 </html>

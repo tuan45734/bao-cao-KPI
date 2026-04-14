@@ -1,0 +1,285 @@
+// ========== BIỂU ĐỒ KHU VỰC ==========
+
+function updateTotalRevenueFromNPP(nppRevenueData) {
+    if (!nppRevenueData) return;
+
+    let totalActualRevenue = 0;
+    let totalTarget = 0;
+
+    if (currentKVFilter === 'all') {
+        totalActualRevenue = nppRevenueData.reduce((sum, npp) => sum + npp.actualRevenue, 0);
+        totalTarget = getKVTargetFromNPP('all');
+    } else {
+        const filteredNPPs = nppRevenueData.filter(npp => npp.kv === currentKVFilter);
+        totalActualRevenue = filteredNPPs.reduce((sum, npp) => sum + npp.actualRevenue, 0);
+        totalTarget = getKVTargetFromNPP(currentKVFilter);
+    }
+
+    const completionRate = totalTarget > 0 ? (totalActualRevenue / totalTarget * 100).toFixed(1) : 0;
+
+    const totalRevenueElement = document.getElementById('totalRevenueAll');
+    if (totalRevenueElement) {
+        totalRevenueElement.innerHTML = `${formatNumber(totalActualRevenue)} / ${formatNumber(totalTarget)} (${completionRate}%)`;
+    }
+}
+
+function createAreaRevenueChart(data) {
+    const nppRevenueData = calculateNPPRevenue(data);
+
+    const kvActualRevenue = {};
+    nppRevenueData.forEach(npp => {
+        if (!kvActualRevenue[npp.kv]) {
+            kvActualRevenue[npp.kv] = 0;
+        }
+        kvActualRevenue[npp.kv] += npp.actualRevenue;
+    });
+
+    const kvData = [];
+    const uniqueKVs = [...new Set(nppData.map(item => item.kv))];
+
+    uniqueKVs.forEach(kv => {
+        const actualRevenue = kvActualRevenue[kv] || 0;
+        const targetRevenue = getKVTargetFromNPP(kv);
+        const completionRate = targetRevenue > 0 ? (actualRevenue / targetRevenue * 100) : 0;
+
+        kvData.push({
+            kv: kv,
+            actualRevenue: actualRevenue,
+            targetRevenue: targetRevenue,
+            completionRate: completionRate
+        });
+    });
+
+    updateTotalRevenueFromNPP(nppRevenueData);
+    kvData.sort((a, b) => b.completionRate - a.completionRate);
+
+    const labels = kvData.map(item => getGroupName(item.kv) || item.kv);
+    const completionRates = kvData.map(item => item.completionRate);
+
+    const chartCard = document.getElementById('areaRevenueChart')?.closest('.chart-card');
+    if (chartCard) {
+        const titleElement = chartCard.querySelector('h3');
+        if (titleElement && currentKVFilter === 'all') {
+            titleElement.innerHTML = '🥧 Tỷ lệ hoàn thành KPI theo Khu vực';
+        }
+    }
+
+    try {
+        const ctx = document.getElementById('areaRevenueChart').getContext('2d');
+        if (areaRevenueChart) areaRevenueChart.destroy();
+
+        const config = {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Tỷ lệ hoàn thành (%)',
+                    data: completionRates,
+                    backgroundColor: completionRates.map(rate => {
+                        if (rate >= 100) return 'rgba(76, 175, 80, 0.8)';
+                        if (rate >= 80) return 'rgba(33, 150, 243, 0.8)';
+                        if (rate >= 50) return 'rgba(255, 193, 7, 0.8)';
+                        return 'rgba(244, 67, 54, 0.8)';
+                    }),
+                    borderColor: 'white',
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        callbacks: {
+                            label: function (context) {
+                                const index = context.dataIndex;
+                                const item = kvData[index];
+                                return [
+                                    `💰 Doanh số TH: ${formatNumber(item.actualRevenue)}`,
+                                    `🎯 Kế hoạch: ${formatNumber(item.targetRevenue)}`,
+                                    `📊 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`
+                                ];
+                            }
+                        }
+                    },
+                    datalabels: hasDataLabelsPlugin ? {
+                        display: true,
+                        anchor: 'end',
+                        align: 'end',
+                        offset: 5,
+                        color: '#333',
+                        font: { weight: 'bold', size: 11 },
+                        formatter: value => value.toFixed(1) + '%'
+                    } : {}
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: { callback: value => value + '%', stepSize: 10 },
+                        title: { display: true, text: 'Tỷ lệ hoàn thành (%)', font: { weight: 'bold' } }
+                    },
+                    y: { ticks: { font: { size: 12 } } }
+                }
+            }
+        };
+
+        areaRevenueChart = new Chart(ctx, config);
+    } catch (error) {
+        console.error('❌ Lỗi vẽ biểu đồ tỷ lệ hoàn thành khu vực:', error);
+    }
+}
+
+function createNPPChartByKV(data, kv) {
+    if (!data || data.length === 0) return;
+
+    const nppRevenueData = calculateNPPRevenue(data);
+    const filteredNPPs = nppRevenueData.filter(npp => npp.kv === kv);
+
+    if (filteredNPPs.length === 0) {
+        showToast(`Không có dữ liệu NPP cho ${getGroupName(kv) || kv}`);
+        return;
+    }
+
+    const chartData = filteredNPPs
+        .map(npp => ({
+            ten: npp.ten,
+            revenue: npp.actualRevenue,
+            target: npp.target,
+            completionRate: npp.target > 0 ? (npp.actualRevenue / npp.target * 100) : 0
+        }))
+        .sort((a, b) => b.completionRate - a.completionRate);
+
+    const labels = chartData.map(item => item.ten.replace(/^NPP\s+/i, ''));
+    const completionRates = chartData.map(item => item.completionRate);
+
+    const maxCompletion = Math.max(...completionRates);
+    let maxAxis = Math.ceil((maxCompletion + 10) / 10) * 10;
+    if (maxAxis < 100) maxAxis = 100;
+
+    try {
+        const ctx = document.getElementById('areaRevenueChart').getContext('2d');
+        if (areaRevenueChart) areaRevenueChart.destroy();
+
+        const kvName = getGroupName(kv) || kv;
+        const chartCard = ctx.canvas.closest('.chart-card');
+        const titleElement = chartCard.querySelector('h3');
+        if (titleElement) titleElement.innerHTML = `🏢 Tỷ lệ hoàn thành KPI NPP - ${kvName}`;
+
+        const config = {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Tỷ lệ hoàn thành (%)',
+                    data: completionRates,
+                    backgroundColor: completionRates.map(rate => {
+                        if (rate >= 100) return 'rgba(76, 175, 80, 0.8)';
+                        if (rate >= 80) return 'rgba(255, 193, 7, 0.8)';
+                        if (rate >= 50) return 'rgba(255, 152, 0, 0.8)';
+                        return 'rgba(244, 67, 54, 0.8)';
+                    }),
+                    borderColor: 'white',
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleFont: { size: 14, weight: 'bold' },
+                        bodyFont: { size: 13 },
+                        padding: 12,
+                        callbacks: {
+                            label: function (context) {
+                                const index = context.dataIndex;
+                                const item = chartData[index];
+                                return [
+                                    `💰 Doanh số TH: ${formatNumber(item.revenue)}`,
+                                    `🎯 Kế hoạch: ${formatNumber(item.target)}`,
+                                    `📊 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`
+                                ];
+                            }
+                        }
+                    },
+                    datalabels: hasDataLabelsPlugin ? {
+                        display: true,
+                        anchor: 'end',
+                        align: 'end',
+                        offset: 5,
+                        color: '#333',
+                        font: { weight: 'bold', size: 11 },
+                        formatter: value => value.toFixed(1) + '%'
+                    } : {}
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: maxAxis,
+                        ticks: { callback: value => value + '%', stepSize: maxAxis > 100 ? 20 : 10 },
+                        title: { display: true, text: 'Tỷ lệ hoàn thành (%)', font: { weight: 'bold' } }
+                    },
+                    y: {
+                        ticks: {
+                            font: { size: 12 },
+                            callback: function (value, index, values) {
+                                const label = this.getLabelForValue(value);
+                                return label && label.length > 30 ? label.substring(0, 27) + '...' : label;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        areaRevenueChart = new Chart(ctx, config);
+    } catch (error) {
+        console.error('❌ Lỗi vẽ biểu đồ NPP theo KV:', error);
+    }
+}
+
+function filterAreaRevenue(kv, event) {
+    const parentDiv = event.target.closest('.kv-filter');
+    parentDiv.querySelectorAll('.kv-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+
+    currentKVFilter = kv;
+    if (!currentData) return;
+
+    const nppRevenueData = calculateNPPRevenue(currentData);
+    updateTotalRevenueFromNPP(nppRevenueData);
+
+    const chartCard = event.target.closest('.chart-card');
+
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'kv-loading';
+    loadingDiv.innerHTML = '<div class="spinner-small"></div><p>Đang lọc dữ liệu...</p>';
+    loadingDiv.style.cssText = 'position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,0.9); padding: 20px; border-radius: 10px; z-index: 10;';
+    chartCard.style.position = 'relative';
+    chartCard.appendChild(loadingDiv);
+
+    setTimeout(() => {
+        if (kv === 'all') {
+            createAreaRevenueChart(currentData);
+        } else {
+            createNPPChartByKV(currentData, kv);
+        }
+
+        const loadingDiv = chartCard.querySelector('.kv-loading');
+        if (loadingDiv) loadingDiv.remove();
+    }, 300);
+}

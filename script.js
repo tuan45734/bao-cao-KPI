@@ -94,27 +94,19 @@ function filterActiveEmployees(data) {
         const maNV = item.ma_nv;
         if (!maNV) return false;
         
-        // Tìm trong employeeMap để lấy trạng thái
         const empInfo = employeeMap.get(maNV);
         if (empInfo) {
             return empInfo.trang_thai === "1";
         }
         
-        // Nếu không tìm thấy, thử tìm theo mã cơ sở
         const baseCode = maNV.split('.')[0];
         const baseEmpInfo = employeeMap.get(baseCode);
         if (baseEmpInfo) {
             return baseEmpInfo.trang_thai === "1";
         }
         
-        // Mặc định: nếu không có thông tin, vẫn hiển thị (để tránh mất dữ liệu)
         return true;
     });
-}
-
-// Hàm lấy tất cả nhân viên (kể cả inactive) cho các biểu đồ khác
-function getAllEmployees(data) {
-    return data || [];
 }
 
 function getNPPTarget(maNPP) {
@@ -359,7 +351,7 @@ async function fetchEmployees() {
                     employeeMap.set(emp.ma, { 
                         ten: emp.ten, 
                         ma_don_vi: emp.ma_don_vi || null,
-                        trang_thai: emp.trang_thai || "0"  // Lưu trạng thái
+                        trang_thai: emp.trang_thai || "0"
                     });
                 }
             });
@@ -445,7 +437,10 @@ async function searchKPI() {
         currentData = mergedData;
         allData = JSON.parse(JSON.stringify(mergedData));
         document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
-        displayDataInfo(currentData);
+        
+        // Ẩn hoàn toàn dataInfo
+        dataInfo.style.display = 'none';
+        
         setTimeout(() => createCharts(currentData), 100);
         displaySummaryStats(currentData);
         reportSection.classList.add('active');
@@ -456,16 +451,6 @@ async function searchKPI() {
     } finally {
         searchBtn.disabled = false;
         loading.classList.remove('active');
-    }
-}
-
-function displayDataInfo(data) {
-    const dataInfo = document.getElementById('dataInfo');
-    if (data && data.length > 0) {
-        const activeCount = data.filter(item => item.trang_thai === "1").length;
-        const inactiveCount = data.length - activeCount;
-        dataInfo.innerHTML = `📊 Tổng: ${data.length} nhân viên | 🟢 Đang hoạt động: ${activeCount} | 🔴 Nghỉ/Thử việc: ${inactiveCount}`;
-        dataInfo.style.display = 'block';
     }
 }
 
@@ -485,7 +470,6 @@ function filterTopEmployees(kv, event) {
     showChartLoading(chartCard);
 
     setTimeout(() => {
-        // CHỈ LẤY NHÂN VIÊN ACTIVE (trang_thai === "1")
         let activeData = filterActiveEmployees(currentData);
         
         let filteredData = activeData;
@@ -525,7 +509,6 @@ function filterBottomEmployees(kv, event) {
     showChartLoading(chartCard);
 
     setTimeout(() => {
-        // CHỈ LẤY NHÂN VIÊN ACTIVE (trang_thai === "1")
         let activeData = filterActiveEmployees(currentData);
         
         let filteredData = activeData;
@@ -657,12 +640,10 @@ function createCharts(data) {
         return;
     }
 
-    // Biểu đồ nhân viên: CHỈ dùng nhân viên active
     const activeData = filterActiveEmployees(data);
     createTopCompletionChart(activeData);
     createBottomCompletionChart(activeData);
     
-    // Các biểu đồ khác: dùng TẤT CẢ dữ liệu
     createTopAreaChart(data);
     createBottomAreaChart(data);
     createAreaRevenueChart(data);
@@ -686,10 +667,10 @@ function createTopCompletionChart(data, kv = 'all') {
         const titleElement = chartCard.querySelector('h3');
         if (titleElement) {
             if (kv === 'all') {
-                titleElement.innerHTML = '🏆 15 Nhân viên doanh số cao nhất (Đang hoạt động)';
+                titleElement.innerHTML = '🏆 15 Nhân viên doanh số cao nhất';
             } else {
                 const kvName = getGroupName(kv) || kv;
-                titleElement.innerHTML = `🏆 15 Nhân viên doanh số cao nhất - ${kvName} (Đang hoạt động)`;
+                titleElement.innerHTML = `🏆 15 Nhân viên doanh số cao nhất - ${kvName}`;
             }
         }
     }
@@ -774,8 +755,7 @@ function createTopCompletionChart(data, kv = 'all') {
                                     `📍 Khu vực: ${kvInfo}`,
                                     `💰 Doanh số: ${formatNumber(revenue)}`,
                                     `🎯 Kế hoạch: ${formatNumber(target)}`,
-                                    `📊 Tỷ lệ HT: ${completionRate}%`,
-                                    `🟢 Trạng thái: Đang hoạt động`
+                                    `📊 Tỷ lệ HT: ${completionRate}%`
                                 ];
                             }
                         }
@@ -832,10 +812,10 @@ function createBottomCompletionChart(data, kv = 'all') {
         const titleElement = chartCard.querySelector('h3');
         if (titleElement) {
             if (kv === 'all') {
-                titleElement.innerHTML = '⚠️ 15 Nhân viên doanh số thấp nhất (Đang hoạt động)';
+                titleElement.innerHTML = '⚠️ 15 Nhân viên doanh số thấp nhất';
             } else {
                 const kvName = getGroupName(kv) || kv;
-                titleElement.innerHTML = `⚠️ 15 Nhân viên doanh số thấp nhất - ${kvName} (Đang hoạt động)`;
+                titleElement.innerHTML = `⚠️ 15 Nhân viên doanh số thấp nhất - ${kvName}`;
             }
         }
     }
@@ -911,8 +891,7 @@ function createBottomCompletionChart(data, kv = 'all') {
                                     `📍 Khu vực: ${kvInfo}`,
                                     `💰 Doanh số: ${formatNumber(revenue)}`,
                                     `🎯 Kế hoạch: ${formatNumber(target)}`,
-                                    `📊 Tỷ lệ HT: ${completionRate}%`,
-                                    `🟢 Trạng thái: Đang hoạt động`
+                                    `📊 Tỷ lệ HT: ${completionRate}%`
                                 ];
                             }
                         }
@@ -1089,119 +1068,7 @@ function createAreaRevenueChart(data) {
     }
 }
 
-function createNPPChartByKV(data, kv) {
-    if (!data || data.length === 0) return;
-
-    const nppRevenueData = calculateNPPRevenue(data);
-    const filteredNPPs = nppRevenueData.filter(npp => npp.kv === kv);
-
-    if (filteredNPPs.length === 0) {
-        showToast(`Không có dữ liệu NPP cho ${kv}`);
-        return;
-    }
-
-    const chartData = filteredNPPs
-        .map(npp => ({
-            ten: npp.ten,
-            revenue: npp.actualRevenue,
-            target: npp.target,
-            completionRate: npp.target > 0 ? (npp.actualRevenue / npp.target * 100) : 0
-        }))
-        .sort((a, b) => b.completionRate - a.completionRate);
-
-    const labels = chartData.map(item => item.ten.replace(/^NPP\s+/i, ''));
-    const completionRates = chartData.map(item => item.completionRate);
-
-    const maxCompletion = Math.max(...completionRates);
-    let maxAxis = Math.ceil((maxCompletion + 10) / 10) * 10;
-    if (maxAxis < 100) maxAxis = 100;
-
-    try {
-        const ctx = document.getElementById('areaRevenueChart').getContext('2d');
-        if (areaRevenueChart) areaRevenueChart.destroy();
-
-        const kvName = getGroupName(kv) || kv;
-        const chartCard = ctx.canvas.closest('.chart-card');
-        const titleElement = chartCard.querySelector('h3');
-        if (titleElement) titleElement.innerHTML = `🏢 Tỷ lệ hoàn thành KPI NPP - ${kvName}`;
-
-        const config = {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Tỷ lệ hoàn thành (%)',
-                    data: completionRates,
-                    backgroundColor: completionRates.map(rate => {
-                        if (rate >= 100) return 'rgba(76, 175, 80, 0.8)';
-                        if (rate >= 80) return 'rgba(255, 193, 7, 0.8)';
-                        if (rate >= 50) return 'rgba(255, 152, 0, 0.8)';
-                        return 'rgba(244, 67, 54, 0.8)';
-                    }),
-                    borderColor: 'white',
-                    borderWidth: 2,
-                    borderRadius: 5
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: false },
-                    tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                        titleFont: { size: 14, weight: 'bold' },
-                        bodyFont: { size: 13 },
-                        padding: 12,
-                        callbacks: {
-                            label: function (context) {
-                                const index = context.dataIndex;
-                                const item = chartData[index];
-                                return [
-                                    `💰 Doanh số TH: ${formatNumber(item.revenue)}`,
-                                    `🎯 Kế hoạch: ${formatNumber(item.target)}`,
-                                    `📊 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`
-                                ];
-                            }
-                        }
-                    },
-                    datalabels: hasDataLabelsPlugin ? {
-                        display: true,
-                        anchor: 'end',
-                        align: 'end',
-                        offset: 5,
-                        color: '#333',
-                        font: { weight: 'bold', size: 11 },
-                        formatter: value => value.toFixed(1) + '%'
-                    } : {}
-                },
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: maxAxis,
-                        ticks: { callback: value => value + '%', stepSize: maxAxis > 100 ? 20 : 10 },
-                        title: { display: true, text: 'Tỷ lệ hoàn thành (%)', font: { weight: 'bold' } }
-                    },
-                    y: {
-                        ticks: {
-                            font: { size: 12 },
-                            callback: function (value, index, values) {
-                                const label = this.getLabelForValue(value);
-                                return label && label.length > 30 ? label.substring(0, 27) + '...' : label;
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
-        areaRevenueChart = new Chart(ctx, config);
-    } catch (error) {
-        console.error('❌ Lỗi vẽ biểu đồ NPP theo KV:', error);
-    }
-}
-
+// ĐÃ SỬA: Bỏ cột kế hoạch, chỉ giữ cột doanh số thực tế, thêm target vào tooltip
 function createTopAreaChart(data) {
     if (!data || data.length === 0) return;
 
@@ -1235,9 +1102,8 @@ function createTopAreaChart(data) {
 
     const labels = areaData.map(item => item.tenHienThi);
     const doanhSoData = areaData.map(item => item.tongDoanhSoTH);
-    const targetData = areaData.map(item => item.target);
 
-    const maxDoanhSo = Math.max(...doanhSoData, ...targetData);
+    const maxDoanhSo = Math.max(...doanhSoData);
     let maxAxis = Math.ceil(maxDoanhSo * 1.3 / 1000000) * 1000000;
 
     try {
@@ -1256,15 +1122,6 @@ function createTopAreaChart(data) {
                         borderColor: 'rgba(76, 175, 80, 1)',
                         borderWidth: 1,
                         borderRadius: 5
-                    },
-                    {
-                        label: 'Kế hoạch',
-                        data: targetData,
-                        backgroundColor: 'rgba(33, 150, 243, 0.3)',
-                        borderColor: 'rgba(33, 150, 243, 1)',
-                        borderWidth: 2,
-                        borderRadius: 5,
-                        borderDash: [5, 5]
                     }
                 ]
             },
@@ -1282,27 +1139,19 @@ function createTopAreaChart(data) {
                         callbacks: {
                             label: function (context) {
                                 const item = areaData[context.dataIndex];
-                                if (context.dataset.label === 'Doanh số thực tế') {
-                                    return [
-                                        `📍 Khu vực: ${item.kv}`,
-                                        `💰 Doanh số TH: ${formatNumber(context.raw)}`,
-                                        `👥 Số nhân viên: ${item.soNhanVien}`,
-                                        `📊 Bình quân: ${formatNumber(context.raw / item.soNhanVien)}/người`
-                                    ];
-                                } else {
-                                    return `🎯 Kế hoạch: ${formatNumber(context.raw)}`;
-                                }
-                            },
-                            footer: function (context) {
-                                const item = areaData[context[0].dataIndex];
-                                return `📈 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`;
+                                return [
+                                    `📍 Khu vực: ${item.kv}`,
+                                    `💰 Doanh số TH: ${formatNumber(context.raw)}`,
+                                    `🎯 Kế hoạch: ${formatNumber(item.target)}`,
+                                    `👥 Số nhân viên: ${item.soNhanVien}`,
+                                    `📊 Bình quân: ${formatNumber(context.raw / item.soNhanVien)}/người`,
+                                    `📈 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`
+                                ];
                             }
                         }
                     },
                     datalabels: hasDataLabelsPlugin ? {
-                        display: function (context) {
-                            return context.dataset.label === 'Doanh số thực tế';
-                        },
+                        display: true,
                         anchor: 'end',
                         align: 'end',
                         offset: 5,
@@ -1335,6 +1184,7 @@ function createTopAreaChart(data) {
     }
 }
 
+// ĐÃ SỬA: Bỏ cột kế hoạch, chỉ giữ cột doanh số thực tế, thêm target vào tooltip
 function createBottomAreaChart(data) {
     if (!data || data.length === 0) return;
 
@@ -1369,9 +1219,8 @@ function createBottomAreaChart(data) {
 
     const labels = areaData.map(item => item.tenHienThi);
     const doanhSoData = areaData.map(item => item.tongDoanhSoTH);
-    const targetData = areaData.map(item => item.target);
 
-    const maxDoanhSo = Math.max(...doanhSoData, ...targetData);
+    const maxDoanhSo = Math.max(...doanhSoData);
     let maxAxis = Math.ceil(maxDoanhSo * 1.3 / 1000000) * 1000000;
     if (maxAxis < 10000000) maxAxis = 10000000;
 
@@ -1391,15 +1240,6 @@ function createBottomAreaChart(data) {
                         borderColor: 'rgba(244, 67, 54, 1)',
                         borderWidth: 1,
                         borderRadius: 5
-                    },
-                    {
-                        label: 'Kế hoạch',
-                        data: targetData,
-                        backgroundColor: 'rgba(33, 150, 243, 0.3)',
-                        borderColor: 'rgba(33, 150, 243, 1)',
-                        borderWidth: 2,
-                        borderRadius: 5,
-                        borderDash: [5, 5]
                     }
                 ]
             },
@@ -1417,27 +1257,19 @@ function createBottomAreaChart(data) {
                         callbacks: {
                             label: function (context) {
                                 const item = areaData[context.dataIndex];
-                                if (context.dataset.label === 'Doanh số thực tế') {
-                                    return [
-                                        `📍 Khu vực: ${item.kv}`,
-                                        `💰 Doanh số TH: ${formatNumber(context.raw)}`,
-                                        `👥 Số nhân viên: ${item.soNhanVien}`,
-                                        `📊 Bình quân: ${formatNumber(context.raw / item.soNhanVien)}/người`
-                                    ];
-                                } else {
-                                    return `🎯 Kế hoạch: ${formatNumber(context.raw)}`;
-                                }
-                            },
-                            footer: function (context) {
-                                const item = areaData[context[0].dataIndex];
-                                return `📈 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`;
+                                return [
+                                    `📍 Khu vực: ${item.kv}`,
+                                    `💰 Doanh số TH: ${formatNumber(context.raw)}`,
+                                    `🎯 Kế hoạch: ${formatNumber(item.target)}`,
+                                    `👥 Số nhân viên: ${item.soNhanVien}`,
+                                    `📊 Bình quân: ${formatNumber(context.raw / item.soNhanVien)}/người`,
+                                    `📈 Tỷ lệ HT: ${item.completionRate.toFixed(1)}%`
+                                ];
                             }
                         }
                     },
                     datalabels: hasDataLabelsPlugin ? {
-                        display: function (context) {
-                            return context.dataset.label === 'Doanh số thực tế';
-                        },
+                        display: true,
                         anchor: 'end',
                         align: 'end',
                         offset: 5,
@@ -1477,12 +1309,10 @@ function displaySummaryStats(data) {
     summaryStats.innerHTML = '';
     if (!data || data.length === 0) return;
 
-    // Dùng TẤT CẢ dữ liệu cho thống kê tổng hợp
     const tongDoanhSoTH = data.reduce((sum, item) => sum + (item.doanh_so?.th || 0), 0);
     const tongDoanhSoKH = getKVTargetFromNPP('all');
     const tlTrungBinh = tongDoanhSoKH > 0 ? (tongDoanhSoTH / tongDoanhSoKH * 100) : 0;
 
-    // Chỉ lấy nhân viên active cho "NV cao nhất"
     const activeData = filterActiveEmployees(data);
     let nvCaoNhat = null;
     if (activeData.length > 0) {
@@ -1542,7 +1372,7 @@ function displaySummaryStats(data) {
         { label: '💰 Tổng DS TH', value: tongDoanhSoTH },
         { label: '📈 Tỷ lệ TB', value: tlTrungBinh, unit: '%' },
         {
-            label: '🏆 NV cao nhất (Đang HĐ)',
+            label: '🏆 NV cao nhất',
             value: nvCaoNhat ? getEmployeeName(nvCaoNhat.ma_nv) : 'N/A',
             subValue: nvCaoNhat ? formatNumber(nvCaoNhat.doanh_so?.th || 0) : '0',
             subLabel: 'Doanh số',
@@ -1659,7 +1489,11 @@ async function initializeAndFetchKPI() {
         allData = JSON.parse(JSON.stringify(currentData));
 
         document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
-        displayDataInfo(currentData);
+        
+        // Ẩn dataInfo
+        const dataInfo = document.getElementById('dataInfo');
+        dataInfo.style.display = 'none';
+        
         setTimeout(() => createCharts(currentData), 100);
         displaySummaryStats(currentData);
         document.getElementById('reportSection').classList.add('active');
