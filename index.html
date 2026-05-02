@@ -6,144 +6,171 @@
     <title>Báo cáo KPI</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Báo cáo KPI Miền Bắc</h1>
-
-        <div class="search-section">
-            <div class="form-group">
+    <!-- ==================== LOGIN PAGE ==================== -->
+    <div id="loginPage" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-chart-line"></i>
+                <h2>Báo cáo KPI Miền Bắc</h2>
+                <p>Hệ thống phân tích KPI</p>
+            </div>
+            <div class="login-body">
                 <div class="input-group">
-                    <label for="month">Tháng:</label>
-                    <select id="month">
-                        <option value="1">Tháng 1</option>
-                        <option value="2">Tháng 2</option>
-                        <option value="3" selected>Tháng 3</option>
-                        <option value="4">Tháng 4</option>
-                        <option value="5">Tháng 5</option>
-                        <option value="6">Tháng 6</option>
-                        <option value="7">Tháng 7</option>
-                        <option value="8">Tháng 8</option>
-                        <option value="9">Tháng 9</option>
-                        <option value="10">Tháng 10</option>
-                        <option value="11">Tháng 11</option>
-                        <option value="12">Tháng 12</option>
-                    </select>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="accessCode" placeholder="Mã truy cập" autocomplete="off">
                 </div>
-
-                <div class="input-group">
-                    <label for="year">Năm:</label>
-                    <input type="number" id="year" min="2020" max="2030" value="2026">
-                </div>
-
-                <div class="input-group" style="display: none;">
-                    <label for="auth">Authorization:</label>
-                    <input type="text" id="auth" value="Basic NjlhZTZlNmM4YTY0NjVmNDFlNTNhZmI0OjFuYzFnc3J1N2p2Ym10eTdncGV5NWk=">
-                </div>
-
-                <button onclick="searchKPI()" id="searchBtn">🔍 Tìm kiếm</button>
-            </div>
-        </div>
-
-        <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <p style="margin-top: 15px; color: #667eea;">Đang tải dữ liệu...</p>
-        </div>
-
-        <div class="data-info" id="dataInfo" style="display: none;"></div>
-        <div class="loading-employees" id="loadingEmployees" style="display: none;">Đang tải danh sách nhân viên...</div>
-        <div class="loading-groups" id="loadingGroups" style="display: none;">Đang tải danh sách nhóm...</div>
-
-        <div class="report-section" id="reportSection">
-            <div class="report-header">
-                <h2 id="reportTitle">Báo cáo KPI tháng Miền Bắc 3/2026</h2>
-            </div>
-
-            <div class="summary-stats" id="summaryStats"></div>
-
-            <!-- Biểu đồ nhân viên -->
-            <div class="charts-container" style="margin-top: 20px;">
-                <div class="chart-card">
-                    <h3>🏆 15 Nhân viên doanh số cao nhất</h3>
-                    
-                    <div class="kv-filter-employee">
-                        <button class="kv-btn-employee top-active" data-kv="all" onclick="filterTopEmployees('all', event)">Miền Bắc</button>
-                        <button class="kv-btn-employee" data-kv="KV1" onclick="filterTopEmployees('KV1', event)">KV1</button>
-                        <button class="kv-btn-employee" data-kv="KV2" onclick="filterTopEmployees('KV2', event)">KV2</button>
-                        <button class="kv-btn-employee" data-kv="KV3" onclick="filterTopEmployees('KV3', event)">KV3</button>
-                        <button class="kv-btn-employee" data-kv="KV4" onclick="filterTopEmployees('KV4', event)">KV4</button>
-                        <button class="kv-btn-employee" data-kv="KV5" onclick="filterTopEmployees('KV5', event)">KV5</button>
-                        <button class="kv-btn-employee" data-kv="KV6" onclick="filterTopEmployees('KV6', event)">KV6</button>
-                    </div>
-                    
-                    <div class="chart-wrapper employee-chart" style="height: 550px;">
-                        <canvas id="topCompletionChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="chart-card">
-                    <h3>⚠️ 15 Nhân viên doanh số thấp nhất</h3>
-                    
-                    <div class="kv-filter-employee">
-                        <button class="kv-btn-employee bottom-active" data-kv="all" onclick="filterBottomEmployees('all', event)">Miền Bắc</button>
-                        <button class="kv-btn-employee" data-kv="KV1" onclick="filterBottomEmployees('KV1', event)">KV1</button>
-                        <button class="kv-btn-employee" data-kv="KV2" onclick="filterBottomEmployees('KV2', event)">KV2</button>
-                        <button class="kv-btn-employee" data-kv="KV3" onclick="filterBottomEmployees('KV3', event)">KV3</button>
-                        <button class="kv-btn-employee" data-kv="KV4" onclick="filterBottomEmployees('KV4', event)">KV4</button>
-                        <button class="kv-btn-employee" data-kv="KV5" onclick="filterBottomEmployees('KV5', event)">KV5</button>
-                        <button class="kv-btn-employee" data-kv="KV6" onclick="filterBottomEmployees('KV6', event)">KV6</button>
-                    </div>
-                    
-                    <div class="chart-wrapper employee-chart" style="height: 550px;">
-                        <canvas id="bottomCompletionChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Biểu đồ NPP -->
-            <div class="charts-container" style="margin-top: 20px;">
-                <div class="chart-card">
-                    <h3>🏆 10 NPP doanh số cao nhất</h3>
-                    <div class="chart-wrapper npp-chart" style="height: 450px;">
-                        <canvas id="topAreaChart"></canvas>
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <h3>⚠️ 10 NPP doanh số thấp nhất</h3>
-                    <div class="chart-wrapper npp-chart" style="height: 450px;">
-                        <canvas id="bottomAreaChart"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Biểu đồ tròn khu vực -->
-            <div class="charts-container" style="margin-top: 20px;">
-                <div class="chart-card">
-                    <h3> Doanh số thực theo Khu vực</h3>
-
-                    <div class="kv-total-revenue">
-                        📊 Tổng doanh thu: <strong id="totalRevenueAll">0</strong>
-                    </div>
-
-                    <div class="kv-filter">
-                        <button class="kv-btn active" data-kv="all" onclick="filterAreaRevenue('all', event)">Miền Bắc</button>
-                        <button class="kv-btn" data-kv="KV1" onclick="filterAreaRevenue('KV1', event)">KV1</button>
-                        <button class="kv-btn" data-kv="KV2" onclick="filterAreaRevenue('KV2', event)">KV2</button>
-                        <button class="kv-btn" data-kv="KV3" onclick="filterAreaRevenue('KV3', event)">KV3</button>
-                        <button class="kv-btn" data-kv="KV4" onclick="filterAreaRevenue('KV4', event)">KV4</button>
-                        <button class="kv-btn" data-kv="KV5" onclick="filterAreaRevenue('KV5', event)">KV5</button>
-                        <button class="kv-btn" data-kv="KV6" onclick="filterAreaRevenue('KV6', event)">KV6</button>
-                    </div>
-
-                    <div class="chart-wrapper pie-chart" style="height: 600px;">
-                        <canvas id="areaRevenueChart"></canvas>
-                    </div>
+                <button class="btn-login" onclick="verifyAccess()">
+                    <i class="fas fa-arrow-right-to-bracket"></i> Đăng nhập
+                </button>
+                <div id="loginError" class="error-message" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i> Mã truy cập không chính xác
                 </div>
             </div>
         </div>
+    </div>
 
-        <div id="errorMessage" class="error-message"></div>
+    <!-- ==================== MAIN CONTENT (ẩn ban đầu) ==================== -->
+    <div id="mainContent" style="display: none;">
+        <div class="container">
+            <h1>Báo cáo KPI Miền Bắc</h1>
+
+            <div class="search-section">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="month">Tháng:</label>
+                        <select id="month">
+                            <option value="1">Tháng 1</option>
+                            <option value="2">Tháng 2</option>
+                            <option value="3" selected>Tháng 3</option>
+                            <option value="4">Tháng 4</option>
+                            <option value="5">Tháng 5</option>
+                            <option value="6">Tháng 6</option>
+                            <option value="7">Tháng 7</option>
+                            <option value="8">Tháng 8</option>
+                            <option value="9">Tháng 9</option>
+                            <option value="10">Tháng 10</option>
+                            <option value="11">Tháng 11</option>
+                            <option value="12">Tháng 12</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="year">Năm:</label>
+                        <input type="number" id="year" min="2020" max="2030" value="2026">
+                    </div>
+
+                    <div class="input-group" style="display: none;">
+                        <label for="auth">Authorization:</label>
+                        <input type="text" id="auth" value="Basic NjlhZTZlNmM4YTY0NjVmNDFlNTNhZmI0OjFuYzFnc3J1N2p2Ym10eTdncGV5NWk=">
+                    </div>
+
+                    <button onclick="searchKPI()" id="searchBtn">🔍 Tìm kiếm</button>
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p style="margin-top: 15px; color: #667eea;">Đang tải dữ liệu...</p>
+            </div>
+
+            <div class="data-info" id="dataInfo" style="display: none;"></div>
+            <div class="loading-employees" id="loadingEmployees" style="display: none;">Đang tải danh sách nhân viên...</div>
+            <div class="loading-groups" id="loadingGroups" style="display: none;">Đang tải danh sách nhóm...</div>
+
+            <div class="report-section" id="reportSection">
+                <div class="report-header">
+                    <h2 id="reportTitle">Báo cáo KPI tháng Miền Bắc 3/2026</h2>
+                </div>
+
+                <div class="summary-stats" id="summaryStats"></div>
+
+                <!-- Biểu đồ nhân viên -->
+                <div class="charts-container" style="margin-top: 20px;">
+                    <div class="chart-card">
+                        <h3>🏆 15 Nhân viên doanh số cao nhất</h3>
+                        
+                        <div class="kv-filter-employee">
+                            <button class="kv-btn-employee top-active" data-kv="all" onclick="filterTopEmployees('all', event)">Miền Bắc</button>
+                            <button class="kv-btn-employee" data-kv="KV1" onclick="filterTopEmployees('KV1', event)">KV1</button>
+                            <button class="kv-btn-employee" data-kv="KV2" onclick="filterTopEmployees('KV2', event)">KV2</button>
+                            <button class="kv-btn-employee" data-kv="KV3" onclick="filterTopEmployees('KV3', event)">KV3</button>
+                            <button class="kv-btn-employee" data-kv="KV4" onclick="filterTopEmployees('KV4', event)">KV4</button>
+                            <button class="kv-btn-employee" data-kv="KV5" onclick="filterTopEmployees('KV5', event)">KV5</button>
+                            <button class="kv-btn-employee" data-kv="KV6" onclick="filterTopEmployees('KV6', event)">KV6</button>
+                        </div>
+                        
+                        <div class="chart-wrapper employee-chart" style="height: 550px;">
+                            <canvas id="topCompletionChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-card">
+                        <h3>⚠️ 15 Nhân viên doanh số thấp nhất</h3>
+                        
+                        <div class="kv-filter-employee">
+                            <button class="kv-btn-employee bottom-active" data-kv="all" onclick="filterBottomEmployees('all', event)">Miền Bắc</button>
+                            <button class="kv-btn-employee" data-kv="KV1" onclick="filterBottomEmployees('KV1', event)">KV1</button>
+                            <button class="kv-btn-employee" data-kv="KV2" onclick="filterBottomEmployees('KV2', event)">KV2</button>
+                            <button class="kv-btn-employee" data-kv="KV3" onclick="filterBottomEmployees('KV3', event)">KV3</button>
+                            <button class="kv-btn-employee" data-kv="KV4" onclick="filterBottomEmployees('KV4', event)">KV4</button>
+                            <button class="kv-btn-employee" data-kv="KV5" onclick="filterBottomEmployees('KV5', event)">KV5</button>
+                            <button class="kv-btn-employee" data-kv="KV6" onclick="filterBottomEmployees('KV6', event)">KV6</button>
+                        </div>
+                        
+                        <div class="chart-wrapper employee-chart" style="height: 550px;">
+                            <canvas id="bottomCompletionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biểu đồ NPP -->
+                <div class="charts-container" style="margin-top: 20px;">
+                    <div class="chart-card">
+                        <h3>🏆 10 NPP doanh số cao nhất</h3>
+                        <div class="chart-wrapper npp-chart" style="height: 450px;">
+                            <canvas id="topAreaChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>⚠️ 10 NPP doanh số thấp nhất</h3>
+                        <div class="chart-wrapper npp-chart" style="height: 450px;">
+                            <canvas id="bottomAreaChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biểu đồ tròn khu vực -->
+                <div class="charts-container" style="margin-top: 20px;">
+                    <div class="chart-card">
+                        <h3> Doanh số thực theo Khu vực</h3>
+
+                        <div class="kv-total-revenue">
+                            📊 Tổng doanh thu: <strong id="totalRevenueAll">0</strong>
+                        </div>
+
+                        <div class="kv-filter">
+                            <button class="kv-btn active" data-kv="all" onclick="filterAreaRevenue('all', event)">Miền Bắc</button>
+                            <button class="kv-btn" data-kv="KV1" onclick="filterAreaRevenue('KV1', event)">KV1</button>
+                            <button class="kv-btn" data-kv="KV2" onclick="filterAreaRevenue('KV2', event)">KV2</button>
+                            <button class="kv-btn" data-kv="KV3" onclick="filterAreaRevenue('KV3', event)">KV3</button>
+                            <button class="kv-btn" data-kv="KV4" onclick="filterAreaRevenue('KV4', event)">KV4</button>
+                            <button class="kv-btn" data-kv="KV5" onclick="filterAreaRevenue('KV5', event)">KV5</button>
+                            <button class="kv-btn" data-kv="KV6" onclick="filterAreaRevenue('KV6', event)">KV6</button>
+                        </div>
+
+                        <div class="chart-wrapper pie-chart" style="height: 600px;">
+                            <canvas id="areaRevenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorMessage" class="error-message"></div>
+        </div>
     </div>
 
     <!-- Thứ tự load file JS -->

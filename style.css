@@ -70,7 +70,7 @@ select:focus, input:focus {
 }
 
 button {
-    background: linear-gradient(135deg, #667eea 0%, #ffa600 100%);
+    background: linear-gradient(135deg, #ff5100 0%, #ffa600 100%);
     color: white;
     border: none;
     padding: 12px 30px;
@@ -127,7 +127,7 @@ button:disabled {
 }
 
 .report-header {
-    background: linear-gradient(135deg, #667eea 0%, #ffa600 100%);
+    background: linear-gradient(135deg, #ff5100 0%, #ffa600 100%);
     color: white;
     padding: 20px;
     border-radius: 10px 10px 0 0;
@@ -215,7 +215,7 @@ button:disabled {
 }
 
 .stat-card {
-    background: linear-gradient(135deg, #667eea 0%, #ffa600 100%);
+    background: linear-gradient(135deg, #ff5100 0%, #ffa600 100%);
     color: white;
     padding: 20px;
     border-radius: 10px;
@@ -328,7 +328,7 @@ button:disabled {
 
 /* Nút đang được chọn - Top chart */
 .kv-btn-employee.top-active {
-    background: linear-gradient(135deg, #667eea 0%, #ffa600 100%);
+    background: linear-gradient(135deg, #ff5100 0%, #ffa600 100%);
     color: white;
     border-color: transparent;
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
@@ -336,7 +336,7 @@ button:disabled {
 
 /* Nút đang được chọn - Bottom chart */
 .kv-btn-employee.bottom-active {
-    background: linear-gradient(135deg, #667eea 0%, #ffa600 100%);
+    background: linear-gradient(135deg, #ff5100 0%, #ffa600 100%);
     color: white;
     border-color: transparent;
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
@@ -372,7 +372,7 @@ button:disabled {
 }
 
 .kv-btn.active {
-    background: linear-gradient(135deg, #667eea 0%, #ffa600 100%);
+    background: linear-gradient(135deg, #ff5100 0%, #ffa600 100%);
     color: white;
     border-color: transparent;
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
@@ -427,4 +427,127 @@ button:disabled {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+/* ==================== LOGIN STYLES ==================== */
+.login-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.login-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.login-header i {
+    font-size: 60px;
+    color: #ff6600;
+    margin-bottom: 15px;
+}
+
+.login-header h2 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 24px;
+}
+
+.login-header p {
+    color: #666;
+    font-size: 14px;
+}
+
+.login-body .input-group {
+    display: flex;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.login-body .input-group:focus-within {
+    border-color: #ff6600;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.login-body .input-group i {
+    color: #999;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.login-body .input-group input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 16px;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #ff5607 0%, #ff7300 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-login:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.error-message {
+    margin-top: 15px;
+    padding: 10px;
+    background: #fee;
+    color: #c33;
+    border-radius: 8px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }

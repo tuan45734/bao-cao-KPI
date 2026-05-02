@@ -247,6 +247,28 @@ async function searchKPI() {
     }
 }
 
+function verifyAccess() {
+    const codeInput = document.getElementById('accessCode');
+    const errorDiv = document.getElementById('loginError');
+    const enteredCode = codeInput.value.trim();
+    
+    // Chuyển thành chữ hoa để so sánh, cho phép nhập cả chữ thường
+    if (enteredCode.toUpperCase() === 'ADMIN99') {
+        // Hiển thị main content, ẩn login
+        document.getElementById('loginPage').style.display = 'none';
+        document.getElementById('mainContent').style.display = 'block';
+        
+        
+    } else {
+        errorDiv.style.display = 'flex';
+        codeInput.value = '';
+        codeInput.focus();
+        setTimeout(() => {
+            errorDiv.style.display = 'none';
+        }, 3000);
+    }
+}
+
 async function initializeAndFetchKPI() {
     console.log('🚀 Tự động tải dữ liệu KPI...');
 
@@ -301,7 +323,8 @@ async function initializeAndFetchKPI() {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const today = new Date();
+    //const today = new Date();
+    const today = new Date(2026, 3, 1);
     document.getElementById('month').value = today.getMonth() + 1;
     document.getElementById('year').value = today.getFullYear();
     console.log('🚀 Ứng dụng đã sẵn sàng!');
