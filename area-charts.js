@@ -68,6 +68,14 @@ function createAreaRevenueChart(data) {
         const ctx = document.getElementById('areaRevenueChart').getContext('2d');
         if (areaRevenueChart) areaRevenueChart.destroy();
 
+        // Tính max value và set max cao hơn 1.1 lần (thêm 10% khoảng trống)
+        const maxValue = Math.max(...completionRates, 0);
+        let maxAxis = Math.ceil((maxValue * 1.1) / 10) * 10; // Làm tròn lên bội số của 10
+        
+        // Đảm bảo maxAxis ít nhất là 100 nếu có giá trị trên 80
+        if (maxValue > 80 && maxAxis < 100) maxAxis = 100;
+        if (maxAxis < 50) maxAxis = 50;
+
         const config = {
             type: 'bar',
             data: {
@@ -122,8 +130,11 @@ function createAreaRevenueChart(data) {
                 scales: {
                     x: {
                         beginAtZero: true,
-                        max: 100,
-                        ticks: { callback: value => value + '%', stepSize: 10 },
+                        max: maxAxis,
+                        ticks: { 
+                            callback: value => value + '%', 
+                            stepSize: maxAxis > 100 ? 20 : 10 
+                        },
                         title: { display: true, text: 'Tỷ lệ hoàn thành (%)', font: { weight: 'bold' } }
                     },
                     y: { ticks: { font: { size: 12 } } }
@@ -160,9 +171,13 @@ function createNPPChartByKV(data, kv) {
     const labels = chartData.map(item => item.ten.replace(/^NPP\s+/i, ''));
     const completionRates = chartData.map(item => item.completionRate);
 
-    const maxCompletion = Math.max(...completionRates);
-    let maxAxis = Math.ceil((maxCompletion + 10) / 10) * 10;
-    if (maxAxis < 100) maxAxis = 100;
+    // Tính max value và set max cao hơn 1.1 lần (thêm 10% khoảng trống)
+    const maxValue = Math.max(...completionRates, 0);
+    let maxAxis = Math.ceil((maxValue * 1.1) / 10) * 10; // Làm tròn lên bội số của 10
+    
+    // Đảm bảo maxAxis ít nhất là 100 nếu có giá trị trên 80
+    if (maxValue > 80 && maxAxis < 100) maxAxis = 100;
+    if (maxAxis < 50) maxAxis = 50;
 
     try {
         const ctx = document.getElementById('areaRevenueChart').getContext('2d');
@@ -228,7 +243,10 @@ function createNPPChartByKV(data, kv) {
                     x: {
                         beginAtZero: true,
                         max: maxAxis,
-                        ticks: { callback: value => value + '%', stepSize: maxAxis > 100 ? 20 : 10 },
+                        ticks: { 
+                            callback: value => value + '%', 
+                            stepSize: maxAxis > 100 ? 20 : 10 
+                        },
                         title: { display: true, text: 'Tỷ lệ hoàn thành (%)', font: { weight: 'bold' } }
                     },
                     y: {
