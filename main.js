@@ -324,7 +324,7 @@ async function initializeAndFetchKPI() {
 
 document.addEventListener('DOMContentLoaded', function () {
     //const today = new Date();
-    const today = new Date(2026, 3, 1);
+    const today = new Date();
     document.getElementById('month').value = today.getMonth() + 1;
     document.getElementById('year').value = today.getFullYear();
     console.log('🚀 Ứng dụng đã sẵn sàng!');
