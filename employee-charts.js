@@ -306,13 +306,18 @@ function filterTopEmployees(kv, event) {
         }
 
         if (filteredData.length === 0) {
-            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${kv === 'all' ? 'Miền Bắc' : kv}`);
+            const fallbackKV = currentAccountRole === 'ADMIN' ? 'all' : (currentAccountKV || kv);
+            const fallbackData = fallbackKV === 'all'
+                ? filterActiveEmployees(currentData)
+                : filterActiveEmployees(currentData).filter(item => findKVFromGroup(item.ma_kv || 'Khác') === fallbackKV);
+
+            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${fallbackKV === 'all' ? 'Miền Bắc' : fallbackKV}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
                 btn.classList.remove('top-active');
             });
-            parentDiv.querySelector('[data-kv="all"]').classList.add('top-active');
-            currentTopKVFilter = 'all';
-            createTopCompletionChart(filterActiveEmployees(currentData));
+            parentDiv.querySelector(`[data-kv="${fallbackKV}"]`).classList.add('top-active');
+            currentTopKVFilter = fallbackKV;
+            createTopCompletionChart(fallbackData, fallbackKV);
         } else {
             createTopCompletionChart(filteredData, kv);
         }
@@ -345,13 +350,18 @@ function filterBottomEmployees(kv, event) {
         }
 
         if (filteredData.length === 0) {
-            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${kv === 'all' ? 'Miền Bắc' : kv}`);
+            const fallbackKV = currentAccountRole === 'ADMIN' ? 'all' : (currentAccountKV || kv);
+            const fallbackData = fallbackKV === 'all'
+                ? filterActiveEmployees(currentData)
+                : filterActiveEmployees(currentData).filter(item => findKVFromGroup(item.ma_kv || 'Khác') === fallbackKV);
+
+            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${fallbackKV === 'all' ? 'Miền Bắc' : fallbackKV}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
                 btn.classList.remove('bottom-active');
             });
-            parentDiv.querySelector('[data-kv="all"]').classList.add('bottom-active');
-            currentBottomKVFilter = 'all';
-            createBottomCompletionChart(filterActiveEmployees(currentData));
+            parentDiv.querySelector(`[data-kv="${fallbackKV}"]`).classList.add('bottom-active');
+            currentBottomKVFilter = fallbackKV;
+            createBottomCompletionChart(fallbackData, fallbackKV);
         } else {
             createBottomCompletionChart(filteredData, kv);
         }

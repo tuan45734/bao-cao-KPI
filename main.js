@@ -13,36 +13,103 @@ try {
     console.warn('⚠️ Lỗi khi đăng ký ChartDataLabels plugin:', e);
 }
 
+const accessCodeMap = {
+    KV1ADZ: 'KV1',
+    KV2ZAC: 'KV2',
+    KV3CCC: 'KV3',
+    KV4YXY: 'KV4',
+    KV5XXZ: 'KV5',
+    KV6XBC: 'KV6',
+    ANCUNGBATUYET99: 'ADMIN'
+};
+
+let currentAccountRole = null;
+let currentAccountKV = null;
+
+function getAccessInfo(code) {
+    if (!code) return null;
+    const normalized = code.trim().toUpperCase();
+    const role = accessCodeMap[normalized] || null;
+    if (!role) return null;
+    return {
+        role: role === 'ADMIN' ? 'ADMIN' : 'KV',
+        kv: role === 'ADMIN' ? null : role
+    };
+}
+
+function setAccountFilters(activeKV, activeClass, isAdmin, selector, containerElement) {
+    const container = containerElement || (selector ? document.querySelector(selector) : null);
+    if (!container) return;
+    container.querySelectorAll('button').forEach(btn => {
+        const btnKV = btn.dataset.kv;
+        btn.classList.remove(activeClass);
+        btn.disabled = false;
+        btn.style.opacity = '';
+
+        if (!isAdmin && btnKV !== activeKV) {
+            btn.disabled = true;
+            btn.style.opacity = '0.55';
+        }
+
+        if (btnKV === activeKV) {
+            btn.classList.add(activeClass);
+        }
+    });
+}
+
+function getEffectiveFilter(filterValue) {
+    if (filterValue && filterValue !== 'all') return filterValue;
+    if (currentAccountRole !== 'ADMIN' && currentAccountKV) return currentAccountKV;
+    return 'all';
+}
+
+function updateFilterUI() {
+    const topKV = getEffectiveFilter(currentTopKVFilter);
+    const bottomKV = getEffectiveFilter(currentBottomKVFilter);
+    const areaKV = getEffectiveFilter(currentKVFilter);
+
+    const employeeFilters = document.querySelectorAll('.kv-filter-employee');
+    if (employeeFilters.length > 0) {
+        setAccountFilters(topKV, 'top-active', currentAccountRole === 'ADMIN', null, employeeFilters[0]);
+    }
+    if (employeeFilters.length > 1) {
+        setAccountFilters(bottomKV, 'bottom-active', currentAccountRole === 'ADMIN', null, employeeFilters[1]);
+    }
+    setAccountFilters(areaKV, 'active', currentAccountRole === 'ADMIN', '.kv-filter');
+}
+
+function applyAccountAccess(role, kv) {
+    currentAccountRole = role;
+    currentAccountKV = kv;
+
+    const isAdmin = role === 'ADMIN';
+    const defaultKV = isAdmin ? 'all' : kv || 'all';
+
+    currentTopKVFilter = defaultKV;
+    currentBottomKVFilter = defaultKV;
+    currentKVFilter = defaultKV;
+
+    updateFilterUI();
+
+    const nppContainer = document.getElementById('nppChartsContainer');
+    if (nppContainer) {
+        nppContainer.style.display = isAdmin ? '' : 'none';
+    }
+
+    const summaryStats = document.getElementById('summaryStats');
+    if (summaryStats) {
+        summaryStats.style.display = isAdmin ? '' : 'none';
+    }
+
+    if (currentData) {
+        createCharts(currentData);
+    }
+}
+
 function createCharts(data) {
     console.log('🔄 Đang vẽ biểu đồ...');
 
-    currentTopKVFilter = 'all';
-    currentBottomKVFilter = 'all';
-    currentKVFilter = 'all';
-
-    const topFilter = document.querySelector('.kv-filter-employee:first-child');
-    if (topFilter) {
-        topFilter.querySelectorAll('.kv-btn-employee').forEach(btn => {
-            btn.classList.remove('top-active');
-        });
-        topFilter.querySelector('[data-kv="all"]').classList.add('top-active');
-    }
-
-    const bottomFilter = document.querySelector('.kv-filter-employee:last-child');
-    if (bottomFilter) {
-        bottomFilter.querySelectorAll('.kv-btn-employee').forEach(btn => {
-            btn.classList.remove('bottom-active');
-        });
-        bottomFilter.querySelector('[data-kv="all"]').classList.add('bottom-active');
-    }
-
-    const areaFilter = document.querySelector('.kv-filter');
-    if (areaFilter) {
-        areaFilter.querySelectorAll('.kv-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        areaFilter.querySelector('[data-kv="all"]').classList.add('active');
-    }
+    updateFilterUI();
 
     if (topCompletionChart) topCompletionChart.destroy();
     if (bottomCompletionChart) bottomCompletionChart.destroy();
@@ -56,12 +123,33 @@ function createCharts(data) {
     }
 
     const activeData = filterActiveEmployees(data);
-    createTopCompletionChart(activeData);
-    createBottomCompletionChart(activeData);
-    
+    const effectiveTopKV = getEffectiveFilter(currentTopKVFilter);
+    const effectiveBottomKV = getEffectiveFilter(currentBottomKVFilter);
+    const effectiveAreaKV = getEffectiveFilter(currentKVFilter);
+
+    const topFilteredData = effectiveTopKV === 'all'
+        ? activeData
+        : activeData.filter(item => findKVFromGroup(item.ma_kv || 'Khác') === effectiveTopKV);
+
+    const bottomFilteredData = effectiveBottomKV === 'all'
+        ? activeData
+        : activeData.filter(item => findKVFromGroup(item.ma_kv || 'Khác') === effectiveBottomKV);
+
+    currentTopKVFilter = effectiveTopKV;
+    currentBottomKVFilter = effectiveBottomKV;
+    currentKVFilter = effectiveAreaKV;
+
+    createTopCompletionChart(topFilteredData, effectiveTopKV);
+    createBottomCompletionChart(bottomFilteredData, effectiveBottomKV);
+
     createTopAreaChart(data);
     createBottomAreaChart(data);
-    createAreaRevenueChart(data);
+
+    if (effectiveAreaKV === 'all') {
+        createAreaRevenueChart(data);
+    } else {
+        createNPPChartByKV(data, effectiveAreaKV);
+    }
     console.log(`✅ Đã vẽ xong biểu đồ (${activeData.length} nhân viên active / ${data.length} tổng số)`);
 }
 
@@ -253,12 +341,11 @@ function verifyAccess() {
     const enteredCode = codeInput.value.trim();
     
     // Chuyển thành chữ hoa để so sánh, cho phép nhập cả chữ thường
-    if (enteredCode.toUpperCase() === 'ANCUNGBATUYET99') {
-        // Hiển thị main content, ẩn login
+    const accessInfo = getAccessInfo(enteredCode);
+    if (accessInfo) {
         document.getElementById('loginPage').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
-        
-        
+        applyAccountAccess(accessInfo.role, accessInfo.kv);
     } else {
         errorDiv.style.display = 'flex';
         codeInput.value = '';
