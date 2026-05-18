@@ -311,7 +311,7 @@ function filterTopEmployees(kv, event) {
                 ? filterActiveEmployees(currentData)
                 : filterActiveEmployees(currentData).filter(item => findKVFromGroup(item.ma_kv || 'Khác') === fallbackKV);
 
-            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${fallbackKV === 'all' ? 'Miền Bắc' : fallbackKV}`);
+            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${fallbackKV === 'all' ? 'Tất Cả' : fallbackKV}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
                 btn.classList.remove('top-active');
             });
@@ -355,7 +355,7 @@ function filterBottomEmployees(kv, event) {
                 ? filterActiveEmployees(currentData)
                 : filterActiveEmployees(currentData).filter(item => findKVFromGroup(item.ma_kv || 'Khác') === fallbackKV);
 
-            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${fallbackKV === 'all' ? 'Miền Bắc' : fallbackKV}`);
+            showToast(`Không có dữ liệu nhân viên đang hoạt động cho ${fallbackKV === 'all' ? 'Tất Cả' : fallbackKV}`);
             parentDiv.querySelectorAll('.kv-btn-employee').forEach(btn => {
                 btn.classList.remove('bottom-active');
             });

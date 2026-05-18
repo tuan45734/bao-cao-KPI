@@ -20,6 +20,7 @@ const accessCodeMap = {
     KV4YXY: 'KV4',
     KV5XXZ: 'KV5',
     KV6XBC: 'KV6',
+    KV7ABC: 'KV7',
     99: 'ADMIN'
 };
 
@@ -330,7 +331,7 @@ async function searchKPI() {
         const mergedData = mergeKPIData(data.result || []);
         currentData = mergedData;
         allData = JSON.parse(JSON.stringify(mergedData));
-        document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
+        document.getElementById('reportTitle').textContent = `Báo cáo KPI Tất Cả tháng ${month}/${year}`;
         
         dataInfo.style.display = 'none';
         
@@ -402,7 +403,7 @@ async function initializeAndFetchKPI() {
         currentData = data.result || [];
         allData = JSON.parse(JSON.stringify(currentData));
 
-        document.getElementById('reportTitle').textContent = `Báo cáo KPI Miền Bắc tháng ${month}/${year}`;
+        document.getElementById('reportTitle').textContent = `Báo cáo KPI Tất Cả tháng ${month}/${year}`;
         
         const dataInfo = document.getElementById('dataInfo');
         dataInfo.style.display = 'none';

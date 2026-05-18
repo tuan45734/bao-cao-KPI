@@ -67,7 +67,17 @@ const nppData = [
     { "ten": "NPP Thành Thanh", "doanhSo": 1150000000, "kv": "KV6" },
     { "ten": "NPP Trường Hằng", "doanhSo": 800000000, "kv": "KV6" },
     { "ten": "NPP Minh Lộc", "doanhSo": 352000000, "kv": "KV6" },
-    { "ten": "NPP Thông Thơm", "doanhSo": 380000000, "kv": "KV6" }
+    { "ten": "NPP Thông Thơm", "doanhSo": 380000000, "kv": "KV6" },
+    {   "ten": "NPP Tâm Bảo Hân",   "doanhSo": 800000000,   "kv": "KV7" },
+ {   "ten": "NPP NAKOA",   "doanhSo": 640000000,   "kv": "KV7" },
+ {   "ten": "NPP Dương Thiên Nhi",   "doanhSo": 640000000,   "kv": "KV7" },
+ {   "ten": "NPP Tường Vy",   "doanhSo": 640000000,   "kv": "KV7" },
+ {   "ten": "NPP Minh Huy",   "doanhSo": 677600000,   "kv": "KV7" },
+ {   "ten": "NPP Hiền Thuận",   "doanhSo": 870000000,   "kv": "KV7" },
+ {   "ten": "NPP Thuý Diễm",   "doanhSo": 640000000,   "kv": "KV7" },
+ {   "ten": "NPP Anh Viên",   "doanhSo": 668000000,   "kv": "KV7" },
+ {   "ten": "NPP Hoàng Gia Bảo",   "doanhSo": 668000000,   "kv": "KV7" },
+ {   "ten": "NPP Trung Nam",   "doanhSo": 668000000,   "kv": "KV7" }
 ];
 
 const additionalKPIData = [];

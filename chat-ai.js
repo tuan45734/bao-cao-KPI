@@ -116,7 +116,7 @@ function handleChatKeyDown(event) {
 // ========== BUILD SYSTEM PROMPT WITH CURRENT DATA CONTEXT ==========
 
 function buildSystemPrompt() {
-    let context = `Bạn là trợ lý AI phân tích báo cáo KPI Miền Bắc. 
+    let context = `Bạn là trợ lý AI phân tích báo cáo KPI Tất Cả. 
 Bạn có nhiệm vụ trả lời các câu hỏi về số liệu báo cáo dựa trên dữ liệu hiện tại.
 Trả lời bằng tiếng Việt, ngắn gọn, chính xác, thân thiện.
 Khi hiển thị số tiền, dùng định dạng Việt Nam (phân cách hàng nghìn bằng dấu chấm).
