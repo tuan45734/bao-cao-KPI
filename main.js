@@ -20,7 +20,7 @@ const accessCodeMap = {
     KV4YXY: 'KV4',
     KV5XXZ: 'KV5',
     KV6XBC: 'KV6',
-    ANCUNGBATUYET99: 'ADMIN'
+    99: 'ADMIN'
 };
 
 let currentAccountRole = null;
@@ -99,6 +99,18 @@ function applyAccountAccess(role, kv) {
     const summaryStats = document.getElementById('summaryStats');
     if (summaryStats) {
         summaryStats.style.display = isAdmin ? '' : 'none';
+    }
+
+    // Hiển thị nút Chat AI chỉ cho ADMIN
+    const chatToggleBtn = document.getElementById('chatToggleBtn');
+    if (chatToggleBtn) {
+        chatToggleBtn.style.display = isAdmin ? 'flex' : 'none';
+    }
+    // Nếu không phải admin và chat panel đang mở, đóng lại
+    if (!isAdmin) {
+        const chatPanel = document.getElementById('chatPanel');
+        if (chatPanel) chatPanel.style.display = 'none';
+        isChatOpen = false;
     }
 
     if (currentData) {
@@ -415,6 +427,11 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('month').value = today.getMonth() + 1;
     document.getElementById('year').value = today.getFullYear();
     console.log('🚀 Ứng dụng đã sẵn sàng!');
+
+    // Khởi tạo Chat AI
+    if (typeof initChat === 'function') {
+        initChat();
+    }
 
     setTimeout(() => {
         initializeAndFetchKPI();

@@ -173,12 +173,82 @@
         </div>
     </div>
 
+    <!-- ==================== CHAT AI BUTTON + PANEL ==================== -->
+    <button id="chatToggleBtn" class="chat-toggle-btn" style="display:none;" onclick="toggleChat()">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <div id="chatPanel" class="chat-panel" style="display:none;">
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <i class="fas fa-robot"></i>
+                <span>AI Trợ lý Báo cáo</span>
+            </div>
+            <div class="chat-header-actions">
+                <button class="chat-btn-icon" onclick="clearChat()" title="Xóa tin nhắn">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+                <button class="chat-btn-icon" onclick="toggleChat()" title="Đóng">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- API Key settings -->
+        <div id="chatApiKeySection" class="chat-api-key-section">
+            <div class="chat-api-key-header" onclick="toggleApiKeySection()">
+                <i class="fas fa-key"></i>
+                <span>Cấu hình API Key</span>
+                <i class="fas fa-chevron-down" id="apiKeyChevron"></i>
+            </div>
+            <div id="chatApiKeyBody" class="chat-api-key-body" style="display:none;">
+                <p class="chat-api-key-desc">Nhập API Key DeepSeek của bạn để sử dụng AI.</p>
+                <div class="chat-api-key-input-group">
+                    <input type="password" id="deepseekApiKey" placeholder="sk-..." class="chat-api-key-input">
+                    <button class="chat-api-key-save" onclick="saveApiKey()">Lưu</button>
+                </div>
+                <span id="apiKeyStatus" class="chat-api-key-status"></span>
+            </div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message chat-message-ai">
+                <div class="chat-message-avatar"><i class="fas fa-robot"></i></div>
+                <div class="chat-message-content">
+                    Xin chào! Tôi là trợ lý AI. Hãy hỏi tôi về số liệu báo cáo KPI hiện tại, ví dụ:
+                    <ul style="margin: 8px 0 0 20px; font-size: 13px; opacity: 0.8;">
+                        <li>Tổng doanh số thực tế là bao nhiêu?</li>
+                        <li>Nhân viên có doanh số cao nhất?</li>
+                        <li>Khu vực nào hoạt động tốt nhất?</li>
+                        <li>Phân tích tình hình KV1</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <div class="chat-suggestions" id="chatSuggestions">
+                <button class="chat-suggestion-btn" onclick="sendQuickQuestion('Tổng doanh số thực tế và kế hoạch?')">📊 Tổng DS</button>
+                <button class="chat-suggestion-btn" onclick="sendQuickQuestion('Nhân viên doanh số cao nhất?')">🏆 Top NV</button>
+                <button class="chat-suggestion-btn" onclick="sendQuickQuestion('Khu vực nào hoạt động tốt nhất?')">📍 Top KV</button>
+                <button class="chat-suggestion-btn" onclick="sendQuickQuestion('Phân tích tình hình chung')">📈 Phân tích</button>
+            </div>
+            <div class="chat-input-row">
+                <textarea id="chatInput" class="chat-input" placeholder="Nhập câu hỏi về báo cáo..." rows="1" oninput="autoResizeInput(this)" onkeydown="handleChatKeyDown(event)"></textarea>
+                <button class="chat-send-btn" onclick="sendChatMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Thứ tự load file JS -->
     <script src="constants.js"></script>
     <script src="utils.js"></script>
     <script src="employee-charts.js"></script>
     <script src="npp-charts.js"></script>
     <script src="area-charts.js"></script>
+    <script src="chat-ai.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
